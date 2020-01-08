@@ -1,0 +1,44 @@
+---
+title: "Introduction to SCCAR"
+author: "Alje van Dam"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to SCCAR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(SCCAR)
+```
+
+## Spectral Clustering Correspondence Analysis
+
+
+## Installation
+
+## How to run the code?
+
+```{r}
+# data <- data('carnivora')
+# SCCARR::scca(data$M)
+```
+
+_We need an example dataset of moderate size!_
+
+## How to prepare your input data?
+
+
+## What to do with the output?
+
+
+## More information and further reading
+

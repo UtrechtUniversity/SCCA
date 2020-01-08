@@ -1,11 +1,22 @@
-Package: SCCA
+Package: SCCAR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Spectral Clustering Correspondence Analysis in R
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors@R: c(
+    person("Alje", "van Dam", email = "aljevdam@gmail.com", role = "aut"),
+    person("Mark", "Dekker", email = "m.m.dekker@uu.nl", role = "aut"),
+    person("Kees", "van Eijden", email = "k.vaneijden@uu.nl", role = "cre")
+  )
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Depends: R (>= 3.1.0)
+Suggests:
+    readr,
+    testthat,
+    knitr,
+    rmarkdown
+License: file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.0.2
+VignetteBuilder: knitr

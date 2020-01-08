@@ -1,4 +1,11 @@
 .Rproj.user
+.Rprofile
 .Rhistory
 .RData
 .Ruserdata
+Python/
+*.csv
+
+inst/doc
+doc
+Meta
