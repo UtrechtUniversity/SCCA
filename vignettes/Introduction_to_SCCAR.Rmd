@@ -17,27 +17,42 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(SCCAR)
+#library(SCCAR)
 ```
 
 ## Spectral Clustering Correspondence Analysis
 
+Several methods of data analysis, widely used in different fields, and most prominently in ecology and in economics, have recently been recognised to be coincident (Mealy et al 2019).
+The method known in economics as the _Economic Complexity Index_ (ECI) (Hidalgo et al 2009, Baudena et al 2015) is in fact mathematically identical to a statistical method known as _Correspondence Analysis_ (CA).
+Though originally derived as an ordination method in ecology (Hill, 1973), _CA_ scores also arise in methods known in network science as spectral clustering and graph embedding.
+In this tutorial we'll illustrate how the use of _CA_ can be extended and how the understanding can be deepened thanks to the insights from network theory. We give guidelines (examples?) for applications to different types of networks in ecology and economics.
+We focus in particular on applications to data that gives rise to modular networks (?)
+
+## Software Description
+
+This R-package provides functions for application of _CA_ to data that gives rise to modular networks by first clustering the data using a iterative procedure based on spectral clustering and subsequently apply _CA_ to each of the individual clusters.
+The main function scca computes the similarity network defined by a bipartite network using stochastic complementation, and computes the spectrum and eigenvalues of the Laplacian of this network.
+The function _scca_ also provides the option (?) to perform an iterative procedure that clusters the data based on the properties of the spectrum of the, and to analyze the resulting clusters using _CA_.
 
 ## Installation
 
-## How to run the code?
-
 ```{r}
-# data <- data('carnivora')
-# SCCARR::scca(data$M)
+#library(devtools)
+#install_github("UtrechtUniversity/SCCA", build_vignettes = TRUE)
 ```
 
-_We need an example dataset of moderate size!_
+## Example 1
 
-## How to prepare your input data?
+```{r}
+#library(SCCAR)
+#x <- SCCARR::scca(carnivora$M)
+
+```
 
 
-## What to do with the output?
+## Example 2
+
+## How to prepare your own input data?
 
 
 ## More information and further reading

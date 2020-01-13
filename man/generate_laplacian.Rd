@@ -4,7 +4,12 @@
 \alias{generate_laplacian}
 \title{Generate Laplacian matrix (L) from the Simmilariry matrix (S) of a bipartite adjacency matrix (M)}
 \usage{
-generate_laplacian(M)
+generate_laplacian(A, cluster_dim)
+}
+\arguments{
+\item{A}{A numeric matrix ......}
+
+\item{cluster_dim}{Character string with value row or column}
 }
 \description{
 Generate Laplacian matrix (L) from the Simmilariry matrix (S) of a bipartite adjacency matrix (M)
