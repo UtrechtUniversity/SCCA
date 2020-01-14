@@ -11,14 +11,14 @@ generate_laplacian <- function(A, cluster_dim) {
   }
   #
 
-  # formula?
+  # formula
   Dr_inv <- matlib::inv(diag(Matrix::rowSums(A)))
   Dc_inv <- matlib::inv(diag(Matrix::colSums(A)))
 
   if (cluster_dim == 'cols') {
     S    <- A %*% Dc_inv %*% t(A)
     L    <- Dr_inv %*% S
-    DCA  <- Dc_inv %*% A
+    DCA  <- Dc_inv %*% t(A)
   }
   if (cluster_dim == 'rows') {
     S   <- t(A) %*% Dr_inv %*% A
