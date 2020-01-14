@@ -14,12 +14,12 @@ generate_laplacian <- function(A, cluster_dim) {
 
   if (cluster_dim == 'cols')
     S    <- A %*% Dc_inv %*% t(A)
-    L    <- Dr_inv %*% Sr
+    L    <- Dr_inv %*% S
     DCA  <- Dc_inv %*% A
 
   if (cluster_dim == 'row') {
     S   <- t(A) %*% Dr_inv %*% A
-    L   <- Dc_inv %*% Sc
+    L   <- Dc_inv %*% S
     DCA <- Dr_inv %*% A
   }
   return(list(L = L, DCA = DCA, S = S))
