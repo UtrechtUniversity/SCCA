@@ -7,20 +7,17 @@
 scca(M)
 }
 \arguments{
-\item{M}{A numeric matrix ......}
+\item{M}{A absence-presence matrix ....}
 }
 \value{
-The function returns a list with .....
+Returns a list with .....
 }
 \description{
-\code{scca} returns the ... of its argument M.
-}
-\details{
-This function ....
+\code{scca} performs a spectral analysis ..,.,.
 }
 \examples{
 \dontrun{
-data('carnivora', package = 'SCCA')
+data('carnivora', package = 'SCCAR')
 scca(M = carnivora$M)
 }
 }

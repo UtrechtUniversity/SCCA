@@ -6,18 +6,21 @@
 generate_laplacian <- function(A, cluster_dim) {
 
   # check input parameters
+  if (!cluster_dim %in% c('cols', 'rows')) {
+    stop('Unknown cluster dimension')
+  }
   #
 
   # formula?
   Dr_inv <- matlib::inv(diag(Matrix::rowSums(A)))
   Dc_inv <- matlib::inv(diag(Matrix::colSums(A)))
 
-  if (cluster_dim == 'cols')
+  if (cluster_dim == 'cols') {
     S    <- A %*% Dc_inv %*% t(A)
     L    <- Dr_inv %*% S
     DCA  <- Dc_inv %*% A
-
-  if (cluster_dim == 'row') {
+  }
+  if (cluster_dim == 'rows') {
     S   <- t(A) %*% Dr_inv %*% A
     L   <- Dc_inv %*% S
     DCA <- Dr_inv %*% A

@@ -1,16 +1,16 @@
 #' Spectral Clustering Correpondence Analysis.
 #'
-#' \code{scca} returns the ... of its argument M.
+#' \code{scca} performs a spectral analysis ..,.,.
 #'
-#' This function ....
 #'
-#' @param M A numeric matrix ......
 #'
-#' @return The function returns a list with .....
+#' @param M A absence-presence matrix ....
+#'
+#' @return Returns a list with .....
 #'
 #' @examples
 #' \dontrun{
-#' data('carnivora', package = 'SCCA')
+#' data('carnivora', package = 'SCCAR')
 #' scca(M = carnivora$M)
 #' }
 #' @export
