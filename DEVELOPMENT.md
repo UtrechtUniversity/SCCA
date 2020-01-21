@@ -2,10 +2,7 @@
 
 ## Add new dataset to SCCA package
 
-```
-df = read_csv("Carnivors.csv")
-save(df, "data/carnivors.RData")
-```
+Add script to data-raw.
 
 ## Clone private repo
 
@@ -16,3 +13,7 @@ Sys.setenv(GITHUB_PAT = "YOUR_TOKEN")
 ```
 
 Now run the install code in the readme. 
+
+## Orignal Python code (experimental)
+
+Please see the branch `python-code` for the experimental Python code https://github.com/UtrechtUniversity/SCCA/tree/python-code
