@@ -1,12 +1,13 @@
 #' Spectral Clustering Correpondence Analysis.
 #'
-#' \code{scca} performs a spectral analysis ..,.,.
+#' The function \code{scca} performs a spectral clustering correspondence analysis on a given
+#' bi-partite graph. It is a form a hierarchical clustering. On every level the sub-clustering is guided by
+#' a spectral analysis to estimate the number of sub-clusters (the k of kmaens). See .....
 #'
 #'
+#' @param M A matrix representing a bi-partite graph. The rows and columns must be labeled
 #'
-#' @param M A absence-presence matrix ....
-#'
-#' @return Returns a list with .....
+#' @return \code{scca} returns a cluster tree as a recursive list.
 #'
 #' @examples
 #' \dontrun{
@@ -15,60 +16,24 @@
 #' }
 #' @export
 scca <- function(M) {
-  if (!is.matrix(M)) {
-    stop('input not a matrix')
+  if (!is.matrix(M)) { stop('input not a matrix')}
+
+  if (is.null(rownames(M)) || is.null(colnames(M))) {
+    stop('matrix M must have row and column labels')
   }
-  return(M)
-}
 
-scca_new <- function(M) {
-
-  # The clustering takes place on the labels of the longest dimension of matrix
+  # clustering takes place on the labels of the axis with the longest dimension (?)
   #
-  cluster_dim <- ifelse(dim(M)[1] >= dim(M)[2], 'rows', 'cols')     # >= ?
+  dim_axis <- ifelse(dim(M)[1] >= dim(M)[2], 'rows', 'cols')     # >= ?
 
-  # Generate Laplacian matrix (L) from the Simmilariry matrix (S) of
-  # the bipartite adjacency matrix (M). But why? They aren't used in the program anywhere
+  # scca_node function recursively constructs the the cluster tree node for node
+  # Of course, it all starts with the top node and all row/column labels as initial cluster
   #
-
-  lds <- generate_laplacian(M, cluster_dim) # returns lds$L(aplacian), lds$DCA and lds$S(im)
-
-  # Iteratively find the clustering using the heuristic
-  #
-  work_to_do <- TRUE
-  while (work_to_do) {
-
-    # hier wordt het voor mij onbegrijpelijk
-    #
-    for (group in unique(labels)) {
-
-      # calculate sub adj. matrix
-
-      subM <- M[labels == group]
-      if (len(subM) > 1) {            # number of rows
-        lds <- generate_laplacian(subM, cluster_dim)      # L, DCA, S
-        kvv <- heuristic(lds$L, lds$DCA)     # KVV$k, KVV$vecs, KVV$vals # k is number of clusters for kmeans
-      }
-      else {
-        k <- 1   #
-      }
-
-      if (k > 1) {
-        Y <- create_Y()                            # complex numbers ?
-        kmeans = kmeans(x = Re(Y), centers = k)    # random state?   is KMeans in Python the same as kmeans in R?
-
-        # do some accounting
-        #
-      } else if (k == 1) {
-        # do some accounting
-        #
-      } else {
-        stop("Something is wrong")
-      }
-    }
-
-    # check clustering condition
-    #
+  if (dim_axis == 'rows') {
+    labels <- rownames(M)
+  } else {
+    labels <- colnames(M)
   }
-  return(NULL)
+  scca_top_node   <- scca_node(M = M, labels = labels, level = 1, axis = dim_axis)
+  return(scca_top_node)
 }

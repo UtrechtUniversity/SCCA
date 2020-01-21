@@ -7,13 +7,15 @@
 scca(M)
 }
 \arguments{
-\item{M}{A absence-presence matrix ....}
+\item{M}{A matrix representing a bi-partite graph. The rows and columns must be labeled}
 }
 \value{
-Returns a list with .....
+\code{scca} returns a cluster tree as a recursive list.
 }
 \description{
-\code{scca} performs a spectral analysis ..,.,.
+The function \code{scca} performs a spectral clustering correspondence analysis on a given
+bi-partite graph. It is a form a hierarchical clustering. On every level the sub-clustering is guided by
+a spectral analysis to estimate the number of sub-clusters (the k of kmaens). See .....
 }
 \examples{
 \dontrun{

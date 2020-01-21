@@ -2,8 +2,10 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^Python$
+^try_out$
 
 ^doc$
 ^Meta$
 ^.*\.png$
 demo.R
+^LICENSE\.md$

@@ -57,3 +57,6 @@ The function _scca_ also provides the option (?) to perform an iterative procedu
 
 ## More information and further reading
 
+## License and citation
+
+This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.

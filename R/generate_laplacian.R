@@ -9,11 +9,10 @@ generate_laplacian <- function(A, cluster_dim) {
   if (!cluster_dim %in% c('cols', 'rows')) {
     stop('Unknown cluster dimension')
   }
-  #
 
-  # formula
-  Dr_inv <- matlib::inv(diag(Matrix::rowSums(A)))
-  Dc_inv <- matlib::inv(diag(Matrix::colSums(A)))
+  #
+  Dr_inv <- solve(diag(Matrix::rowSums(A))) # n X n
+  Dc_inv <- solve(diag(Matrix::colSums(A))) # m X m
 
   if (cluster_dim == 'cols') {
     S    <- A %*% Dc_inv %*% t(A)
