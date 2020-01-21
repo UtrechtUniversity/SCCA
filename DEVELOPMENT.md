@@ -1,6 +1,6 @@
 # Development instructions
 
-## Add new dataset to SCCA package
+## Add new dataset to scca package
 
 Add script to data-raw.
 
@@ -16,4 +16,4 @@ Now run the install code in the readme.
 
 ## Orignal Python code (experimental)
 
-Please see the branch `python-code` for the experimental Python code https://github.com/UtrechtUniversity/SCCA/tree/python-code
+Please see the branch `python-code` for the experimental Python code https://github.com/UtrechtUniversity/scca/tree/python-code

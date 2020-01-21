@@ -11,11 +11,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' data('carnivora', package = 'SCCAR')
-#' scca(M = carnivora$M)
+#' data('carnivora', package = 'sccar')
+#' scca_compute(M = carnivora$M)
 #' }
 #' @export
-scca <- function(m) {
+scca_compute <- function(m) {
   if (!is.matrix(m)) { stop('input not a matrix')}
 
   if (is.null(rownames(m)) || is.null(colnames(m))) {

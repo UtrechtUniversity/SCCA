@@ -1,24 +1,24 @@
 #' Mysterious function
 #'
-#' @param subM Numeric matrix; Laplacian
-#' @param Eigenvecs Matrix; columns are eigenvectors of subM
-#' @param Eigenvals Numeric vector
+#' @param sub_matrix Numeric matrix; Laplacian
+#' @param eigenvectors Matrix; columns are eigenvectors of sub_matrix
+#' @param eigenvalues Numeric vector
 #' @param k Numeric; the number of eigenvalues to be considered
 #'
-create_Y <- function(subM, Eigenvecs, Eigenvals, k) {
+create_y <- function(sub_matrix, eigenvectors, eigenvalues, k) {
 
-  N <-  sum(subM)
-  Dv <- rowSums(subM)
+  N <-  sum(sub_matrix)
+  Dv <- rowSums(sub_matrix)
 
   stds <- vector(mode = 'numeric', length = k)
-  X    <- Eigenvecs[ , 1:k]
+  X    <- eigenvectors[ , 1:k]
   for (u in 1:k) {
-    ux      <- Eigenvecs[ , u]
+    ux      <- eigenvectors[ , u]
     stds[u] <- sqrt(((ux * Dv) %*% ux) / N)
   }
   print(stds)
   X <- t(t(X) / stds)
-  Y <- t(t(X) * sqrt(Eigenvals[1:k]))
+  Y <- t(t(X) * sqrt(eigenvalues[1:k]))
   return(Y)
 }
 

@@ -1,22 +1,22 @@
 #
-# Eigendecomposition of a Laplacian , and sort the eigenvectors by the eigenvalues
+# Eigenvalue decomposition of a Laplacian , and sort the eigenvectors by the eigenvalues
 # -> Calculate right eigenvectors of transpose of P, to get left eigenvectors of C
 # -> Transform to C eigenvectors and sort
 #
 
-Eigen_decomp <- function(Laplacian, DCA, axis) {
+eigen_decomp <- function(laplacian, dca, axis) {
 
   # Can Laplacian assumed to be symmetric ?
   # Is this algorithm Laplacian  specific ?
-  Eigen <- rARPACK::eigs(A = Laplacian, k = min(nrow(Laplacian), 25))
+  eigen <- rARPACK::eigs(A = laplacian, k = min(nrow(laplacian), 25))
 
-  s <- sort(Eigen$values, index.return=TRUE, decreasing = TRUE)
-  Eigenvalues <- s$x
+  s <- sort(eigen$values, index.return=TRUE, decreasing = TRUE)
+  eigenvalues <- s$x
 
-  Eigenvectors <- Eigen$vectors
+  eigenvectors <- eigen$vectors
   if (axis == 'rows') {
-    Eigenvectors <- DCA %*% Eigenvectors
+    eigenvectors <- dca %*% eigenvectors
   }
-  Eigenvectors[ , s$ix]
-  return(list(values = Eigenvalues, vectors = Eigenvectors))
+  eigenvectors[ , s$ix]
+  return(list(values = eigenvalues, vectors = eigenvectors))
 }

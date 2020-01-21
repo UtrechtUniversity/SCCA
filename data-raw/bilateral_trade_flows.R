@@ -33,5 +33,5 @@ rownames(exports_matrix) <- countries %>% dplyr::pull(country_name)
 
 # Save the data as a Rdata file
 #
-exports   <- list(M = exports_matrix, countries = countries)
-usethis::use_data(exports, overwrite = TRUE)
+bilateral_trade   <- list(M = exports_matrix, countries = countries)
+usethis::use_data(bilateral_trade, overwrite = TRUE)

@@ -1,19 +1,19 @@
-#' Apply SCCA Heuristic
+#' Apply scca heuristic
 #'
 #'
 #' The function \code{apply_heuristic} implements heuristic
 #' -> Returns index and vectors of # weakly connected components
 #' -> Calculate gaps, check for disconnect components, and otherwise for the largest gap
 #'
-#' @param Eigenvalues Numeric vector of eigenvalues
+#' @param eigenvalues Numeric vector of eigenvalues
 #'
 #' @return The number of weakly connected components (possibly clusters)
 
-apply_heuristic <- function(Eigenvalues) {
+apply_heuristic <- function(eigenvalues) {
 
   # checking parameters
   #
-  if (is.unsorted(rev(Eigenvalues))) {
+  if (is.unsorted(rev(eigenvalues))) {
     stop('Eigenvalues are not decreasingly sorted')
   }
 
@@ -21,7 +21,7 @@ apply_heuristic <- function(Eigenvalues) {
 
   # if more than one Eigenvalue equals 1 (within error) then .....
   #
-  value_is_one <- abs(Eigenvalues - 1) < error
+  value_is_one <- abs(eigenvalues - 1) < error
   n_ones       <- length(which(value_is_one))
   if (n_ones > 1) {
     return(n_ones)
@@ -29,7 +29,7 @@ apply_heuristic <- function(Eigenvalues) {
     # look for successive eigenvalues with greatest difference in value (gradient)
     # number of Eigenvalues before this gap is the required value for kmeans
     #
-    gradients <- Eigenvalues[2:length(Eigenvalues)] - Eigenvalues[1:(length(Eigenvalues)-1)]
+    gradients <- eigenvalues[2:length(eigenvalues)] - eigenvalues[1:(length(eigenvalues)-1)]
     threshold <- match(min(gradients), gradients)    # returns first match
   }
   return(threshold)
