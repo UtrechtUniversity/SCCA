@@ -1,9 +1,9 @@
 #' Generate Laplacian matrix (L) from the Simmilariry matrix (S) of a bipartite adjacency matrix (M)
 #'
-#' @param A A numeric matrix ......
+#' @param matrix_a A numeric matrix ......
 #' @param cluster_dim Character string with value row or column
 #'
-generate_laplacian <- function(A, cluster_dim) {
+generate_laplacian <- function(matrix_a, cluster_dim) {
 
   # check input parameters
   if (!cluster_dim %in% c('cols', 'rows')) {
@@ -15,14 +15,14 @@ generate_laplacian <- function(A, cluster_dim) {
   Dc_inv <- solve(diag(Matrix::colSums(A))) # m X m
 
   if (cluster_dim == 'cols') {
-    S    <- A %*% Dc_inv %*% t(A)
+    S    <- matrix_a %*% Dc_inv %*% t(matrix_a)
     L    <- Dr_inv %*% S
-    DCA  <- Dc_inv %*% t(A)
+    DCA  <- Dc_inv %*% t(matrix_a)
   }
   if (cluster_dim == 'rows') {
-    S   <- t(A) %*% Dr_inv %*% A
+    S   <- t(matrix_a) %*% Dr_inv %*% matrix_a
     L   <- Dc_inv %*% S
-    DCA <- Dr_inv %*% A
+    DCA <- Dr_inv %*% matrix_a
   }
   return(list(L = L, DCA = DCA, S = S))
 }

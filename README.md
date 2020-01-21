@@ -11,7 +11,7 @@ This R package can be installed directly from Github with the code below. Ensure
 
 ``` R 
 library(devtools)
-install_github("UtrechtUniversity/SCCA", build_vignettes = TRUE)
+install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 ```
 
 ## Usage

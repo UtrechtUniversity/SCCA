@@ -2,12 +2,12 @@
 % Please edit documentation in R/apply_heuristic.R
 \name{apply_heuristic}
 \alias{apply_heuristic}
-\title{Apply SCCA Heuristic}
+\title{Apply scca heuristic}
 \usage{
-apply_heuristic(Eigenvalues)
+apply_heuristic(eigenvalues)
 }
 \arguments{
-\item{Eigenvalues}{Numeric vector of eigenvalues}
+\item{eigenvalues}{Numeric vector of eigenvalues}
 }
 \value{
 The number of weakly connected components (possibly clusters)

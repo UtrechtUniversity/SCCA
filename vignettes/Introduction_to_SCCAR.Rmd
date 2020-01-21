@@ -1,10 +1,10 @@
 ---
-title: "Introduction to SCCAR"
+title: "Introduction to sccar"
 author: "Alje van Dam"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to SCCAR}
+  %\VignetteIndexEntry{Introduction to sccar}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-#library(SCCAR)
+#library(sccar)
 ```
 
 ## Spectral Clustering Correspondence Analysis
@@ -38,14 +38,14 @@ The function _scca_ also provides the option (?) to perform an iterative procedu
 
 ```{r}
 #library(devtools)
-#install_github("UtrechtUniversity/SCCA", build_vignettes = TRUE)
+#install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 ```
 
 ## Example 1
 
 ```{r}
-#library(SCCAR)
-#x <- SCCARR::scca(carnivora$M)
+#library(sccar)
+#x <- sccarR::scca(carnivora$M)
 
 ```
 
