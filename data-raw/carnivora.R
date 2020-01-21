@@ -27,9 +27,8 @@ coords  <- carn_df[ , c('lon', 'lat')]
 
 # The adjacency matrix of the bi-partite network
 #
-carn_matrix <- as.matrix(carn_df[ , 4:n_cols])
+carnivora <- as.matrix(carn_df[ , 4:n_cols])
 
 # Save the data as a Rdata file
 #
-carnivora   <- list(M = carn_matrix, coords = coords)
 usethis::use_data(carnivora, overwrite = TRUE)
