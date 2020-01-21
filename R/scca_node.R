@@ -1,6 +1,6 @@
 #' Build recursively a SCCA tree
 #'
-#' @param M Numeric matrix; Laplacian
+#' @param m Numeric matrix; Laplacian
 #' @param labels Character vector; The labels defining the rows/columns of the submatrix
 #' @param level Integer; the depth of the node in the tree
 #' @param axis Vector; should the rows or columns be subsetted
@@ -8,7 +8,7 @@
 #' @note Expects an matrix M accessible from within its environment
 #'
 
-scca_node <- function(M, labels, level, axis) {
+scca_compute_tree <- function(m, labels, level, axis) {
 
   if (!is.matrix(M)) {stop("Argument M is not a matrix")}
 
