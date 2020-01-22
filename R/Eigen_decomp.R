@@ -8,15 +8,17 @@ eigen_decomp <- function(laplacian, dca, axis) {
 
   # Can Laplacian assumed to be symmetric ?
   # Is this algorithm Laplacian  specific ?
+
   eigen <- rARPACK::eigs(A = laplacian, k = min(nrow(laplacian), 25))
 
   s <- sort(eigen$values, index.return=TRUE, decreasing = TRUE)
-  eigenvalues <- s$x
+  eigenvalues <- Re(s$x)
 
-  eigenvectors <- eigen$vectors
+  eigenvectors <- as.matrix(Re(eigen$vectors))
   if (axis == 'rows') {
     eigenvectors <- dca %*% eigenvectors
   }
-  eigenvectors[ , s$ix]
+  eigenvectors <- eigenvectors[ , s$ix]
+
   return(list(values = eigenvalues, vectors = eigenvectors))
 }

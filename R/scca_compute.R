@@ -26,6 +26,7 @@ scca_compute <- function(m) {
   #
   dim_axis <- ifelse(dim(m)[1] >= dim(m)[2], 'rows', 'cols')     # >= ?
 
+
   # scca_node function recursively constructs the the cluster tree node for node
   # Of course, it all starts with the top node and all row/column labels as initial cluster
   #

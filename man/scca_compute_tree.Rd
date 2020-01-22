@@ -4,12 +4,12 @@
 \alias{scca_compute_tree}
 \title{Build recursively a scca tree}
 \usage{
-scca_compute_tree(m, labels, level, axis)
+scca_compute_tree(labels, m, level, axis)
 }
 \arguments{
-\item{m}{Numeric matrix; Laplacian}
-
 \item{labels}{Character vector; The labels defining the rows/columns of the submatrix}
+
+\item{m}{Numeric matrix; Laplacian}
 
 \item{level}{Integer; the depth of the node in the tree}
 
