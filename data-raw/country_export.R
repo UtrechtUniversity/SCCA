@@ -28,10 +28,9 @@ colnames(countries) <- 'country_name'
 
 # The adjacency matrix of the bi-partite network
 #
-exports_matrix           <- as.matrix(exports_df[ , 2:n_cols])
-rownames(exports_matrix) <- countries %>% dplyr::pull(country_name)
+country_export           <- as.matrix(exports_df[ , 2:n_cols])
+rownames(country_export) <- countries %>% dplyr::pull(country_name)
 
 # Save the data as a Rdata file
 #
-bilateral_trade   <- list(M = exports_matrix, countries = countries)
-usethis::use_data(bilateral_trade, overwrite = TRUE)
+usethis::use_data(country_export, overwrite = TRUE)
