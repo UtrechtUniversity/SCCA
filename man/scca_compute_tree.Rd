@@ -4,10 +4,12 @@
 \alias{scca_compute_tree}
 \title{Build recursively a scca tree}
 \usage{
-scca_compute_tree(labels, m, level, axis)
+scca_compute_tree(labels, child, m, level, axis)
 }
 \arguments{
 \item{labels}{Character vector; The labels defining the rows/columns of the submatrix}
+
+\item{child}{Numeric. Child number among its siblings (= same parent) in the tree}
 
 \item{m}{Numeric matrix; Laplacian}
 

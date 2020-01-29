@@ -18,13 +18,15 @@ generate_laplacian <- function(matrix_a, cluster_dim) {
     S    <- matrix_a %*% Dc_inv %*% Matrix::t(matrix_a)
     L    <- Dr_inv %*% S
     DCA  <- Dc_inv %*% Matrix::t(matrix_a)
+    D    <- Dc_inv
   }
   if (cluster_dim == 'rows') {
     S   <- Matrix::t(matrix_a) %*% Dr_inv %*% matrix_a
     L   <- Dc_inv %*% S
     DCA <- Dr_inv %*% matrix_a
+    D   <- Dr_inv
   }
-  return(list(L = L, DCA = DCA, S = S))
+  return(list(L = L, DCA = DCA, S = S, D = D))
 }
 
 

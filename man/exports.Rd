@@ -19,7 +19,7 @@ exports
 \description{
 The exports data set consists of a matrix of 234 rows that represent countries and 1239 columns that represent products.
 The entries give the value of exports in 2016 in US $.
-The product names are given by the 4-digit 'Harmonized System' classification.
+The product names (column names) are given by the 4-digit 'Harmonized System' classification. The country names (row names) are ....
 }
 \details{
 The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,

@@ -9,9 +9,11 @@
 #' (last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and prunned distributions
 #' to only include carnivores. Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
 #' The incidences of certain species (carnivora) at marine sites are given by a bipartite adjacency matrix.
-#' The rows are the sites and the columns are the species.
+#' The rows are the sites and the columns are the species. The rownames are labels made up out of the lon/lat of the sites: e.g.
+#' "W170.4-S27.3".
 #'
-#' The dataset also has a table (coords) with for every site the lon/lat. The Behrman cylindrical equal area projection is used with
+#' The dataset also has a table (coords) with for every site the label, longitude and latitude.
+#' The Behrman cylindrical equal area projection is used with
 #' a resolution of 96.5 km by 96.5 km at 30° North and 30° South.
 #' The full projection description following R-notation is
 #' “+proj=cea +lon_0=0+lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84+towgs84=0,0,0”.
@@ -20,8 +22,8 @@
 #'
 #' @format A list with to elements
 #' \describe{
-#'   \item{M}{absence-presence (0/1) matrix }
-#'   \item{coords}{datatable with lon/lat of the sites}
+#'   \item{M}{absence-presence (0/1) matrix. The column names are names of the species and the row names are coordinates of the sites }
+#'   \item{coords}{datatable with site labels and lon/lat pairs}
 #'   ...
 #' }
 #' @source \url{http://www.somewhere}
@@ -31,7 +33,7 @@
 #'
 #' The exports data set consists of a matrix of 234 rows that represent countries and 1239 columns that represent products.
 #' The entries give the value of exports in 2016 in US $.
-#' The product names are given by the 4-digit 'Harmonized System' classification.
+#' The product names (column names) are given by the 4-digit 'Harmonized System' classification. The country names (row names) are ....
 #'
 #' The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,
 #' processed and made publicly available by the Growth Growth Lab at Harvard University.

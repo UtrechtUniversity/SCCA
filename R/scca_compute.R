@@ -35,6 +35,6 @@ scca_compute <- function(m) {
   } else {
     labels <- colnames(m)
   }
-  scca_top_node   <- scca_compute_tree(m = m, labels = labels, level = 1, axis = dim_axis)
+  scca_top_node   <- scca_compute_tree(m = m, child = 0, labels = labels, level = 1, axis = dim_axis)
   return(scca_top_node)
 }
