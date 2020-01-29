@@ -39,10 +39,15 @@ coords  <- carn_df[ , c('label', 'lon', 'lat')]
 
 # The adjacency matrix of the bi-partite network
 #
+<<<<<<< HEAD
 carn_matrix <- as.matrix(carn_df[ , 4:n_cols])
 rownames(carn_matrix) <- carn_df %>% pull(label)    # set rownames (labels) of matrix
+||||||| merged common ancestors
+carn_matrix <- as.matrix(carn_df[ , 4:n_cols])
+=======
+carnivora <- as.matrix(carn_df[ , 4:n_cols])
+>>>>>>> 9b77a2598aec01102b4256aad20ef425de5e2329
 
 # Save the data as a Rdata file
 #
-carnivora   <- list(M = carn_matrix, coords = coords)
 usethis::use_data(carnivora, overwrite = TRUE)
