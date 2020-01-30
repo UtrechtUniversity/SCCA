@@ -3,6 +3,7 @@
 ^data-raw$
 ^Python$
 ^try_out$
+^output^
 
 ^doc$
 ^Meta$
@@ -10,3 +11,4 @@
 demo.R
 ^LICENSE\.md$
 ^.gitignore$
+

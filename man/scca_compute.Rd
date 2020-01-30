@@ -7,15 +7,25 @@
 scca_compute(m)
 }
 \arguments{
-\item{m}{A matrix representing a bi-partite graph. The rows and columns must be labeled}
+\item{m}{A matrix representing a bi-partite graph. The matrix must have row names and column names}
 }
 \value{
-\code{scca} returns a cluster tree as a recursive list.
+A recursive which describes the hierarchical clustering process.
+Each node in the tree represents a stage in the analysis. The subnodes  :
+\describe{
+  \item{level}{The level in the tree.}
+  \item{child}{Numbering of the siblings. No order intended}
+  \item{spectrum}{Vector of the Eigen values found at this node. The Eigenvalues are
+  sorted on explained variance in descending order.}
+  \item{labels}{The labels of the cluster in this node}
+  \item{eigen_vec_1}{The first Eigenvector found in the cluster of this node}
+  \item{eigen_vec_2}{The second}
+}
 }
 \description{
-The function \code{scca} performs a spectral clustering correspondence analysis on a given
+The function \code{scca_compute} performs a spectral clustering correspondence analysis on a given
 bi-partite graph. It is a form a hierarchical clustering. On every level the sub-clustering is guided by
-a spectral analysis to estimate the number of sub-clusters (the k of kmaens). See .....
+a spectral analysis to estimate the number of sub-clusters (the k of kmeans). See .....
 }
 \examples{
 \dontrun{

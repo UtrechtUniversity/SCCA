@@ -24,24 +24,26 @@ scca_compute_tree <- function(labels, child, m, level, axis) {
   # we expect the current matrix can be split in k clusters
   # we build a tree (recursive list) with a node per cluster
   #
+  zero_vector  <- rep(0, length(labels))
   cluster_node <- list(level       =  level,
                        child       =  child,
                        labels      =  labels,
                        k           =  NULL,
                        node_type   = 'branch',
-                       eigen_vec_1 =  NULL,
-                       spectrum    =  NULL,
-                       node        =  NULL)
+                       eigen_vec_1 =  zero_vector,
+                       eigen_vec_2 =  zero_vector,
+                       eigen_vec_3 =  zero_vector,
+                       spectrum    =  zero_vector,
+                       node        =  list(NULL))
 
   # Calculate Laplacian, Simmilarity matrix and DCA
   gl <- generate_laplacian(matrix_a = subM, cluster_dim = axis)
 
   # calculate Eigenvectors and Eigenvalues of Laplacian
 
-  if (nrow(gl$L) < 3) {                       # 'eigs' needs a matrix with more than 2 rows
-    #warning('stop 3: ', length(labels))
+  if (nrow(gl$L) < 3) {                       # 'eigs' needs a matrix with more than 2 rows (why?)
+    warning('stop 3: ', length(labels))
     cluster_node[['node_type']] = 'leaf'
-    cluster_node[['node']]      =  labels
     return(cluster_node)
   }
   eigen_dc <- eigen_decomp(laplacian = gl$L, dca = gl$DCA, axis = axis)
@@ -59,9 +61,7 @@ scca_compute_tree <- function(labels, child, m, level, axis) {
   # return the set of labels as a leaf node
   #
   if (k <= 1 || k >= length(labels)) {
-    #warning('stop k')
     cluster_node[['node_type']] = 'leaf'
-    cluster_node[['node']]      =  labels
     return(cluster_node)
   }
 
@@ -80,7 +80,7 @@ scca_compute_tree <- function(labels, child, m, level, axis) {
   if (nrow(unique.matrix(Y)) <= k) {
     #warning('stop Y')
     cluster_node[['node_type']] = 'leaf'
-    cluster_node[['node']]      =  labels
+    #cluster_node[['node']]      =  labels
     return(cluster_node)
   }
   cl <- stats::kmeans(x = Y, centers = k)  # cl$cluster is a num vector of length rows/cols

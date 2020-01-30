@@ -17,7 +17,8 @@ Imports:
     Matrix,
     matlib,
     rARPACK,
-    stats
+    stats,
+    tibble
 Suggests:
     readr,
     testthat,

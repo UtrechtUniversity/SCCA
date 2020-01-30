@@ -4,6 +4,7 @@
 .RData
 .Ruserdata
 Python/
+output/
 *.csv
 *.png
 
