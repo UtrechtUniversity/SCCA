@@ -61,6 +61,7 @@ scca_compute_tree <- function(labels, child, m, level, axis) {
   # return the set of labels as a leaf node
   #
   if (k <= 1 || k >= length(labels)) {
+    warning('stop K: ', k)
     cluster_node[['node_type']] = 'leaf'
     return(cluster_node)
   }
@@ -78,9 +79,8 @@ scca_compute_tree <- function(labels, child, m, level, axis) {
   # clustering with kmeans and n_clusters = k -->  list of k subclusters
   #
   if (nrow(unique.matrix(Y)) <= k) {
-    #warning('stop Y')
+    warning('stop Y: unique')
     cluster_node[['node_type']] = 'leaf'
-    #cluster_node[['node']]      =  labels
     return(cluster_node)
   }
   cl <- stats::kmeans(x = Y, centers = k)  # cl$cluster is a num vector of length rows/cols

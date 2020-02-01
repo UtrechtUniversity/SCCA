@@ -12,15 +12,15 @@ create_y <- function(sub_matrix, eigenvectors, eigenvalues, k) {
   Dv <- Matrix::rowSums(sub_matrix)
 
   stds <- vector(mode = 'numeric', length = k)
-  X    <- eigenvectors[ , 1:k]
+  X    <- eigenvectors[ , 1:k]                 # 1 --> 2
 
-  for (u in 1:k) {
+  for (u in 1:k) {                             # 1 --> 2
     ux      <- eigenvectors[ , u]
     stds[u] <- sqrt(((ux * Dv) %*% ux) / N)
   }
 
   X <- Matrix::t(Matrix::t(X) / stds)
-  Y <- Matrix::t(Matrix::t(X) * sqrt(eigenvalues[1:k]))
+  Y <- Matrix::t(Matrix::t(X) * sqrt(eigenvalues[1:k]))   # 1 --> 2
   return(Y)
 }
 
