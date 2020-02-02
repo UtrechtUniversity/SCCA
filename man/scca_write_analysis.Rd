@@ -2,20 +2,25 @@
 % Please edit documentation in R/write_scca.R
 \name{scca_write_analysis}
 \alias{scca_write_analysis}
-\title{Write  a SCCA to File}
+\title{Write a SCCA outcomne to file}
 \usage{
-scca_write_analysis(analysis_tree, vec_name, spec_name)
+scca_write_analysis(scca_tree, vec_name = "V_", spec_name = "S_")
 }
 \arguments{
-\item{analysis_tree}{Output tree of an SCCA}
+\item{scca_tree}{Output tree of an call to scca_compute}
 
-\item{vec_name}{Prefix of the names for files with the Eigenvectors}
+\item{vec_name}{Prefix of the files with the Eigenvectors}
 
-\item{spec_name}{Prefix of the filenames with the spectra}
+\item{spec_name}{Prefix of files with the spectra}
 }
 \value{
-TRUE
+Function returns TRUE
 }
 \description{
-Writes the results of an analysis to .csv files
+Write a SCCA outcomne to file
+}
+\details{
+Writes the results of an SCCA analysis to .csv files. At every tree node the subcluster is is printed along
+with its 3 most prominent Eigenvectors. The filename contains the path from the top to the tree node.
+Another file contains the spectra found at this stage.
 }

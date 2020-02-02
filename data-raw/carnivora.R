@@ -22,22 +22,25 @@ carnivora <- carnivora[rowSums(carnivora) != 0, ]
 carnivora <- carnivora[ , colSums(carnivora) != 0]
 
 
-
-
-
-# Compute rownames (labels)  out of coordinates
-#
-# carn_df %<>% mutate(label = case_when(
-#               lon  < 0  & lat  < 0  ~ sprintf("W%4.1f-S%03.1f", -lon, -lat),
-#               lon  < 0  & lat >= 0  ~ sprintf("W%4.1f-N%03.1f", -lon,  lat),
-#               lon >= 0  & lat >= 0  ~ sprintf("E%4.1f-N%03.1f",  lon,  lat),
-#               lon >= 0  & lat  < 0  ~ sprintf("E%4.1f-S%03.1f",  lon, -lat),
-#               TRUE ~ "error"))
-#
-
-
-
-
 # Save the data as a Rdata file
 #
 usethis::use_data(carnivora, overwrite = TRUE)
+
+# extra data Carnivora dataset
+#
+carnivora_sites   <- read_csv('data-raw/Info_Site.csv')
+carnivora_sites %<>% select(site = X1,
+                            lon  = Xcoord,
+                            lat  = Ycoord) %>%
+                     mutate(site = sprintf("%d", site))
+
+usethis::use_data(carnivora_sites, overwrite = TRUE)
+
+# extra data Carnivora dataset
+#
+carnivora_species   <- read_csv('data-raw/Info_Spec.csv')
+carnivora_species %<>% select(species_id    = X1,
+                              species_name  = `0`) %>%
+                       mutate(species_id = sprintf("%d", species_id))
+
+usethis::use_data(carnivora_species, overwrite = TRUE)

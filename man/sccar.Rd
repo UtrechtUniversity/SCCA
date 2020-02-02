@@ -3,9 +3,9 @@
 \docType{package}
 \name{sccar}
 \alias{sccar}
-\title{sccar: A package for Spectral Clustering Corresponce Analysis.}
+\title{sccar: An R package for Spectral Clustering Correspondence Analysis.}
 \description{
-The sccar package provides R functions for ....
+R functions for ....
 }
 \section{sccar functions}{
 
