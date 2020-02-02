@@ -13,9 +13,9 @@ scca_compute_tree1 <- function(labels, child, m, level, decomp_axis) {
 
   if (!is.matrix(m)) {stop("Argument m is not a matrix")}
 
-  # Select the rows of the matrix that has to be analyzed at this node
+  # Select the rows of the sub matrix that has to be analyzed at this node
   #
-  subM <- m[labels, ]
+  subM <- m[labels, , drop = FALSE]
 
   #
   zero_vector  <- rep(0, length(labels))            # used as a place holder for eigen_vectors of this sub-matrix

@@ -33,7 +33,10 @@ scca_compute <- function(m) {
     stop('matrix M must have row and column labels')
   }
 
-  # decomposition takes place on the labels of the axis with the longest dimension (?)
+  # The actual Eigen decomposition takes place on the axis (rows/cols) with the shortest dimension for
+  # performance reasons only.
+  # The clustering takes place along the rows. If decomposition axis is columns the Eigenvectors will be
+  # translated to rows. See function 'compute_symmetric'.
   #
   decomp_axis <- ifelse(dim(m)[1] >= dim(m)[2], 'cols', 'rows')     # >= ?
 
