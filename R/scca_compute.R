@@ -33,19 +33,22 @@ scca_compute <- function(m) {
     stop('matrix M must have row and column labels')
   }
 
-  # clustering takes place on the labels of the axis with the longest dimension (?)
+  # The actual Eigen decomposition takes place on the axis (rows/cols) with the shortest dimension for
+  # performance reasons only.
+  # The clustering takes place along the rows. If decomposition axis is columns the Eigenvectors will be
+  # translated to rows. See function 'compute_symmetric'.
   #
-  dim_axis <- ifelse(dim(m)[1] >= dim(m)[2], 'rows', 'cols')     # >= ?
+  decomp_axis <- ifelse(dim(m)[1] >= dim(m)[2], 'cols', 'rows')     # >= ?
+
+  # clustering takes place along the rows of the matrix
+  #
+  labels <- rownames(m)
 
 
   # scca_node function recursively constructs the the cluster tree node for node
   # Of course, it all starts with the top node and all row/column labels as initial cluster
   #
-  if (dim_axis == 'rows') {
-    labels <- rownames(m)
-  } else {
-    labels <- colnames(m)
-  }
-  scca_top_node   <- scca_compute_tree(m = m, child = 0, labels = labels, level = 1, axis = dim_axis)
+
+  scca_top_node   <- scca_compute_tree(m = m, child = 1, labels = labels, level = 1, decomp_axis = decomp_axis)
   return(scca_top_node)
 }

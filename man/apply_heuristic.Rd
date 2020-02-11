@@ -13,7 +13,7 @@ apply_heuristic(eigenvalues)
 The number of weakly connected components (possibly clusters)
 }
 \description{
-The function \code{apply_heuristic} implements heuristic
+The function \code{apply_heuristic} implements heuristic for SCCA
 -> Returns index and vectors of # weakly connected components
 -> Calculate gaps, check for disconnect components, and otherwise for the largest gap
 }

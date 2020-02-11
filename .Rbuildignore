@@ -11,4 +11,5 @@
 demo.R
 ^LICENSE\.md$
 ^.gitignore$
+^.github$
 

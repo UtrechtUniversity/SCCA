@@ -26,15 +26,5 @@ data on the geographic distributions of mammals both extant and extinct over the
 (last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and prunned distributions
 to only include carnivores. Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
 The incidences of certain species (carnivora) at marine sites are given by a bipartite adjacency matrix.
-The rows are the sites and the columns are the species. The rownames are labels made up out of the lon/lat of the sites: e.g.
-"W170.4-S27.3".
-}
-\details{
-The dataset also has a table (coords) with for every site the label, longitude and latitude.
-The Behrman cylindrical equal area projection is used with
-a resolution of 96.5 km by 96.5 km at 30° North and 30° South.
-The full projection description following R-notation is
-“+proj=cea +lon_0=0+lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84+towgs84=0,0,0”.
-Only the area between 90°N and 60°S is included.
 }
 \keyword{datasets}

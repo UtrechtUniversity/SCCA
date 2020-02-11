@@ -4,47 +4,43 @@ library(readr)
 library(tidyverse)
 library(magrittr)
 
-carn_df <- read_csv('data-raw/Carnivora_incidence_marineterr.csv')
+carn_df   <- read_csv('data-raw/Carnivora.csv')
 
-# Due to compatibility with Python, the first column contains site numbers (rownames)
+# From Python; first column contains row indices
 #
-colnames(carn_df)[1] <- 'label'
-colnames(carn_df)[2] <- 'lon'
-colnames(carn_df)[3] <- 'lat'
+carn_df %<>% select(-1)
+
+# convert to matrix,
+#
+carnivora           <- as.matrix(carn_df)
+rownames(carnivora) <- sprintf('%d', 0:(nrow(carnivora)-1))
+colnames(carnivora) <- sprintf('%d', 0:(ncol(carnivora)-1))
 
 # remove disconnected species (columns) and sites (rows)
 #
-n_cols  <- ncol(carn_df)
-carn_df <- carn_df[ , append(rep(TRUE, 3), colSums(abs(carn_df[ , 4:n_cols])) != 0)]
-n_cols  <- ncol(carn_df)
-carn_df <- carn_df[rowSums(abs(carn_df[ , 4:n_cols])) != 0, ]
-
-#
-
-# Compute rownames (labels)  out of coordinates
-#
-carn_df %<>% mutate(label = case_when(
-              lon  < 0  & lat  < 0  ~ sprintf("W%4.1f-S%03.1f", -lon, -lat),
-              lon  < 0  & lat >= 0  ~ sprintf("W%4.1f-N%03.1f", -lon,  lat),
-              lon >= 0  & lat >= 0  ~ sprintf("E%4.1f-N%03.1f",  lon,  lat),
-              lon >= 0  & lat  < 0  ~ sprintf("E%4.1f-S%03.1f",  lon, -lat),
-              TRUE ~ "error"))
-
-carn_df %>% group_by(label) %>% summarise(n=n()) %>% filter(n > 1)
-
-# The second and third columns are the (lon,lat) coordinates of the sites.
-# These columns are saved for displaying output on maps etc.
-#
-coords  <- carn_df[ , c('label', 'lon', 'lat')]
-
-# The adjacency matrix of the bi-partite network
-#
-
-
-carnivora           <- as.matrix(carn_df[ , 4:n_cols])
-rownames(carnivora) <- carn_df %>% pull(label)    # set rownames (labels) of matrix
+carnivora <- carnivora[rowSums(carnivora) != 0, ]
+carnivora <- carnivora[ , colSums(carnivora) != 0]
 
 
 # Save the data as a Rdata file
 #
 usethis::use_data(carnivora, overwrite = TRUE)
+
+# extra data Carnivora dataset
+#
+carnivora_sites   <- read_csv('data-raw/Info_Site.csv')
+carnivora_sites %<>% select(site = X1,
+                            lon  = Xcoord,
+                            lat  = Ycoord) %>%
+                     mutate(site = sprintf("%d", site))
+
+usethis::use_data(carnivora_sites, overwrite = TRUE)
+
+# extra data Carnivora dataset
+#
+carnivora_species   <- read_csv('data-raw/Info_Spec.csv')
+carnivora_species %<>% select(species_id    = X1,
+                              species_name  = `0`) %>%
+                       mutate(species_id = sprintf("%d", species_id))
+
+usethis::use_data(carnivora_species, overwrite = TRUE)

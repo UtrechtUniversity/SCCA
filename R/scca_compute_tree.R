@@ -1,110 +1,80 @@
 #' Build recursively a scca tree
 #'
 #' @param m Numeric matrix; Laplacian
-#' @param child Numeric. Child number among its siblings (= same parent) in the tree
-#' @param labels Character vector; The labels defining the rows/columns of the submatrix
-#' @param level Integer; the depth of the node in the tree
-#' @param axis Vector; should the rows or columns be subsetted
+#' @param child Numeric. Node number within its siblings (= same parent)
+#' @param labels Character vector; The labels defining the (sub-)cluster to be analyzed
+#' @param level Integer; the depth of this node in the tree
+#' @param decomp_axis Character string ('row', 'col)
 #'
 #' @note Expects an matrix M accessible from within its environment
 #'
 
-scca_compute_tree <- function(labels, child, m, level, axis) {
+scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
 
   if (!is.matrix(m)) {stop("Argument m is not a matrix")}
 
-  # Select the part of the matrix that has to be analyzed
+  # Select the rows of the sub matrix that has to be analyzed at this node
   #
-  if (axis == 'rows') {
-    subM <- m[labels, ]
-  } else {
-    subM <- m[ ,labels]
-  }
+  subM <- m[labels, , drop = FALSE]
 
-  # we expect the current matrix can be split in k clusters
-  # we build a tree (recursive list) with a node per cluster
   #
-  zero_vector  <- rep(0, length(labels))
-  cluster_node <- list(level       =  level,
-                       child       =  child,
-                       labels      =  labels,
-                       k           =  NULL,
-                       node_type   = 'branch',
-                       eigen_vec_1 =  zero_vector,
+  zero_vector  <- rep(0, length(labels))            # used as a place holder for eigen_vectors of this sub-matrix
+  cluster_node <- list(level       =  level,        # the steps taken form top level to this node
+                       child       =  child,        # number to distinguish from its siblings
+                       labels      =  labels,       # current cluster
+                       k           =  NULL,         # number of non-trivial, contributing eigenvalues
+                       node_type   = 'branch',      # branch or leaf
+                       eigen_vec_1 =  zero_vector,  # eigen vectors after decomposition of this cluster
                        eigen_vec_2 =  zero_vector,
                        eigen_vec_3 =  zero_vector,
-                       spectrum    =  zero_vector,
-                       node        =  list(NULL))
+                       spectrum    =  vector(mode = 'integer'),  # eigenvalues sorted on explained variance
+                       node        =  list(NULL))   # will contain list of children (if any)
 
-  # Calculate Laplacian, Simmilarity matrix and DCA
-  gl <- generate_laplacian(matrix_a = subM, cluster_dim = axis)
+  #
+  decomposition <- compute_symmetric(matrix = subM, decomp_axis = decomp_axis)   #s and d_inv
 
-  # calculate Eigenvectors and Eigenvalues of Laplacian
-
-  if (nrow(gl$L) < 3) {                       # 'eigs' needs a matrix with more than 2 rows (why?)
-    warning('stop 3: ', length(labels))
-    cluster_node[['node_type']] = 'leaf'
-    return(cluster_node)
+  n_eigen <- ifelse (dim(decomposition$vectors)[2] < 3, dim(decomposition$vectors)[2], 3)
+  for (i in 1:n_eigen) {
+    eigen_vec_name                 <- sprintf('eigen_vec_%d', i)
+    cluster_node[[eigen_vec_name]] <- decomposition$vectors[ , i]
   }
-  eigen_dc <- eigen_decomp(laplacian = gl$L, dca = gl$DCA, axis = axis)
-  cluster_node[['eigen_vec_1']] <- eigen_dc$vectors[ , 1]
-  cluster_node[['spectrum']]    <- eigen_dc$values
+  cluster_node[['spectrum']]    <- decomposition$values
 
   # apply heuristic on spectrum (eigenvalues) to calculate the number (k) of expected clusters in matrix
   # k <- heuristic(spectrum = spectrum)
   #
-  k <- apply_heuristic(eigen_dc$values)
+  k <- apply_heuristic(decomposition$values)
   cluster_node[['k']] <- k
 
 
-  # stop recursion when clustering doesn't make sense anymore
-  # return the set of labels as a leaf node
+  # If k == 1 then this cluster can't be split further in meaningful sub-clusters. So recursion on
+  # this path stops here
   #
-  if (k <= 1 || k >= length(labels)) {
+  if (k == 1) {
     cluster_node[['node_type']] = 'leaf'
     return(cluster_node)
   }
 
-  # Create matrix Y
-  Y <- create_y(
-    eigenvectors = eigen_dc$vectors,
-    eigenvalues =  eigen_dc$values,
-    sub_matrix =   subM,
-    k =            k
-  )
-
-
-
-  # clustering with kmeans and n_clusters = k -->  list of k subclusters
+  # Compute input matrix Y for the kmeans.
+  # Y is a matrix with the eigenvectors as columns minus the first trivial one
   #
-  if (nrow(unique.matrix(Y)) <= k) {
-    #warning('stop Y')
-    cluster_node[['node_type']] = 'leaf'
-    #cluster_node[['node']]      =  labels
-    return(cluster_node)
-  }
-  cl <- stats::kmeans(x = Y, centers = k)  # cl$cluster is a num vector of length rows/cols
-                                           # the value (=1:k) of element i gives the cluster id the row/col i is in
+  Y <- decomposition$vectors[ , 2:k]
 
-  # repeat proces for each cluster and combine results in a list which will be stored as element 'node'
+  cl <- stats::kmeans(x = Y, centers = k)  # returns vector cl$cluster which gives the cluster id for each label
+
+  # repeat proces for each cluster (C_i with i in 1:k) and combine results in a list which will be
+  # stored in the 'nodes' attribute of this node
   #
-
-    # create list of label set; for each subcluster one
-    #
   cluster_labels <- list()
+  cluster_labels <- lapply(X = 1:k, FUN = function(i) rownames(subM)[cl$cluster == i])
 
-  if (axis == 'rows') {
-    cluster_labels <- lapply(X = 1:k, FUN = function(i) rownames(subM)[cl$cluster == i])
-  } else {
-    cluster_labels <- lapply(X = 1:k, FUN = function(i) colnames(subM)[cl$cluster == i])
-  }
-    # for each set of labels in list repeat scca proces and combine results in a list
-    # lapply means 'list apply'
+  # for each set of labels in list repeat scca proces and combine results in a list
+  # lapply means 'list apply'
     #
   cluster_node[['node']] <- mapply(FUN = scca_compute_tree,
-                                   cluster_labels,
-                                   as.list(1:k),
-                                   MoreArgs = list(m = m, level = level + 1, axis =axis),
+                                   cluster_labels,               # will be mapped to argument 'labels'
+                                   as.list(1:k),                 # will be mapped to argument 'child'
+                                   MoreArgs = list(m = m, level = level + 1, decomp_axis = decomp_axis),
                                    SIMPLIFY = FALSE)
   return(cluster_node)
 }

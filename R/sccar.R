@@ -1,6 +1,6 @@
-#' sccar: A package for Spectral Clustering Corresponce Analysis.
+#' sccar: An R package for Spectral Clustering Correspondence Analysis.
 #'
-#' The sccar package provides R functions for ....
+#' R functions for ....
 #'
 #'
 #' @section sccar functions:

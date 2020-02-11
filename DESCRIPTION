@@ -12,7 +12,7 @@ Authors@R: c(
 Description: This R-package is meant to allow application of CA to data that gives rise to modular networks
     by first clustering the data using a iterative procedure based on spectral clustering and subsequently
     apply CA to each of the individual clusters.
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.5.0)
 Imports:
     Matrix,
     matlib,
@@ -24,7 +24,7 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2

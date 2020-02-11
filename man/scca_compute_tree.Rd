@@ -4,18 +4,18 @@
 \alias{scca_compute_tree}
 \title{Build recursively a scca tree}
 \usage{
-scca_compute_tree(labels, child, m, level, axis)
+scca_compute_tree(labels, child, m, level, decomp_axis)
 }
 \arguments{
-\item{labels}{Character vector; The labels defining the rows/columns of the submatrix}
+\item{labels}{Character vector; The labels defining the (sub-)cluster to be analyzed}
 
-\item{child}{Numeric. Child number among its siblings (= same parent) in the tree}
+\item{child}{Numeric. Node number within its siblings (= same parent)}
 
 \item{m}{Numeric matrix; Laplacian}
 
-\item{level}{Integer; the depth of the node in the tree}
+\item{level}{Integer; the depth of this node in the tree}
 
-\item{axis}{Vector; should the rows or columns be subsetted}
+\item{decomp_axis}{Character string ('row', 'col)}
 }
 \description{
 Build recursively a scca tree
