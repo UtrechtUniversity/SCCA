@@ -32,7 +32,7 @@ apply_heuristic <- function(eigenvalues) {
     gaps <- eigenvalues[2:length(eigenvalues)] - eigenvalues[1:(length(eigenvalues)-1)] # gaps
     threshold <- match(min(gaps), gaps)    # returns first match
   }
-  return(threshold)
+  return(as.numeric(threshold))
 }
 
 

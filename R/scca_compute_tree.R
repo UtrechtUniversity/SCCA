@@ -1,15 +1,15 @@
 #' Build recursively a scca tree
 #'
 #' @param m Numeric matrix; Laplacian
-#' @param child Numeric. Child number among its siblings (= same parent) in the tree
-#' @param labels Character vector; The labels defining the rows/columns of the submatrix
-#' @param level Integer; the depth of the node in the tree
-#' @param decomp_axis Vector; should the rows or columns be subsetted
+#' @param child Numeric. Node number within its siblings (= same parent)
+#' @param labels Character vector; The labels defining the (sub-)cluster to be analyzed
+#' @param level Integer; the depth of this node in the tree
+#' @param decomp_axis Character string ('row', 'col)
 #'
 #' @note Expects an matrix M accessible from within its environment
 #'
 
-scca_compute_tree1 <- function(labels, child, m, level, decomp_axis) {
+scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
 
   if (!is.matrix(m)) {stop("Argument m is not a matrix")}
 
@@ -30,11 +30,14 @@ scca_compute_tree1 <- function(labels, child, m, level, decomp_axis) {
                        spectrum    =  vector(mode = 'integer'),  # eigenvalues sorted on explained variance
                        node        =  list(NULL))   # will contain list of children (if any)
 
-  # C
+  #
   decomposition <- compute_symmetric(matrix = subM, decomp_axis = decomp_axis)   #s and d_inv
 
-
-  cluster_node[['eigen_vec_1']] <- decomposition$vectors[ , 1]
+  n_eigen <- ifelse (dim(decomposition$vectors)[2] < 3, dim(decomposition$vectors)[2], 3)
+  for (i in 1:n_eigen) {
+    eigen_vec_name                 <- sprintf('eigen_vec_%d', i)
+    cluster_node[[eigen_vec_name]] <- decomposition$vectors[ , i]
+  }
   cluster_node[['spectrum']]    <- decomposition$values
 
   # apply heuristic on spectrum (eigenvalues) to calculate the number (k) of expected clusters in matrix
@@ -68,7 +71,7 @@ scca_compute_tree1 <- function(labels, child, m, level, decomp_axis) {
   # for each set of labels in list repeat scca proces and combine results in a list
   # lapply means 'list apply'
     #
-  cluster_node[['node']] <- mapply(FUN = scca_compute_tree1,
+  cluster_node[['node']] <- mapply(FUN = scca_compute_tree,
                                    cluster_labels,               # will be mapped to argument 'labels'
                                    as.list(1:k),                 # will be mapped to argument 'child'
                                    MoreArgs = list(m = m, level = level + 1, decomp_axis = decomp_axis),

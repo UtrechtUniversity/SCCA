@@ -1,16 +1,19 @@
 #' Write a SCCA outcomne to file
 #'
 #' @details
-#' Writes the results of an SCCA analysis to .csv files. At every tree node the subcluster is is printed along
-#' with its 3 most prominent Eigenvectors. The filename contains the path from the top to the tree node.
-#' Another file contains the spectra found at this stage.
+#' Writes the results of an SCCA analysis to .csv files. At every tree node two files are written.
+#' 1. The first column contains labels of the subcluster and columns 2 to 4 are the 3 most prominent Eigenvectors
 #'
-#' @param scca_tree Output tree of an call to scca_compute
-#' @param vec_name Prefix of the files with the Eigenvectors
-#' @param spec_name Prefix of files with the spectra
+#' 2. The first column contains the spectrum of the subcluster and the second column the explained variance
+#'
+#' The filename scontain the path from the top to the tree node.
+#'
+#' @param scca_tree list, the tree resulting from a call to 'scca_compute'
+#' @param vec_name character string; prefix of the files with the clusters and the Eigenvectors
+#' @param spec_name chaacter string; prefix of files with the spectra
 #'
 #' @return
-#' Function returns TRUE
+#' TRUE
 #'
 #' @export
 scca_write_analysis <- function(scca_tree, vec_name = 'V_', spec_name = 'S_') {
@@ -33,7 +36,10 @@ scca_print_tree <- function(tree_node, path, v_name, s_name) {
   # write cluster labels and Eigen vectors of this node
   #
   file_name <- file.path(getwd(), sprintf('%s_%s.csv', v_name, paste(unlist(path), collapse = '_')))
-  vecs_tbl  <- tibble::tibble(labels = tree_node$labels, eig_1 = tree_node$eigen_vec_1)
+  vecs_tbl  <- tibble::tibble(labels = tree_node$labels,
+                              eig_1 = tree_node$eigen_vec_1,
+                              eig_2 = tree_node$eigen_vec_2,
+                              eig_3 = tree_node$eigen_vec_3)
   readr::write_csv(x = vecs_tbl, path = file_name, col_names = TRUE)
 
   # write spectrum of this node

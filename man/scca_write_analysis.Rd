@@ -7,20 +7,23 @@
 scca_write_analysis(scca_tree, vec_name = "V_", spec_name = "S_")
 }
 \arguments{
-\item{scca_tree}{Output tree of an call to scca_compute}
+\item{scca_tree}{list, the tree resulting from a call to 'scca_compute'}
 
-\item{vec_name}{Prefix of the files with the Eigenvectors}
+\item{vec_name}{character string; prefix of the files with the clusters and the Eigenvectors}
 
-\item{spec_name}{Prefix of files with the spectra}
+\item{spec_name}{chaacter string; prefix of files with the spectra}
 }
 \value{
-Function returns TRUE
+TRUE
 }
 \description{
 Write a SCCA outcomne to file
 }
 \details{
-Writes the results of an SCCA analysis to .csv files. At every tree node the subcluster is is printed along
-with its 3 most prominent Eigenvectors. The filename contains the path from the top to the tree node.
-Another file contains the spectra found at this stage.
+Writes the results of an SCCA analysis to .csv files. At every tree node two files are written.
+1. The first column contains labels of the subcluster and columns 2 to 4 are the 3 most prominent Eigenvectors
+
+2. The first column contains the spectrum of the subcluster and the second column the explained variance
+
+The filename scontain the path from the top to the tree node.
 }
