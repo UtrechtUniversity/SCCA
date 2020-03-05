@@ -3,7 +3,7 @@
 ^data-raw$
 ^Python$
 ^try_out$
-^output^
+^output$
 
 ^doc$
 ^Meta$
@@ -13,3 +13,4 @@ demo.R
 ^.gitignore$
 ^.github$
 
+^R/write_scca_leaf.R$

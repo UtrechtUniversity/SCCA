@@ -18,7 +18,15 @@ Imports:
     matlib,
     rARPACK,
     stats,
-    tibble
+    rlang,
+    tibble,
+    dplyr,
+    tidyr,
+    magrittr,
+    ggplot2,
+    graphics,
+    GGally,
+    network
 Suggests:
     readr,
     testthat,

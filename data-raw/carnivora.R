@@ -17,9 +17,10 @@ rownames(carnivora) <- sprintf('%d', 0:(nrow(carnivora)-1))
 colnames(carnivora) <- sprintf('%d', 0:(ncol(carnivora)-1))
 
 # remove disconnected species (columns) and sites (rows)
+# Under discussion!
 #
-carnivora <- carnivora[rowSums(carnivora) != 0, ]
-carnivora <- carnivora[ , colSums(carnivora) != 0]
+# carnivora <- carnivora[rowSums(carnivora) != 0, ]
+# carnivora <- carnivora[ , colSums(carnivora) != 0]
 
 
 # Save the data as a Rdata file

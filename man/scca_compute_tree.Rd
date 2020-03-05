@@ -20,6 +20,3 @@ scca_compute_tree(labels, child, m, level, decomp_axis)
 \description{
 Build recursively a scca tree
 }
-\note{
-Expects an matrix M accessible from within its environment
-}

@@ -6,7 +6,6 @@
 #' @param level Integer; the depth of this node in the tree
 #' @param decomp_axis Character string ('row', 'col)
 #'
-#' @note Expects an matrix M accessible from within its environment
 #'
 
 scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
@@ -20,7 +19,7 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
   #
   zero_vector  <- rep(0, length(labels))            # used as a place holder for eigen_vectors of this sub-matrix
   cluster_node <- list(level       =  level,        # the steps taken form top level to this node
-                       child       =  child,        # number to distinguish from its siblings
+                       child       =  child,        # number to distinguish this node from its siblings
                        labels      =  labels,       # current cluster
                        k           =  NULL,         # number of non-trivial, contributing eigenvalues
                        node_type   = 'branch',      # branch or leaf
@@ -38,10 +37,10 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
     eigen_vec_name                 <- sprintf('eigen_vec_%d', i)
     cluster_node[[eigen_vec_name]] <- decomposition$vectors[ , i]
   }
-  cluster_node[['spectrum']]    <- decomposition$values
+  cluster_node[['spectrum']]       <- decomposition$values
 
   # apply heuristic on spectrum (eigenvalues) to calculate the number (k) of expected clusters in matrix
-  # k <- heuristic(spectrum = spectrum)
+  #
   #
   k <- apply_heuristic(decomposition$values)
   cluster_node[['k']] <- k
@@ -60,7 +59,7 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
   #
   Y <- decomposition$vectors[ , 2:k]
 
-  cl <- stats::kmeans(x = Y, centers = k)  # returns vector cl$cluster which gives the cluster id for each label
+  cl <- stats::kmeans(x = Y, centers = k, nstart = 50)  # returns vector cl$cluster which gives the cluster id for each label
 
   # repeat proces for each cluster (C_i with i in 1:k) and combine results in a list which will be
   # stored in the 'nodes' attribute of this node

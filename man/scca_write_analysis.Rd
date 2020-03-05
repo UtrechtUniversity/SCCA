@@ -25,5 +25,5 @@ Writes the results of an SCCA analysis to .csv files. At every tree node two fil
 
 2. The first column contains the spectrum of the subcluster and the second column the explained variance
 
-The filename scontain the path from the top to the tree node.
+The filename is a concatenation of the prefix and de path from the top to the node.
 }

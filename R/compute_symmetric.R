@@ -14,6 +14,10 @@ compute_symmetric <- function(matrix, decomp_axis) {
 
   # remove disconnected columns
   #
+  n_disconnect <- sum(colSums(matrix) == 0)
+  if (n_disconnect > 0) {
+    warning('Disconnected columns: ', n_disconnect)
+  }
   matrix <- matrix[ , colSums(matrix) != 0, drop = FALSE]
 
   # A n*m
