@@ -26,7 +26,8 @@ Imports:
     ggplot2,
     graphics,
     GGally,
-    network
+    network,
+    clValid
 Suggests:
     readr,
     testthat,

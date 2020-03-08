@@ -1,4 +1,5 @@
-#' Get Clustering from an SCCA run
+#' Get clustering from an output of an SCCA run
+#'
 #'
 #' @param scca An SCCA analysis tree; output from a run of scca_compute on a dataset
 #'
@@ -7,12 +8,14 @@
 #'
 #' @details get_clustering is a wrapper around get_clustering_recursive
 #'
+#' @return Returns a tibble. Each row contains a label of a case and the id of the cluster it's assigned to.
+#'
 #' @import dplyr
 #' @import magrittr
 #'
 #' @export
 #'
-get_clustering <- function(scca) {
+scca_get_clustering <- function(scca) {
   cl <- get_clustering_recursive(scca = scca, id = 0, leaves_only = TRUE)
   if(is.null(cl$clustering)) {
     return(NULL)
@@ -84,8 +87,8 @@ scca_overlap_test <- function(x, y, plot = FALSE) {
     warning("Not from the same dataset and or category!")
     return(NULL)
   }
-  cl.x <- get_clustering(scca = x)
-  cl.y <- get_clustering(scca = y)
+  cl.x <- scca_get_clustering(scca = x)
+  cl.y <- scca_get_clustering(scca = y)
 
   if (is.null(cl.x) || is.null(cl.y)) {
     warning("Something wrong in x or y")
@@ -135,7 +138,7 @@ scca_overlap_test <- function(x, y, plot = FALSE) {
 #' @importFrom graphics plot
 #' @importFrom rlang .data
 #'
-#' @note Do not use; contains bug
+#' @note Do not use; contains bugs
 #'
 plot_overlap <- function(overlap_xy) {
 
@@ -177,3 +180,5 @@ plot_overlap <- function(overlap_xy) {
          edge.label.color = 'red')
   plot(p)
 }
+
+
