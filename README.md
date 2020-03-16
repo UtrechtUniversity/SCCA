@@ -16,6 +16,14 @@ install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 
 ## Usage
 
+The main function of the package is `scca_compute`. 
+
+``` R
+scca <- scca_compute(m = carnivora)
+```
+
+
+
 Usage description `[[ By Kees ]]`
 
 ## License and citation

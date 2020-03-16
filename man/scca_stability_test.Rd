@@ -4,28 +4,34 @@
 \alias{scca_stability_test}
 \title{SCCA Stability Test}
 \usage{
-scca_stability_test(m, del_columns = NULL, dist_m = NULL)
+scca_stability_test(m, drop_vars = NULL)
 }
 \arguments{
 \item{m}{Matrix representing an incidence (or bipartite) network}
 
-\item{del_columns}{Integer vector, the index of the columns to be deleted (one for one) when testing
-the stability. When omitted, all the columns are deleted (one for one)}
-
-\item{dist_m}{Object of class dist; the distance matrix that corresponds with the incidence matrix m. If NULL (default),
-scca_stability_test calculates the distance matrix}
+\item{drop_vars}{Integer vector, the index of the variables (columns) to be dropped (one by one) when testing
+the stability. When omitted, all the columns are succesively dropped.}
+}
+\value{
+A tibble with two columns:
+\describe{
+  \item{var_id}{Index of the dropped variable}
+  \item{var_apo}{The average proportion of overlap between base clustering and clustering after dropping variable}
+}
 }
 \description{
-Tests the stability of the clustering method.
+Tests the stability of an SCCA clustering.
 }
 \details{
 Performs an SCCCA stability test on a clustering of a dataset.
 First, a clustering on the complete dataset is done.
 This is the base clustering.
-Then, one for one, each variable in the dataset is removed and a new
+Then, one by one, a variable of the dataset is dropped and a new
 clustering is calculated.
 Each new clustering is compared with the base clustering.
-The measures are APN, AD, ADM and FOM.
-The returned values are averages of the outcomes of the measure per removed variable.
-If the user provides a list of columns, only those columns will be taken into account.
+The stability measure is the average proportion of overlap (APO: the reverse of APN).
+APO can be understood as the chance that if 2 observations are in the same cluster in the base clustering they are also
+in the same cluster in the clustering with 1 column dropped.
+If the user provides a list of column indices (integers), only those columns will be taken into account.
+If no columns are provided all variables are successively dropped.
 }

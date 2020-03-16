@@ -15,9 +15,9 @@ compute_symmetric <- function(matrix, decomp_axis) {
   # remove disconnected columns
   #
   n_disconnect <- sum(colSums(matrix) == 0)
-  if (n_disconnect > 0) {
-    warning('Disconnected columns: ', n_disconnect)
-  }
+  # if (n_disconnect > 0) {
+  #   warning('Disconnected columns: ', n_disconnect)
+  # }
   matrix <- matrix[ , colSums(matrix) != 0, drop = FALSE]
 
   # A n*m
@@ -65,7 +65,10 @@ compute_symmetric <- function(matrix, decomp_axis) {
 
   s_hat         <- sqrt(d_inv) %*% s %*% sqrt(d_inv)
   if (nrow(s_hat) >= 25 ) {
+    oldw <- getOption("warn")
+    options(warn = -1)
     eigen_decomp <- rARPACK::eigs_sym(A = s_hat, k = 25)
+    options(warn = oldw)
   } else {
     eigen_decomp <- eigen(x = s_hat, symmetric = TRUE)
   }
@@ -82,6 +85,11 @@ compute_symmetric <- function(matrix, decomp_axis) {
 
   # some scaling ?
   #
+  tolerance = 1e-7
+  if (any(eigen_values < -tolerance)) {
+    stop('Negative Eigenvalues!')
+  }
+  eigen_values[abs(eigen_values) < tolerance] <- 0
   eigen_vectors <- eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
 
   return(list(vectors = eigen_vectors, values = eigen_values))

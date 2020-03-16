@@ -1,13 +1,13 @@
-#' Write a Spectral Clustering Coorespondence Analysis tree to file
+#' Write a SCCA Clustering to Files
 #'
 #' @details
 #' Writes the results of an SCCA to .csv files. At every tree node two files are written
-#' Eigen vectors
+#'
 #' 1. Eigenvectors: The first column contains labels of the subcluster and columns 2 to 4 are the 3 most prominent Eigenvectors
 #'
 #' 2. Spectrum: The first column contains the spectrum of the subcluster and the second column the explained variance
 #'
-#' The filename scontain the path from the top to the tree node.
+#' The filename contains the path from the top to the tree node.
 #'
 #' @param scca_tree list; the tree resulting from a call to 'scca_compute'
 #' @param vec_name character string; prefix of the files with the clusters and the Eigenvectors
@@ -18,7 +18,7 @@
 #' TRUE
 #'
 #' @export
-scca_write_analysis1 <- function(scca_tree, vec_name = 'V_', spec_name = 'S_', leaves_only = TRUE) {
+scca_write_clustering <- function(scca_tree, vec_name = 'V_', spec_name = 'S_', leaves_only = TRUE) {
   if (!is.list(scca_tree) || is.null(scca_tree)) {
     stop("argument 'analysis_tree' does not have a valid value.")
   }
@@ -26,7 +26,7 @@ scca_write_analysis1 <- function(scca_tree, vec_name = 'V_', spec_name = 'S_', l
   if (!is.character(vec_name) || !is.character(spec_name)) {
     stop("argument vec_name and/or spec_name not a character string.")
   }
-  scca_print_tree1(
+  scca_print_tree(
     tree_node = scca_tree,
     path = list(),
     v_name = vec_name,
@@ -34,16 +34,15 @@ scca_write_analysis1 <- function(scca_tree, vec_name = 'V_', spec_name = 'S_', l
     leaves_only = leaves_only)
 }
 
-scca_print_tree1 <- function(tree_node, path, v_name, s_name, leaves_only) {
+scca_print_tree <- function(tree_node, path, v_name, s_name, leaves_only) {
 
   # update path with number of this node
   #
   path      <- append(path, tree_node$child)
 
-  write_node = TRUE
+  write_node <- TRUE
   if (isTRUE(leaves_only)) {
     write_node <- ifelse(tree_node$node_type == 'leaf', TRUE, FALSE)
-    warning(write_node)
   }
 
 
@@ -67,7 +66,7 @@ scca_print_tree1 <- function(tree_node, path, v_name, s_name, leaves_only) {
   # if this node is a 'branch' then call the childs (recursively)
 
   if (tree_node$node_type == 'branch') {
-    lapply(X = tree_node$node, FUN = scca_print_tree1, path = path, v_name = v_name, s_name = s_name,
+    lapply(X = tree_node$node, FUN = scca_print_tree, path = path, v_name = v_name, s_name = s_name,
            leaves_only = leaves_only)
   }
   return(TRUE)

@@ -1,118 +1,68 @@
 #' SCCA Stability Test
 #'
-#' Tests the stability of the clustering method.
+#' Tests the stability of an SCCA clustering.
 #'
 #' @param m Matrix representing an incidence (or bipartite) network
-#' @param del_columns Integer vector, the index of the columns to be deleted (one for one) when testing
-#' the stability. When omitted, all the columns are deleted (one for one)
-#' @param dist_m Object of class dist; the distance matrix that corresponds with the incidence matrix m. If NULL (default),
-#' scca_stability_test calculates the distance matrix
-#'
+#' @param drop_vars Integer vector, the index of the variables (columns) to be dropped (one by one) when testing
+#' the stability. When omitted, all the columns are succesively dropped.
 #'
 #' @details
 #' Performs an SCCCA stability test on a clustering of a dataset.
 #' First, a clustering on the complete dataset is done.
 #' This is the base clustering.
-#' Then, one for one, each variable in the dataset is removed and a new
+#' Then, one by one, a variable of the dataset is dropped and a new
 #' clustering is calculated.
 #' Each new clustering is compared with the base clustering.
-#' The measures are APN, AD, ADM and FOM.
-#' The returned values are averages of the outcomes of the measure per removed variable.
-#' If the user provides a list of columns, only those columns will be taken into account.
+#' The stability measure is the average proportion of overlap (APO: the reverse of APN).
+#' APO can be understood as the chance that if 2 observations are in the same cluster in the base clustering they are also
+#' in the same cluster in the clustering with 1 column dropped.
+#' If the user provides a list of column indices (integers), only those columns will be taken into account.
+#' If no columns are provided all variables are successively dropped.
 #'
-#' @importFrom stats dist
-#'
-#' @importFrom dplyr summarise
+#' @return A tibble with two columns:
+#' \describe{
+#'   \item{var_id}{Index of the dropped variable}
+#'   \item{var_apo}{The average proportion of overlap between base clustering and clustering after dropping variable}
+#' }
 #'
 #' @export
 #'
-scca_stability_test <- function(m, del_columns = NULL, dist_m = NULL) {
+scca_stability_test <- function(m, drop_vars = NULL) {
 
   # checking function arguments
   #
-  if (is.null(del_columns)) {          # do all columns
-    del_columns <- 1:dim(m)[2]
+  if (is.null(drop_vars)) {          # do all columns
+    drop_vars <- 1:dim(m)[2]
   }
 
-  if(any(!is.integer(del_columns))) {
+  if(any(!is.integer(drop_vars))) {
     warning('illegal column indices!')
     return(NULL)
   }
 
-  if (max(del_columns > dim(m)[2]) || min(del_columns < 1)) {
+  if (max(drop_vars > dim(m)[2]) || min(drop_vars < 1)) {
     warning('illegal column indices!')
     return(NULL)
   }
 
-  if (is.null(dist_m)) {
-    dist_m <- stats::dist(x = m, method = 'euclidian')
-  }
-
-  # scca run on all variabels of the dataset
+  # run an SCCA on all variables (columns) of the dataset
   #
-  base    <- scca_compute(m = m)
-  base_cl <- scca_get_clustering(scca = base)
+  base      <- scca_compute(m = m)
 
-
+  # data frame to hold the results
+  #
   stability <- tibble::tibble(
-    APN = double(),
-    AD  = double(),
-    ADM = double(),
-    FOM = double()
+    var_id   = integer(),
+    var_APO  = double(),
   )
 
-  for (i in 1:length(del_columns)) {
-    del_tree       <- scca_compute(m = m[,-del_columns[i]])
-    del_cl         <- scca_get_clustering(scca = del_tree)
-    stability[i, ] <- clValid::stability(
-      mat        = m,
-      Dist       = dist_m,
-      del        = del_columns[i],
-      cluster    = base_cl$cluster,
-      clusterDel = del_cl$cluster)
+  # one by one drop a variable from the list and compute the APO
+  #
+  for (i in 1:length(drop_vars)) {
+    drop_var                <- scca_compute(m = m[,-drop_vars[i]])
+    stability[i, 'var_id']  <- drop_vars[i]
+    stability[i, 'var_APO'] <- scca_overlap_test(base, drop_var, plot = FALSE)$avg_overlap.x
   }
-  stability <- cbind(stability, del = del_columns)
-  stability <- dplyr::summarise(.data = stability,
-                 APN = mean(APN),
-                 AD  = mean(AD),
-                 ADM = mean(ADM),
-                 FOM = mean(FOM))
-
   return(stability)
 }
-
-#' SCCA compute and store distance matrix
-#'
-#' @param m Incidence or adjacency matrix
-#' @param filename Name of the file in which to store the distance matrix. If NULL (default) the
-#' distance will not be stored, but only returned
-#' @param method See ?stats::dist
-#'
-#' @return The distance matrix as an dist object
-#'
-
-#'
-#' @export
-#'
-scca_compute_dist <- function(m, filename = NULL, method = 'euclidian') {
-  if (is.null(filename)) {
-    filepath = NULL
-  } else {
-    filepath <- file.path(getwd(), sprintf('%s.Rds', filename))
-    print(filepath)
-    if (file.exists(filepath)) {
-      warning(sprintf('file %s allready exists!', filepath))
-      return(NULL)
-    }
-  }
-  dist_m <- dist(x = m, method = method )
-  if (!is.null(filepath)) {
-    readr::write_rds(x = dist_m, path = filepath)
-  }
-  return(dist_m)
-}
-
-# @importFrom readr write_rds
-# @importFrom stats dist
-# @importFrom clValid stability
 

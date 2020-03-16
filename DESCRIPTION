@@ -14,6 +14,7 @@ Description: This R-package is meant to allow application of CA to data that giv
     apply CA to each of the individual clusters.
 Depends: R (>= 3.5.0)
 Imports:
+    stringr,
     Matrix,
     matlib,
     rARPACK,
@@ -27,7 +28,9 @@ Imports:
     graphics,
     GGally,
     network,
-    clValid
+    clValid,
+    cluster,
+    factoextra
 Suggests:
     readr,
     testthat,

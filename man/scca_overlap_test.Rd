@@ -11,26 +11,39 @@ scca_overlap_test(x, y, plot = FALSE)
 
 \item{y}{An output of another SCCA run on the same dataset/category as in x}
 
-\item{plot}{Boolean; plot an bi-partite, overlap graph between clusters of x and y. Default is FALSE}
+\item{plot}{Boolean; plot an bi-partite, overlap graph between clustering x and clustering y. Default is FALSE}
 }
 \value{
 A list with 3 elements:
 \describe{
-  \item{avg_overlap.x}{The chance that a pair of cases which are in the same cluster of x
-  are also in the same cluster of y. The weighted average of overlaps of all clusters in x with clusters in y }
-  \item{avg_overlap.y}{The weighted average of overlaps of all clusters in y }
-  \item{overlap.xy}{Tibble. Overlap between each (x,y) pair of clusters}
+  \item{\strong{avg_overlap.x}}{The chance that a pair of cases which are in the same cluster of x
+  are also in the same cluster of y}
+  \item{avg_overlap.y}{The chance that a pair of cases which are in the same cluster of y
+  are also in the same cluster of x}
+  \item{overlap.xy}{A tibble with X variables:
+    \itemize{
+      \item \emph{cluster.x} Id of cluster in clustering x
+      \item \emph{cluster.y} Id of cluster in clustering y
+      \item \emph{card.x} Cardinal of x cluster
+      \item \emph{card.y} Cardinal of y cluster
+      \item \emph{inter} Intersection of x and y; the labels they have in common
+      \item \emph{overlap.x} Chance two cases in the same x cluster are also in the same y cluster
+      \item \emph{overlap.y} Chance two cases in the same y cluster are also in the same x cluster
+      \item \emph{path.x} The path from the top of the analysis tree to this x cluster
+      \item \emph{path.y} The path from the top of the analysis tree to this y cluster
+   }
+ }
 }
 }
 \description{
 The function \code{scca_overlap_test} compares two SCCA clusterings of the same dataset and category to
-establish their ovelap. It calculates an average proportion of overlap between the two clusterings.
+establish their ovelap. It calculates the average proportion of overlap between the two clusterings.
 }
 \examples{
 \dontrun{
 data('carnivora', package = 'sccar')
 sc1 <- scca_compute(carnivora)
 sc2 <- scca_compute(carnivora)
-scca_overlap_test(x = sc1, y = sc2)
+scca_overlap_test(x = sc1, y = sc2, plot = TRUE)
 }
 }

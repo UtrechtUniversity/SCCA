@@ -14,3 +14,4 @@ demo.R
 ^.github$
 
 ^R/write_scca_leaf.R$
+^R/silhouette.R$
