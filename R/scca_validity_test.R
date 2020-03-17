@@ -64,9 +64,10 @@ scca_silhouette_test <- function(scca, dist, plot = TRUE) {
 #' distance will not be stored, but only returned
 #' @param method See: \code{\link[stats]{dist}}
 #'
-#' @return The distance matrix as an \emph{dist} object
+#' @return
+#' The distance matrix as an \emph{dist} object
 #'
-#" @export
+#' @export
 
 scca_compute_dist <- function(m, filename = NULL, method = 'euclidian') {
   if (is.null(filename)) {

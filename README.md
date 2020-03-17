@@ -37,27 +37,37 @@ scca1   <- scca_compute(m = carnivora)
 overlap <- scca_overlap_test(x = scca, y = scca1, plot = TRUE)
 ```
 
-Let `cl` be a clustering on a set of observation and `cl_i` the clustering of same observations with variable `i` dropped. The clustering `cl` is called stable if it is (almost) the same (by some measure) as the cl_i. The measure is the average proportion of overlap.
+Let `cl` be a clustering on a set of observation and `cl_i` the clustering of same observations with variable `i` dropped. The clustering process is called stable if `cl` is (almost) the same (by some measure) as cl_i. The measure is the average proportion of overlap.
 
 ``` R
+library(dplyr)
 drop          <- sample(ncol(carnivora), ncol(carnivora) %/% 10)
 stability     <- scca_stability_test(m = carnivora, drop_vars = drop)
 avg_stability <- stability %>% summarise(mean(var_APO))
 ``` 
 
-The package `clValid` and `cluster` provide functions to calculate the internal validity of a clustering. The measures are Silhoutette Width, Dunn Index and Connectivity. This package provides a wrapper around these functions. It needs a distance matrix which must be calculated. Save the distance matrix, for repeated uses. 
+The package `clValid` and `cluster` provide functions to calculate the internal validity of a clustering. The measures are Silhoutette Width, Dunn Index and Connectivity. This package provides a wrapper around these functions. It needs a distance matrix which must be calculated. Save the distance matrix for repeated uses, because the distance computation may take a while. 
 
 ``` R
 library(dplyr)
 library(readr)
-d_species    <- scca_compute_dist(m = t(carnivora), filename = 'd_species_carn')
-# d_species   <- read_rds('d_species_carn')
+d_species    <- scca_compute_dist(m = t(carnivora), filename = 'd_species')
+# d_species   <- read_rds('some_path/d_species_carn') # path from working directory
 scca_species <- scca_compute(m = t(carnivora))
 validity     <- scca_validity_test(scca = scca_species, dist = d_species)
 validity$sil
 validity$dunn
 validity$conn
+```
 
+Last but not least, there is a function to compare clusterings form `scca_compute` with clusterings on the same data/category from the Python implementation. See ?scca_py_overlap_test
+
+``` R
+s <- scca_compute(m = carnivora)
+scca_py_overlap_test <- function(scca = s, 
+     py_output = 'location of the Python output files',
+     plot      = TRUE)
+```
 
 ## License and citation
 
