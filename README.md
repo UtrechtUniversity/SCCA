@@ -16,15 +16,48 @@ install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 
 ## Usage
 
-The main function of the package is `scca_compute`. 
+The main function of the package is `scca_compute`. The value is an SCCA clustering tree (recursive list).
 
 ``` R
 scca <- scca_compute(m = carnivora)
 ```
 
+To get the final clusters:
 
+``` R
+clusters <- scca_get_clusters(scca)
+```
 
-Usage description `[[ By Kees ]]`
+The value is a cluster table. For each observation a record with the label of the observation and the cluster the observation is assigned to.
+
+SCCA is a stochastic process. Two runs will produce different outputs. The overlap between those outputs can be computed (and optionally plotted) with
+
+``` R
+scca1   <- scca_compute(m = carnivora)
+overlap <- scca_overlap_test(x = scca, y = scca1, plot = TRUE)
+```
+
+Let `cl` be a clustering on a set of observation and `cl_i` the clustering of same observations with variable `i` dropped. The clustering `cl` is called stable if it is (almost) the same (by some measure) as the cl_i. The measure is the average proportion of overlap.
+
+``` R
+drop          <- sample(ncol(carnivora), ncol(carnivora) %/% 10)
+stability     <- scca_stability_test(m = carnivora, drop_vars = drop)
+avg_stability <- stability %>% summarise(mean(var_APO))
+``` 
+
+The package `clValid` and `cluster` provide functions to calculate the internal validity of a clustering. The measures are Silhoutette Width, Dunn Index and Connectivity. This package provides a wrapper around these functions. It needs a distance matrix which must be calculated. Save the distance matrix, for repeated uses. 
+
+``` R
+library(dplyr)
+library(readr)
+d_species    <- scca_compute_dist(m = t(carnivora), filename = 'd_species_carn')
+# d_species   <- read_rds('d_species_carn')
+scca_species <- scca_compute(m = t(carnivora))
+validity     <- scca_validity_test(scca = scca_species, dist = d_species)
+validity$sil
+validity$dunn
+validity$conn
+
 
 ## License and citation
 
