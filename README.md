@@ -52,7 +52,7 @@ The package `clValid` and `cluster` provide functions to calculate the internal 
 library(dplyr)
 library(readr)
 d_species    <- scca_compute_dist(m = t(carnivora), filename = 'd_species')
-# d_species   <- read_rds('some_path/d_species_carn') # path from working directory
+# d_species  <- read_rds('some_path/d_species_carn') # path from working directory
 scca_species <- scca_compute(m = t(carnivora))
 validity     <- scca_validity_test(scca = scca_species, dist = d_species)
 validity$sil
@@ -64,7 +64,7 @@ Last but not least, there is a function to compare clusterings form `scca_comput
 
 ``` R
 s <- scca_compute(m = carnivora)
-scca_py_overlap_test <- function(scca = s, 
+scca_py_overlap_test(scca = s, 
      py_output = 'location of the Python output files',
      plot      = TRUE)
 ```

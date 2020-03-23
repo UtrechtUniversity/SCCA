@@ -46,7 +46,7 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
   cluster_node[['k']] <- k
 
 
-  # If k == 1 then this cluster can't be split further in meaningful sub-clusters. So recursion on
+  # If k == 1 then this cluster can't be split any further in meaningful sub-clusters. So recursion on
   # this path stops here
   #
   if (k == 1) {
@@ -60,6 +60,7 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
   Y <- decomposition$vectors[ , 2:k]
 
   cl <- stats::kmeans(x = Y, centers = k, nstart = 50)  # returns vector cl$cluster which gives the cluster id for each label
+                                                        # shouldn't nstart be a parameter of scca_compute?
 
   # repeat proces for each cluster (C_i with i in 1:k) and combine results in a list which will be
   # stored in the 'nodes' attribute of this node

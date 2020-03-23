@@ -3,7 +3,6 @@
 #' @param matrix A numeric matrix
 #' @param decomp_axis Character string with value 'row' or 'column'.
 #'
-# matrix <- matrix(sample(x = c(0,1), size = 60, prob= c(0.9, 0.1), replace = TRUE), ncol = 6)
 
 compute_symmetric <- function(matrix, decomp_axis) {
 
@@ -31,10 +30,10 @@ compute_symmetric <- function(matrix, decomp_axis) {
   r_sums <- Matrix::rowSums(matrix_a)
   c_sums <- Matrix::colSums(matrix_a)
   if (any(r_sums == 0) ) {
-    warning('any row sum equals 0: ', dim(matrix_a))
+    warning('any row sum equals 0: ', dim(matrix_a)[1], ' - ', dim(matrix_a)[2])
   }
   if (any(c_sums == 0)) {
-    warning('any col sum equals 0: ', dim(matrix_a))
+    warning('any col sum equals 0: ', dim(matrix_a)[1], ' - ', dim(matrix_a)[2])
   }
 
 
@@ -50,8 +49,6 @@ compute_symmetric <- function(matrix, decomp_axis) {
     d_inv <- d_r_inv
   }
 
-    # calculate symmetric matrix S with dimensions m*m (m is number of columns)
-    #
   if (decomp_axis == 'cols') {
     s <- Matrix::t(matrix_a) %*% d_r_inv %*% matrix_a # Sc
     d_inv <- d_c_inv
@@ -64,9 +61,9 @@ compute_symmetric <- function(matrix, decomp_axis) {
   # return V,lambdas
 
   s_hat         <- sqrt(d_inv) %*% s %*% sqrt(d_inv)
-  if (nrow(s_hat) >= 25 ) {
+  if (nrow(s_hat) > 25 ) {
     oldw <- getOption("warn")
-    options(warn = -1)
+    #options(warn = -1)
     eigen_decomp <- rARPACK::eigs_sym(A = s_hat, k = 25)
     options(warn = oldw)
   } else {
@@ -83,11 +80,11 @@ compute_symmetric <- function(matrix, decomp_axis) {
   eigen_values  <- eigen_sorted$x
   eigen_vectors <- eigen_vectors[ , eigen_sorted$ix]
 
-  # some scaling ?
+  # some scaling but why?
   #
   tolerance = 1e-7
   if (any(eigen_values < -tolerance)) {
-    stop('Negative Eigenvalues!')
+    stop('Negative Eigenvalues! Something is definitely going wrong!')
   }
   eigen_values[abs(eigen_values) < tolerance] <- 0
   eigen_vectors <- eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
