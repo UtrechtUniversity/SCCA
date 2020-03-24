@@ -4,10 +4,14 @@
 \alias{scca_compute}
 \title{Spectral Clustering Correpondence Analysis.}
 \usage{
-scca_compute(m)
+scca_compute(m, iter.max = 10, nstart = 25)
 }
 \arguments{
 \item{m}{A matrix representing a bi-partite or incidence graph. The matrix must have row names and column names}
+
+\item{iter.max}{Integer, the maximum number of iterations \code{kmeans} is allowed. Default is 10.}
+
+\item{nstart}{Integer, number of random cluster centers kmeans may choose to start with. Default is 25.}
 }
 \value{
 A tree which describes the hierarchical clustering process.

@@ -4,11 +4,18 @@
 #' @param child Numeric. Node number within its siblings (= same parent)
 #' @param labels Character vector; The labels defining the (sub-)cluster to be analyzed
 #' @param level Integer; the depth of this node in the tree
-#' @param decomp_axis Character string ('row', 'col)
+#' @param decomp_axis Character string; the choices are: 'row' or 'col'
+#' @param pre_centers If TRUE, a list of k cluster centers will be computed
+#' If FALSE (default) kmeans must decides with which k cluster it must start
+#' @param iter.max Integer; the maximum number of iterations kmeans may take to compute the clusters
+#' @param nstart Integer; the number of clusterings from which kmeans chooses the best
 #'
 #'
 
-scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
+scca_compute_tree <- function(labels, child, m, level, decomp_axis,
+                              pre_centers  =  FALSE,
+                              iter.max     =  10,
+                              nstart       =  50) {
 
   if (!is.matrix(m)) {stop("Argument m is not a matrix")}
 
@@ -43,7 +50,9 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
   #
   #
   k <- apply_heuristic(decomposition$values)
+
   cluster_node[['k']] <- k
+
 
 
   # If k == 1 then this cluster can't be split any further in meaningful sub-clusters. So recursion on
@@ -54,13 +63,23 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
     return(cluster_node)
   }
 
+  #
+  if (isTRUE(pre_centers)){
+    centers <- compute_centers(k)
+  } else {
+    centers <- k
+  }
+
   # Compute input matrix Y for the kmeans.
   # Y is a matrix with the eigenvectors as columns minus the first trivial one
   #
   Y <- decomposition$vectors[ , 2:k]
 
-  cl <- stats::kmeans(x = Y, centers = k, nstart = 50)  # returns vector cl$cluster which gives the cluster id for each label
-                                                        # shouldn't nstart be a parameter of scca_compute?
+  cl <- stats::kmeans(
+    x        = Y,
+    centers  = centers,
+    iter.max = iter.max,
+    nstart   = nstart)  # returns vector cl$cluster which gives the cluster id for each label
 
   # repeat proces for each cluster (C_i with i in 1:k) and combine results in a list which will be
   # stored in the 'nodes' attribute of this node
@@ -74,7 +93,10 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis) {
   cluster_node[['node']] <- mapply(FUN = scca_compute_tree,
                                    cluster_labels,               # will be mapped to argument 'labels'
                                    as.list(1:k),                 # will be mapped to argument 'child'
-                                   MoreArgs = list(m = m, level = level + 1, decomp_axis = decomp_axis),
+                                   MoreArgs = list(m = m, level = level + 1, decomp_axis = decomp_axis,
+                                                   pre_centers = pre_centers,
+                                                   iter.max    = iter.max,
+                                                   nstart      = nstart),
                                    SIMPLIFY = FALSE)
   return(cluster_node)
 }
