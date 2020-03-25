@@ -2,15 +2,18 @@
 % Please edit documentation in R/compute_symmetric.R
 \name{compute_symmetric}
 \alias{compute_symmetric}
-\title{Compute Symmetric Matrix of a bipartite adjacency matrix}
+\title{Compute Eigenvalues and Eigenvectors of Large and Sparse Incidence Matrix}
 \usage{
 compute_symmetric(matrix, decomp_axis)
 }
 \arguments{
-\item{matrix}{A numeric matrix}
+\item{matrix}{An incidence matrix. The rows are the observations and
+the columns are the}
 
-\item{decomp_axis}{Character string with value 'row' or 'column'.}
+\item{decomp_axis}{Character string with value 'row' or 'column' indicating the axis along
+which the decomposition will initially take place. At the end the decomposition will be transformed
+to the row axis (= observations)}
 }
 \description{
-Compute Symmetric Matrix of a bipartite adjacency matrix
+See <<link>>
 }
