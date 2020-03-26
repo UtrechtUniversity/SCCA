@@ -3,7 +3,7 @@
 \docType{data}
 \name{carnivora}
 \alias{carnivora}
-\title{Carnivora incidence in marine territoria.}
+\title{Carnivora Incidence in Marine Territoria}
 \format{A list with to elements
 \describe{
   \item{M}{absence-presence (0/1) matrix. The column names are names of the species and the row names are coordinates of the sites }

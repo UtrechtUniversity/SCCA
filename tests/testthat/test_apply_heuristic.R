@@ -1,4 +1,4 @@
-context('compute_symmetric')
+context('apply_heuristic')
 
 library(readr)
 

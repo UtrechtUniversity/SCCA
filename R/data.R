@@ -1,4 +1,4 @@
-#' Carnivora incidence in marine territoria.
+#' Carnivora Incidence in Marine Territoria
 #'
 #' To explore an example of application of CA to a common-use dataset in Ecology, we used the global
 #' geographical distributions of the mammalian order Carnivora. The dataset is comprised by an incidence matrix M
@@ -63,5 +63,9 @@
 #' }
 #' @source \url{http://atlas.cid.harvard.edu/about-data}
 "exports"
+
+#' Carnivora Incidence in Marine Territoria (old verion)
+#'
+"carnivora_old"
 
 

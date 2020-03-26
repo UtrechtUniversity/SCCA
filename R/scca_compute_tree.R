@@ -37,7 +37,7 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis,
                        node        =  list(NULL))   # will contain list of children (if any)
 
   #
-  decomposition <- compute_symmetric(matrix = subM, decomp_axis = decomp_axis)   #s and d_inv
+  decomposition <- decomp_symmetric(matrix = subM, decomp_axis = decomp_axis)   #s and d_inv
 
   n_eigen <- ifelse (dim(decomposition$vectors)[2] < 3, dim(decomposition$vectors)[2], 3)
   for (i in 1:n_eigen) {

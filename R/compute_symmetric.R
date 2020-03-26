@@ -1,4 +1,4 @@
-#' Compute Eigenvalues and Eigenvectors of Large and Sparse Incidence Matrix
+#' Decompose Large and Sparse Matrix
 #'
 #' See <<link>>
 #'
@@ -7,9 +7,10 @@
 #' @param decomp_axis Character string with value 'row' or 'column' indicating the axis along
 #'   which the decomposition will initially take place. At the end the decomposition will be transformed
 #'   to the row axis (= observations)
+#' @param n_eigenvalues Number of most prominent Eigenvalues to return. Default is 25.
 #'
 
-compute_symmetric <- function(matrix, decomp_axis) {
+decomp_symmetric <- function(matrix, decomp_axis, n_eigenvalues = 25) {
 
   # check input parameters
   if (!decomp_axis %in% c('cols', 'rows')) {
@@ -60,7 +61,7 @@ compute_symmetric <- function(matrix, decomp_axis) {
 
    # Eigenvalues and Eigenvectors of symmetric S
    #
-  if (nrow(s_hat) > 25 ) {                        # Don't compute more than 25 Eigenvalues for performance reasons
+  if (nrow(s_hat) > n_eigenvalues ) {                        # Don't compute more than 25 Eigenvalues for performance reasons
     #oldw <- getOption("warn")
     #options(warn = -1)
     eigen_decomp <- rARPACK::eigs_sym(A = s_hat, k = 25)
