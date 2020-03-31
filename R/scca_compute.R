@@ -6,7 +6,7 @@
 #' the input parameter k of kmeans. If k > 1 then the current clusters is split by kemaens into k subclusters and the proces is
 #' repeated for the k subclusters. Else, the decomposition of this branch ends with current cluster (leaf).
 #'
-#' @param m A matrix representing a bi-partite or incidence graph. The matrix must have row names and column names
+#' @param m A matrix representing a bi-partite or incidence graph. The matrix must have row names and column names.
 #' @param iter.max Integer, the maximum number of iterations \code{kmeans} is allowed. Default is 10.
 #' @param nstart Integer, number of random cluster centers kmeans may choose to start with. Default is 25.
 #'
@@ -45,7 +45,6 @@ scca_compute <- function(m, iter.max = 10, nstart = 25) {
   # The clustering always takes place along the rows. If the decomposition axis is 'columns' then the Eigenvectors will be
   # translated to the Eigenvectors of rows. See function 'compute_symmetric'.
   #
-  decomp_axis <- ifelse(dim(m)[1] >= dim(m)[2], 'cols', 'rows')     # >= ?
 
   # rows (columns) must be labeled. The labels indentify the cases in the proces of clustering
   #
@@ -56,8 +55,9 @@ scca_compute <- function(m, iter.max = 10, nstart = 25) {
     colnames(m) <- sprintf("%d", 1:ncol(m))
   }
 
-  # clustering takes place along the rows of the matrix
+  # clustering takes place along the row axis
   #
+
   labels <- rownames(m)
 
 
@@ -65,8 +65,12 @@ scca_compute <- function(m, iter.max = 10, nstart = 25) {
   # Of course, it all starts with the top node
   #
 
-  scca_top_node   <- scca_compute_tree(m = m, child = 1, labels = labels, level = 1, decomp_axis = decomp_axis,
-                                       iter.max = iter.max,
-                                       nstart   = nstart)
+  scca_top_node   <- scca_compute_tree(
+    m        = m,
+    child    = 1,
+    labels   = labels,
+    level    = 1,
+    iter.max = iter.max,
+    nstart   = nstart)
   return(scca_top_node)
 }

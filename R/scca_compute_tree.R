@@ -3,19 +3,17 @@
 #' @param m Numeric matrix; Laplacian
 #' @param child Numeric. Node number within its siblings (= same parent)
 #' @param labels Character vector; The labels defining the (sub-)cluster to be analyzed
-#' @param level Integer; the depth of this node in the tree
-#' @param decomp_axis Character string; the choices are: 'row' or 'col'
-#' @param pre_centers If TRUE, a list of k cluster centers will be computed
-#' If FALSE (default) kmeans must decides with which k cluster it must start
+#' @param level Integer the depth of this node in the tree
 #' @param iter.max Integer; the maximum number of iterations kmeans may take to compute the clusters
 #' @param nstart Integer; the number of clusterings from which kmeans chooses the best
 #'
 #'
-
-scca_compute_tree <- function(labels, child, m, level, decomp_axis,
-                              pre_centers  =  FALSE,
-                              iter.max     =  10,
-                              nstart       =  50) {
+#'
+#'
+scca_compute_tree <- function(
+  labels, m, child, level,
+  iter.max     =  10,
+  nstart       =  50) {
 
   if (!is.matrix(m)) {stop("Argument m is not a matrix")}
 
@@ -26,9 +24,9 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis,
   #
   zero_vector  <- rep(0, length(labels))            # used as a place holder for eigen_vectors of this sub-matrix
   cluster_node <- list(level       =  level,        # the steps taken form top level to this node
-                       child       =  child,        # number to distinguish this node from its siblings
-                       labels      =  labels,       # current cluster
-                       k           =  NULL,         # number of non-trivial, contributing eigenvalues
+                       child       =  child,        # number for distinguishing this node from its siblings
+                       labels      =  labels,       # observations in this cluster
+                       k           =  NULL,         # number of most contributing eigenvalues
                        node_type   = 'branch',      # branch or leaf
                        eigen_vec_1 =  zero_vector,  # eigen vectors after decomposition of this cluster
                        eigen_vec_2 =  zero_vector,
@@ -37,23 +35,28 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis,
                        node        =  list(NULL))   # will contain list of children (if any)
 
   #
-  decomposition <- decomp_symmetric(matrix = subM, decomp_axis = decomp_axis)   #s and d_inv
+  warning('level: ', level, ' / child: ', child, ' / labels: ', length(labels))
 
-  n_eigen <- ifelse (dim(decomposition$vectors)[2] < 3, dim(decomposition$vectors)[2], 3)
-  for (i in 1:n_eigen) {
-    eigen_vec_name                 <- sprintf('eigen_vec_%d', i)
-    cluster_node[[eigen_vec_name]] <- decomposition$vectors[ , i]
+  if (length(labels) > 2) {
+    decomposition <- decomp_symmetric(matrix = subM, n_eigenvalues = 25)   #s and d_inv
+    eigen_vectors <- decomposition$r_vectors
+    eigen_values  <- decomposition$values
+
+    n_eigen <- ifelse (dim(eigen_vectors)[2] < 3, dim(eigen_vectors)[2], 3)
+    for (i in 1:n_eigen) {
+      eigen_vec_name                 <- sprintf('eigen_vec_%d', i)
+      cluster_node[[eigen_vec_name]] <- eigen_vectors[ , i]
+    }
+    cluster_node[['spectrum']]       <- eigen_values
+
+    # apply heuristic on spectrum (eigenvalues) to calculate the number (k) of expected clusters in matrix
+    #
+    k <- apply_heuristic(eigen_values)
+    cluster_node[['k']] <- k
+  } else {
+    warning('small cluster')
+    k <- 1  # to stop decomposition
   }
-  cluster_node[['spectrum']]       <- decomposition$values
-
-  # apply heuristic on spectrum (eigenvalues) to calculate the number (k) of expected clusters in matrix
-  #
-  #
-  k <- apply_heuristic(decomposition$values)
-
-  cluster_node[['k']] <- k
-
-
 
   # If k == 1 then this cluster can't be split any further in meaningful sub-clusters. So recursion on
   # this path stops here
@@ -63,17 +66,12 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis,
     return(cluster_node)
   }
 
-  #
-  if (isTRUE(pre_centers)){
-    centers <- compute_centers(k)
-  } else {
-    centers <- k
-  }
-
   # Compute input matrix Y for the kmeans.
   # Y is a matrix with the eigenvectors as columns minus the first trivial one
   #
-  Y <- decomposition$vectors[ , 2:k]
+  Y <- eigen_vectors[ , 2:k]
+
+  centers <- k
 
   cl <- stats::kmeans(
     x        = Y,
@@ -93,8 +91,7 @@ scca_compute_tree <- function(labels, child, m, level, decomp_axis,
   cluster_node[['node']] <- mapply(FUN = scca_compute_tree,
                                    cluster_labels,               # will be mapped to argument 'labels'
                                    as.list(1:k),                 # will be mapped to argument 'child'
-                                   MoreArgs = list(m = m, level = level + 1, decomp_axis = decomp_axis,
-                                                   pre_centers = pre_centers,
+                                   MoreArgs = list(m = m, level = level + 1,
                                                    iter.max    = iter.max,
                                                    nstart      = nstart),
                                    SIMPLIFY = FALSE)

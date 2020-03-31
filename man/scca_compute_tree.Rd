@@ -4,30 +4,16 @@
 \alias{scca_compute_tree}
 \title{Build recursively a scca tree}
 \usage{
-scca_compute_tree(
-  labels,
-  child,
-  m,
-  level,
-  decomp_axis,
-  pre_centers = FALSE,
-  iter.max = 10,
-  nstart = 50
-)
+scca_compute_tree(labels, m, child, level, iter.max = 10, nstart = 50)
 }
 \arguments{
 \item{labels}{Character vector; The labels defining the (sub-)cluster to be analyzed}
 
-\item{child}{Numeric. Node number within its siblings (= same parent)}
-
 \item{m}{Numeric matrix; Laplacian}
 
-\item{level}{Integer; the depth of this node in the tree}
+\item{child}{Numeric. Node number within its siblings (= same parent)}
 
-\item{decomp_axis}{Character string; the choices are: 'row' or 'col'}
-
-\item{pre_centers}{If TRUE, a list of k cluster centers will be computed
-If FALSE (default) kmeans must decides with which k cluster it must start}
+\item{level}{Integer the depth of this node in the tree}
 
 \item{iter.max}{Integer; the maximum number of iterations kmeans may take to compute the clusters}
 

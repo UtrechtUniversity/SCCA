@@ -3,19 +3,12 @@
 #' See <<link>>
 #'
 #' @param matrix An incidence matrix. The rows are the observations and
-#'   the columns are the
-#' @param decomp_axis Character string with value 'row' or 'column' indicating the axis along
-#'   which the decomposition will initially take place. At the end the decomposition will be transformed
-#'   to the row axis (= observations)
+#'   the columns are the variables
 #' @param n_eigenvalues Number of most prominent Eigenvalues to return. Default is 25.
 #'
 
-decomp_symmetric <- function(matrix, decomp_axis, n_eigenvalues = 25) {
+decomp_symmetric <- function(matrix, n_eigenvalues = 25) {
 
-  # check input parameters
-  if (!decomp_axis %in% c('cols', 'rows')) {
-    stop('Unknown decomposition axis')
-  }
 
   # Compute symmetric matrix S
   # Steps:
@@ -30,63 +23,43 @@ decomp_symmetric <- function(matrix, decomp_axis, n_eigenvalues = 25) {
   r_sums   <- Matrix::rowSums(matrix_a)
   c_sums   <- Matrix::colSums(matrix_a)
 
-  # In the proces columns/rows can become disconnected (sum == 0). To prevent division by 0
-   # set the sum to 1
-   #
+  # columns/rows can become disconnected (sum == 0). To prevent division by 0
+  # set the sum to 1
+  #
   r_sums[r_sums == 0] <- 1
   c_sums[c_sums == 0] <- 1
 
-   # Compute inverted diagonal matrices
-   #
+  # Compute inverted diagonal matrices.
+  # Will be used for scaling and axis transformations
+  #
   d_r_inv <- Matrix::Diagonal(x = 1/r_sums) # n X n
   d_c_inv <- Matrix::Diagonal(x = 1/c_sums) # m X m
 
-    # compute symmetric matrix S
-    #
-  if (decomp_axis == 'rows') {
-    s     <- matrix_a %*% d_c_inv %*% Matrix::t(matrix_a)  # Sr
-    d_inv <- d_r_inv
-  } else {                             # decomp_axis == 'cols'
-    s     <- Matrix::t(matrix_a) %*% d_r_inv %*% matrix_a # Sc
-    d_inv <- d_c_inv
-  }
-
-  # Decompose symmetric matrix S
-  #   Shat = D_r^{-1/2}  S D_r^{-1/2}
-  #   U, lambdas = eig(Shat)
-  #   V = D_r^{-1/2} U          #
-  #   return V,lambdas
-
-  s_hat <- sqrt(d_inv) %*% s %*% sqrt(d_inv)
-
-   # Eigenvalues and Eigenvectors of symmetric S
-   #
-  if (nrow(s_hat) > n_eigenvalues ) {                        # Don't compute more than 25 Eigenvalues for performance reasons
-    #oldw <- getOption("warn")
-    #options(warn = -1)
-    eigen_decomp <- rARPACK::eigs_sym(A = s_hat, k = 25)
-    #options(warn = oldw)
-  } else {
-    eigen_decomp <- eigen(x = s_hat, symmetric = TRUE)
-  }
-
-  # Eigenvalues and Eigenvectors of the original matrix. Along the decomp_axis
+  # For explanation of following decomposition see:
   #
-  eigen_vectors <- sqrt(d_inv) %*% eigen_decomp$vectors
-  eigen_values  <- eigen_decomp$values
+  a_hat <- sqrt(d_r_inv) %*% matrix_a %*% sqrt(d_c_inv)
 
-    # Get 'row' Eigenvectors
-    #
-  if (decomp_axis == 'cols') {
-    eigen_vectors <- d_r_inv %*% matrix_a %*% eigen_vectors
-  }
+  #  number of eigenvalues may not be larger than smallest dimension of the matrix
+  #
+  min_dim       <- min(dim(a_hat)[1], dim(a_hat)[2])
+  warning(min_dim)
+  n_eigenvalues <- ifelse(n_eigenvalues > min_dim, min_dim, n_eigenvalues)
 
-  eigen_sorted  <- sort(eigen_decomp$values, index.return=TRUE, decreasing = TRUE)
-  eigen_values  <- eigen_sorted$x
-  eigen_vectors <- eigen_vectors[ , eigen_sorted$ix]
+  singular_decomp <- rARPACK::svds(
+    A    = a_hat,
+    k    = n_eigenvalues,
+    opts = list(maxitr = 100000))
+
+  #singular_decomp <- base::svd(A = a_hat, k = n_eigenvalues)
+
+  row_eigen_vectors <- sqrt(d_r_inv) %*% singular_decomp$u
+  col_eigen_vectors <- sqrt(d_c_inv) %*% singular_decomp$v
+  eigen_values      <- singular_decomp$d^2
+
 
   # due to rounding errors zero's, don't have to be exactly zero. They even can be negative and that
-  # can cause errors in some comming computations. Within a small tolerance values will be reset to 0
+  # can cause errors when taking square roots. Such values within a small tolerance will be reset to 0,
+  # otherwise will raise errors
   #
   tolerance = 1e-7
   if (any(eigen_values < -tolerance)) {
@@ -96,9 +69,10 @@ decomp_symmetric <- function(matrix, decomp_axis, n_eigenvalues = 25) {
 
   # some scaling but why?
   #
-  eigen_vectors <- eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
+  row_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
+  col_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
 
-  return(list(vectors = eigen_vectors, values = eigen_values))
+  return(list(r_vectors = row_eigen_vectors, c_vectors = col_eigen_vectors, values = eigen_values))
 }
 
 

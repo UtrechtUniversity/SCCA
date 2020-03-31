@@ -4,15 +4,11 @@
 \alias{decomp_symmetric}
 \title{Decompose Large and Sparse Matrix}
 \usage{
-decomp_symmetric(matrix, decomp_axis, n_eigenvalues = 25)
+decomp_symmetric(matrix, n_eigenvalues = 25)
 }
 \arguments{
 \item{matrix}{An incidence matrix. The rows are the observations and
-the columns are the}
-
-\item{decomp_axis}{Character string with value 'row' or 'column' indicating the axis along
-which the decomposition will initially take place. At the end the decomposition will be transformed
-to the row axis (= observations)}
+the columns are the variables}
 
 \item{n_eigenvalues}{Number of most prominent Eigenvalues to return. Default is 25.}
 }

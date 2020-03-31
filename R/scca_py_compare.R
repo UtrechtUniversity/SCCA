@@ -39,7 +39,7 @@ get_py_clustering <- function(path = NULL) {
     cluster_id     <- cluster_id + 1
     cluster_data   <- readr::read_csv(file      = file.path(path, sprintf('/Vecs_0.%s.csv', cluster_path)),
                                       skip      = 1,
-                                      col_types = cols(),
+                                      col_types = readr::cols(),
                                       col_names = FALSE)
     cluster_data %<>% dplyr::mutate(label = as.character(.data$X2))
     cluster_data %<>% dplyr::mutate(cluster = cluster_id,

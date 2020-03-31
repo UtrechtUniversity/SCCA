@@ -25,11 +25,10 @@ bm_decomp_symmetric <- function() {
   # decompose matrix with decomp_symmetric
   #
   scca        <- sccar:::decomp_symmetric(
-                   matrix      =  bm_matrix,
-                   decomp_axis = 'rows',
-                   n_eigenvalues = nrow(bm_matrix))
+                   matrix            = bm_matrix,
+                   n_eigenvalues     = 180)
 
-  sc_vectors  <- as.matrix(scca$vectors)
+  sc_vectors  <- as.matrix(scca$r_vectors)
   sc_vectors  <- abs(round(sc_vectors, digits = 4))  # benchmark data has only 4 digits
                                                      # and get rid of sign issues
   sc_spectrum <- scca$values
