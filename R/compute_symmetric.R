@@ -42,7 +42,7 @@ decomp_symmetric <- function(matrix, n_eigenvalues = 25) {
   #  number of eigenvalues may not be larger than smallest dimension of the matrix
   #
   min_dim       <- min(dim(a_hat)[1], dim(a_hat)[2])
-  warning(min_dim)
+  #warning(min_dim)
   n_eigenvalues <- ifelse(n_eigenvalues > min_dim, min_dim, n_eigenvalues)
 
   singular_decomp <- rARPACK::svds(

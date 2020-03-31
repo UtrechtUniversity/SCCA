@@ -35,7 +35,7 @@ scca_compute_tree <- function(
                        node        =  list(NULL))   # will contain list of children (if any)
 
   #
-  warning('level: ', level, ' / child: ', child, ' / labels: ', length(labels))
+  #warning('level: ', level, ' / child: ', child, ' / labels: ', length(labels))
 
   if (length(labels) > 2) {
     decomposition <- decomp_symmetric(matrix = subM, n_eigenvalues = 25)   #s and d_inv
@@ -54,7 +54,6 @@ scca_compute_tree <- function(
     k <- apply_heuristic(eigen_values)
     cluster_node[['k']] <- k
   } else {
-    warning('small cluster')
     k <- 1  # to stop decomposition
   }
 
