@@ -6,6 +6,7 @@
 #' @param level Integer the depth of this node in the tree
 #' @param iter.max Integer; the maximum number of iterations kmeans may take to compute the clusters
 #' @param nstart Integer; the number of clusterings from which kmeans chooses the best
+#' @param decomp The decomposition method to use: 'svd' or 'svds'.
 #'
 #'
 #'
@@ -13,13 +14,15 @@
 scca_compute_tree <- function(
   labels, m, child, level,
   iter.max     =  10,
-  nstart       =  50) {
+  nstart       =  50,
+  decomp) {
 
   if (!is.matrix(m)) {stop("Argument m is not a matrix")}
 
   # Select the rows of the sub matrix that has to be analyzed at this node
   #
   subM <- m[labels, , drop = FALSE]
+
 
   #
   zero_vector  <- rep(0, length(labels))            # used as a place holder for eigen_vectors of this sub-matrix
@@ -38,7 +41,7 @@ scca_compute_tree <- function(
   #warning('level: ', level, ' / child: ', child, ' / labels: ', length(labels))
 
   if (length(labels) > 2) {
-    decomposition <- decomp_symmetric(matrix = subM, n_eigenvalues = 25)   #s and d_inv
+    decomposition <- decomp_symmetric(matrix = subM, n_eigenvalues = 25, decomp = decomp)   #s and d_inv
     eigen_vectors <- decomposition$r_vectors
     eigen_values  <- decomposition$values
 
@@ -90,9 +93,11 @@ scca_compute_tree <- function(
   cluster_node[['node']] <- mapply(FUN = scca_compute_tree,
                                    cluster_labels,               # will be mapped to argument 'labels'
                                    as.list(1:k),                 # will be mapped to argument 'child'
-                                   MoreArgs = list(m = m, level = level + 1,
-                                                   iter.max    = iter.max,
-                                                   nstart      = nstart),
+                                   MoreArgs = list(m = m,
+                                                   level    = level + 1,
+                                                   iter.max = iter.max,
+                                                   nstart   = nstart,
+                                                   decomp   = decomp),
                                    SIMPLIFY = FALSE)
   return(cluster_node)
 }

@@ -4,13 +4,15 @@
 \alias{decomp_symmetric}
 \title{Decompose Large and Sparse Matrix}
 \usage{
-decomp_symmetric(matrix, n_eigenvalues = 25)
+decomp_symmetric(matrix, n_eigenvalues = 25, decomp = "svd")
 }
 \arguments{
 \item{matrix}{An incidence matrix. The rows are the observations and
 the columns are the variables}
 
 \item{n_eigenvalues}{Number of most prominent Eigenvalues to return. Default is 25.}
+
+\item{decomp}{The decomposition to use: 'svd' (default) or 'svds'.}
 }
 \description{
 See <<link>>

@@ -5,11 +5,14 @@
 #' @param matrix An incidence matrix. The rows are the observations and
 #'   the columns are the variables
 #' @param n_eigenvalues Number of most prominent Eigenvalues to return. Default is 25.
+#' @param decomp The decomposition to use: 'svd' (default) or 'svds'.
 #'
 
-decomp_symmetric <- function(matrix, n_eigenvalues = 25) {
+decomp_symmetric <- function(matrix, n_eigenvalues = 25, decomp = 'svd') {
 
-
+  if (!decomp %in% c('svds', 'svd')) {
+    stop('Unknown decomposition function!')
+  }
   # Compute symmetric matrix S
   # Steps:
   #   A  matrix with observations (n rows) and variables (m columns)
@@ -20,8 +23,12 @@ decomp_symmetric <- function(matrix, n_eigenvalues = 25) {
 
 
   matrix_a <- Matrix::Matrix(matrix, sparse = TRUE)     # Use sparse matrix to speed up computations
+
+
   r_sums   <- Matrix::rowSums(matrix_a)
   c_sums   <- Matrix::colSums(matrix_a)
+
+  #matrix_a <- matrix_a[ , c_sums != 0]
 
   # columns/rows can become disconnected (sum == 0). To prevent division by 0
   # set the sum to 1
@@ -42,19 +49,20 @@ decomp_symmetric <- function(matrix, n_eigenvalues = 25) {
   #  number of eigenvalues may not be larger than smallest dimension of the matrix
   #
   min_dim       <- min(dim(a_hat)[1], dim(a_hat)[2])
-  #warning(min_dim)
   n_eigenvalues <- ifelse(n_eigenvalues > min_dim, min_dim, n_eigenvalues)
 
-  singular_decomp <- rARPACK::svds(
-    A    = a_hat,
-    k    = n_eigenvalues,
-    opts = list(maxitr = 100000))
-
-  #singular_decomp <- base::svd(A = a_hat, k = n_eigenvalues)
+  if (decomp == 'svds') {
+    singular_decomp <- rARPACK::svds(
+      A    = a_hat,
+      k    = n_eigenvalues,
+      opts = list(maxitr = 1000))
+  } else {
+    singular_decomp <- base::svd(x = a_hat, nu = n_eigenvalues, nv = 0)
+  }
 
   row_eigen_vectors <- sqrt(d_r_inv) %*% singular_decomp$u
-  col_eigen_vectors <- sqrt(d_c_inv) %*% singular_decomp$v
-  eigen_values      <- singular_decomp$d^2
+  #col_eigen_vectors <- sqrt(d_c_inv) %*% singular_decomp$v
+  eigen_values      <- singular_decomp$d[1:n_eigenvalues]^2
 
 
   # due to rounding errors zero's, don't have to be exactly zero. They even can be negative and that
@@ -70,9 +78,11 @@ decomp_symmetric <- function(matrix, n_eigenvalues = 25) {
   # some scaling but why?
   #
   row_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
-  col_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
+  #col_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
 
-  return(list(r_vectors = row_eigen_vectors, c_vectors = col_eigen_vectors, values = eigen_values))
+  return(list(r_vectors = row_eigen_vectors,
+              #c_vectors = col_eigen_vectors,
+              values = eigen_values))
 }
 
 
