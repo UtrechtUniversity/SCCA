@@ -19,7 +19,7 @@ scca_compute(m, iter.max = 10, nstart = 25, decomp = "svd")
 A tree which describes the hierarchical clustering process.
 Each node in the tree represents a stage in the analysis. The subnodes  :
 \describe{
-  \item{level}{The level in the tree.}
+  \item{depth}{The depth in the tree.}
   \item{labels}{The labels (rownames) of the cluster in this node}
   \item{child}{Number of this cluster among its siblings. No order intended}
   \item{spectrum}{Vector of the Eigen values found at this node. The Eigenvalues are

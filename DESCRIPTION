@@ -30,7 +30,8 @@ Imports:
     network,
     clValid,
     cluster,
-    factoextra
+    factoextra,
+    data.tree
 Suggests:
     readr,
     testthat,

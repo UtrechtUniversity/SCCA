@@ -3,7 +3,7 @@
 #' @param m Numeric matrix; Laplacian
 #' @param child Numeric. Node number within its siblings (= same parent)
 #' @param labels Character vector; The labels defining the (sub-)cluster to be analyzed
-#' @param level Integer the depth of this node in the tree
+#' @param depth Integer the depth of this node in the tree
 #' @param iter.max Integer; the maximum number of iterations kmeans may take to compute the clusters
 #' @param nstart Integer; the number of clusterings from which kmeans chooses the best
 #' @param decomp The decomposition method to use: 'svd' or 'svds'.
@@ -12,7 +12,7 @@
 #'
 #'
 scca_compute_tree <- function(
-  labels, m, child, level,
+  labels, m, child, depth,
   iter.max     =  10,
   nstart       =  50,
   decomp) {
@@ -26,19 +26,20 @@ scca_compute_tree <- function(
 
   #
   zero_vector  <- rep(0, length(labels))            # used as a place holder for eigen_vectors of this sub-matrix
-  cluster_node <- list(level       =  level,        # the steps taken form top level to this node
+  cluster_node <- list(depth       =  depth,        # the steps taken form top depth to this node
                        child       =  child,        # number for distinguishing this node from its siblings
                        labels      =  labels,       # observations in this cluster
-                       k           =  NULL,         # number of most contributing eigenvalues
+                       nlabs       =  length(labels),
+                       k           =  0,            # number of most contributing eigenvalues
                        node_type   = 'branch',      # branch or leaf
                        eigen_vec_1 =  zero_vector,  # eigen vectors after decomposition of this cluster
                        eigen_vec_2 =  zero_vector,
                        eigen_vec_3 =  zero_vector,
                        spectrum    =  vector(mode = 'integer'),  # eigenvalues sorted on explained variance
-                       node        =  list(NULL))   # will contain list of children (if any)
+                       node        =  NULL)   # will contain list of children (if any)
 
   #
-  #warning('level: ', level, ' / child: ', child, ' / labels: ', length(labels))
+  #warning('depth: ', depth, ' / child: ', child, ' / labels: ', length(labels))
 
   if (length(labels) > 2) {
     decomposition <- decomp_symmetric(matrix = subM, n_eigenvalues = 25, decomp = decomp)   #s and d_inv
@@ -94,7 +95,7 @@ scca_compute_tree <- function(
                                    cluster_labels,               # will be mapped to argument 'labels'
                                    as.list(1:k),                 # will be mapped to argument 'child'
                                    MoreArgs = list(m = m,
-                                                   level    = level + 1,
+                                                   depth    = depth + 1,
                                                    iter.max = iter.max,
                                                    nstart   = nstart,
                                                    decomp   = decomp),
