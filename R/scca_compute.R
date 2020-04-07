@@ -71,8 +71,9 @@ scca_compute <- function(m, iter.max = 10, nstart = 25, decomp = 'svd') {
     child    = 1,
     labels   = labels,
     depth    = 1,
+    n_node   = 1,
     iter.max = iter.max,
     nstart   = nstart,
     decomp   = decomp)
-  return(scca_top_node)
+  return(scca_top_node$cluster_node)
 }

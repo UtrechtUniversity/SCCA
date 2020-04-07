@@ -9,18 +9,19 @@ scca_print(scca, ...)
 \arguments{
 \item{scca}{An output of scca_compute}
 
-\item{...}{The attributes to be printed: 'depth', 'k', 'node_type' and 'nlabs'}
+\item{...}{The attributes to be printed: 'depth', 'k', 'node_type' and 'n_labs'}
 }
 \description{
 Prints the hierarchical analysis to screen in character-based, human-readable fashion
 }
 \details{
-The numbers in the tree are the child numbers. \code{depth} is the level in the tree and \code{nlabs} the number of
-  of labels in the (sub-)cluster. Each attribute can be ommited. If no attribute is given, then only the hierarchy is printed.
+The nodes (subclusters) are numbered in depth-first pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
+  of labels in the (sub-)cluster. \code{child} is the numbering within its siblings. And \code{k} is the number of relevant Eigenvalues.
+  Each attribute can be ommited. If no attribute is given, then only the hierarchy is printed.
 }
 \examples{
   \dontrun{
      s <- scca_compute(t(carnivora))
-     scca_print(scca = s, 'k', 'nlabs')
+     scca_print(scca = s, 'k', 'n_labs')
 }
 }

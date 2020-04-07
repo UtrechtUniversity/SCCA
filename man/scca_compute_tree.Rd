@@ -4,7 +4,16 @@
 \alias{scca_compute_tree}
 \title{Build recursively a scca tree}
 \usage{
-scca_compute_tree(labels, m, child, depth, iter.max = 10, nstart = 50, decomp)
+scca_compute_tree(
+  labels,
+  m,
+  child,
+  depth,
+  n_node,
+  iter.max = 10,
+  nstart = 50,
+  decomp
+)
 }
 \arguments{
 \item{labels}{Character vector; The labels defining the (sub-)cluster to be analyzed}
@@ -14,6 +23,8 @@ scca_compute_tree(labels, m, child, depth, iter.max = 10, nstart = 50, decomp)
 \item{child}{Numeric. Node number within its siblings (= same parent)}
 
 \item{depth}{Integer the depth of this node in the tree}
+
+\item{n_node}{Number of this node in the tree. This is a depth-first, pre-order numbering}
 
 \item{iter.max}{Integer; the maximum number of iterations kmeans may take to compute the clusters}
 

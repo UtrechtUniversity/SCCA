@@ -37,6 +37,23 @@ scca1   <- scca_compute(m = carnivora)
 overlap <- scca_overlap_test(x = scca, y = scca1, plot = TRUE)
 ```
 
+### Printing and plotting
+
+The package provides three functions for printing and plotting the hierachical analysis tree produced by \code{scca_compute}
+
+The function \code{scca_print} prints the ...
+
+``` R
+s <- scca_compute(carnivora, decomp = 'svd')
+scca_print(scca = s, 'k', 'n_labs')
+```
+
+The function \code{scca_plot_spectrum} plots the spectrum of a specific node ...
+
+The function \code{scca_plot_vectors} plots the ....
+
+### Stability
+
 Let `cl` be a clustering on a set of observation and `cl_i` the clustering of same observations with variable `i` dropped. The clustering process is called stable if `cl` is (almost) the same (by some measure) as cl_i. The measure is the average proportion of overlap.
 
 ``` R
@@ -45,6 +62,7 @@ drop          <- sample(ncol(carnivora), ncol(carnivora) %/% 10)
 stability     <- scca_stability_test(m = carnivora, drop_vars = drop)
 avg_stability <- stability %>% summarise(mean(var_APO))
 ``` 
+### Validity
 
 The package `clValid` and `cluster` provide functions to calculate the internal validity of a clustering. The measures are Silhoutette Width, Dunn Index and Connectivity. This package provides a wrapper around these functions. It needs a distance matrix which must be calculated. Save the distance matrix for repeated uses, because the distance computation may take a while. 
 

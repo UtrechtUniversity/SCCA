@@ -4,6 +4,7 @@
 #' @param child Numeric. Node number within its siblings (= same parent)
 #' @param labels Character vector; The labels defining the (sub-)cluster to be analyzed
 #' @param depth Integer the depth of this node in the tree
+#' @param n_node Number of this node in the tree. This is a depth-first, pre-order numbering
 #' @param iter.max Integer; the maximum number of iterations kmeans may take to compute the clusters
 #' @param nstart Integer; the number of clusterings from which kmeans chooses the best
 #' @param decomp The decomposition method to use: 'svd' or 'svds'.
@@ -12,7 +13,7 @@
 #'
 #'
 scca_compute_tree <- function(
-  labels, m, child, depth,
+  labels, m, child, depth, n_node,
   iter.max     =  10,
   nstart       =  50,
   decomp) {
@@ -29,8 +30,9 @@ scca_compute_tree <- function(
   cluster_node <- list(depth       =  depth,        # the steps taken form top depth to this node
                        child       =  child,        # number for distinguishing this node from its siblings
                        labels      =  labels,       # observations in this cluster
-                       nlabs       =  length(labels),
+                       n_labs      =  length(labels), # Number of labels in this cluster (node)
                        k           =  0,            # number of most contributing eigenvalues
+                       n_node      =  n_node,       # depth-first, pre-order numbering of nodes
                        node_type   = 'branch',      # branch or leaf
                        eigen_vec_1 =  zero_vector,  # eigen vectors after decomposition of this cluster
                        eigen_vec_2 =  zero_vector,
@@ -66,7 +68,7 @@ scca_compute_tree <- function(
   #
   if (k == 1) {
     cluster_node[['node_type']] = 'leaf'
-    return(cluster_node)
+    return(list(cluster_node = cluster_node, n_node = n_node))
   }
 
   # Compute input matrix Y for the kmeans.
@@ -83,24 +85,23 @@ scca_compute_tree <- function(
     nstart   = nstart)  # returns vector cl$cluster which gives the cluster id for each label
 
   # repeat proces for each cluster (C_i with i in 1:k) and combine results in a list which will be
-  # stored in the 'nodes' attribute of this node
+  # stored in the 'nodes' attribute of this node as a list of lists
   #
-  cluster_labels <- list()
-  cluster_labels <- lapply(X = 1:k, FUN = function(i) rownames(subM)[cl$cluster == i])
-
-  # for each set of labels in list repeat scca proces and combine results in a list
-  # lapply means 'list apply'
-    #
-  cluster_node[['node']] <- mapply(FUN = scca_compute_tree,
-                                   cluster_labels,               # will be mapped to argument 'labels'
-                                   as.list(1:k),                 # will be mapped to argument 'child'
-                                   MoreArgs = list(m = m,
-                                                   depth    = depth + 1,
-                                                   iter.max = iter.max,
-                                                   nstart   = nstart,
-                                                   decomp   = decomp),
-                                   SIMPLIFY = FALSE)
-  return(cluster_node)
+  for (child in 1:k) {
+    child_labels <- rownames(subM)[cl$cluster == child]
+    child_tree   <- scca_compute_tree(
+      labels   = child_labels,
+      m        = m,
+      child    = child,
+      depth    = depth + 1,
+      n_node   = n_node + 1,
+      iter.max = iter.max,
+      nstart   = nstart,
+      decomp   = decomp)
+    cluster_node$node[[child]] <- child_tree$cluster_node
+    n_node                     <- child_tree$n_node
+  }
+  return(list(cluster_node = cluster_node, n_node = n_node))
 }
 
 
