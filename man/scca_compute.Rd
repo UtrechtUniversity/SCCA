@@ -4,7 +4,13 @@
 \alias{scca_compute}
 \title{Spectral Clustering Correpondence Analysis.}
 \usage{
-scca_compute(m, iter.max = 10, nstart = 25, decomp = "svd")
+scca_compute(
+  m,
+  iter.max = 10,
+  nstart = 25,
+  decomp = "svd",
+  heuristic = eigengap_heuristic
+)
 }
 \arguments{
 \item{m}{A matrix representing a bi-partite or incidence graph. The matrix must have row names and column names.}
@@ -14,6 +20,8 @@ scca_compute(m, iter.max = 10, nstart = 25, decomp = "svd")
 \item{nstart}{Integer, number of random cluster centers kmeans may choose to start with. Default is 25.}
 
 \item{decomp}{The decomposition function to use. Choices are 'svd' (default) and 'svds'.}
+
+\item{heuristic}{The function to use for calculating the number of expected clusters.}
 }
 \value{
 A tree which describes the hierarchical clustering process.
@@ -33,11 +41,12 @@ Each node in the tree represents a stage in the analysis. The subnodes  :
 }
 }
 \description{
-The function \code{scca_compute} performs a spectral clustering correspondence analysis on a given
-bi-partite or incidence graph (matrix m).
-Starting with the the input matrix the spectrum (sorted Eigenvalues) of the matrix is computed. The spectrum is used by a heuristic to determine
-the input parameter k of kmeans. If k > 1 then the current clusters is split by kemaens into k subclusters and the proces is
-repeated for the k subclusters. Else, the decomposition of this branch ends with current cluster (leaf).
+The function \code{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a
+bi-partite or incidence matrix. The proces consists of a decompostion of the matrix (svd), a (user-provided) heuristic which transforms
+transforms the decompostion to input for kmeans clustering and the kmeans clustering itself. Each of the resulting clusters (sub-matrices) can be analyzed again
+And so on till some stopping condition is met.
+The output of \code{sccs_compute} is a tree (list of lists) in which every node is a proces step.
+The top node represents the first step on the entire matrix
 }
 \examples{
 \dontrun{

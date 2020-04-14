@@ -37,20 +37,38 @@ scca1   <- scca_compute(m = carnivora)
 overlap <- scca_overlap_test(x = scca, y = scca1, plot = TRUE)
 ```
 
-### Printing and plotting
+### Singular Value Decomposition
 
-The package provides three functions for printing and plotting the hierachical analysis tree produced by \code{scca_compute}
+The default is `svd`, but the user can opt for `svds`
 
-The function \code{scca_print} prints the ...
+``` R
+scca <- scca_compute(carnivora, decomp = 'svds`)
+```
+
+### Retrieving information
+
+The package provides three functions for retrieving information out of the hierachical analysis tree produced by `scca_compute`
+
+The function \code{scca_print} prints the tree to screen.
 
 ``` R
 s <- scca_compute(carnivora, decomp = 'svd')
 scca_print(scca = s, 'k', 'n_labs')
 ```
 
-The function \code{scca_plot_spectrum} plots the spectrum of a specific node ...
+The print function shows the tree structure in which the nodes are numbered. Use `scca_get_node` to collect labels of the data cluster at that node and its spectrum. 
 
-The function \code{scca_plot_vectors} plots the ....
+``` R
+s <- scca_compute(carnivora, decomp = 'svd')
+scca_print(scca = s, 'k', 'n_labs')
+
+# user finds node N interesting and want to see its attributes
+#
+
+scca_get_node(scca = s, node = N)
+```
+
+The function \code{scca_plot_spectrum} plots the spectrum of ....
 
 ### Stability
 
@@ -77,6 +95,31 @@ validity$sil
 validity$dunn
 validity$conn
 ```
+
+### Heuristics 
+
+The function `scca_compute` uses a heuristic to determine the input for the `kmeans` clustering based on the properties of the Eigenvalues (spectrum) and Eigenvectors. The default is `eigengap_heuristic`. The package also contains the `trace_heuristic`. The user has also the option to provide her own heuristic.
+
+``` R
+scca <- scca_compute(exports, heuristic = trace_heuristic)
+
+my_heuristic <- function(eigenvalues, eigenvectors) {
+  
+  # compute minimum number and maximum number of cluster centers
+  min.nc <- ....
+  max.nc <- ....
+  
+  # compute embedding (= data matrix for kmeans)
+  #
+  Y <- .....
+  return(list(Y = Y, min.nc = min.nc, max.nc = max.nc ))
+}
+```
+
+If `min.nc == max.nc` the standard `kmeans` will be used. Else `NbClust` is used to find the optimal number of clusters witin the range (min.nc, max.nc).
+
+
+### Python implementation of SCCA
 
 Last but not least, there is a function to compare clusterings form `scca_compute` with clusterings on the same data/category from the Python implementation. See ?scca_py_overlap_test
 

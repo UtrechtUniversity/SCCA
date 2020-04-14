@@ -3,7 +3,7 @@
 \docType{data}
 \name{carnivora_sites}
 \alias{carnivora_sites}
-\title{Sites of the Carnivora incidence in marine territoria.}
+\title{Site coordinates of the Ccarnivora dataset}
 \format{An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 41580 rows and 3 columns.}
 \usage{
 carnivora_sites

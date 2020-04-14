@@ -6,9 +6,7 @@
 \title{Carnivora Incidence in Marine Territoria}
 \format{A list with to elements
 \describe{
-  \item{M}{absence-presence (0/1) matrix. The column names are names of the species and the row names are coordinates of the sites }
-  \item{coords}{datatable with site labels and lon/lat pairs}
-  ...
+  \item{M}{absence-presence (0/1) matrix. The columns are species and the rows are the sites }
 }}
 \source{
 \url{http://www.somewhere}
@@ -26,5 +24,8 @@ data on the geographic distributions of mammals both extant and extinct over the
 (last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and prunned distributions
 to only include carnivores. Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
 The incidences of certain species (carnivora) at marine sites are given by a bipartite adjacency matrix.
+}
+\details{
+The table \code{carnivora_species}
 }
 \keyword{datasets}

@@ -9,7 +9,7 @@
 carnivora_species
 }
 \description{
-This table has two columns: species_id and species_name. The first column contains indices (column names) in the Carnivora
-incidence matrix. The second column contains the names of the species (which format/schema?)
+This table has two columns: species_id and species_name. The first column contains labels (column names) of the Carnivora
+incidence matrix. The second column contains the names of the species.
 }
 \keyword{datasets}

@@ -24,6 +24,9 @@ decomp_symmetric <- function(matrix, n_eigenvalues = 25, decomp = 'svd') {
 
   matrix_a <- Matrix::Matrix(matrix, sparse = TRUE)     # Use sparse matrix to speed up computations
 
+  # remove disconnected columns
+  #
+  matrix_a <- matrix_a[ , Matrix::colSums(matrix_a) != 0, drop = FALSE]
 
   r_sums   <- Matrix::rowSums(matrix_a)
   c_sums   <- Matrix::colSums(matrix_a)
@@ -65,8 +68,8 @@ decomp_symmetric <- function(matrix, n_eigenvalues = 25, decomp = 'svd') {
   eigen_values      <- singular_decomp$d[1:n_eigenvalues]^2
 
 
-  # due to rounding errors zero's, don't have to be exactly zero. They even can be negative and that
-  # can cause errors when taking square roots. Such values within a small tolerance will be reset to 0,
+  # due to rounding errors zero's, values don't have to be exactly zero. They even can be negative and that
+  # will give errors when taking square roots. Such values within a small tolerance will be reset to 0,
   # otherwise will raise errors
   #
   tolerance = 1e-7

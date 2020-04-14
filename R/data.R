@@ -10,26 +10,26 @@
 #' to only include carnivores. Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
 #' The incidences of certain species (carnivora) at marine sites are given by a bipartite adjacency matrix.
 #'
-
-#'
 #'
 #' @format A list with to elements
 #' \describe{
-#'   \item{M}{absence-presence (0/1) matrix. The column names are names of the species and the row names are coordinates of the sites }
-#'   \item{coords}{datatable with site labels and lon/lat pairs}
-#'   ...
+#'   \item{M}{absence-presence (0/1) matrix. The columns are species and the rows are the sites }
 #' }
+#'
+#' @details
+#'   The table \code{carnivora_species}
 #' @source \url{http://www.somewhere}
 "carnivora"
+"carnivora_species"
 
 #' Species of the Carnivora incidence in marine territoria.
 #'
-#' This table has two columns: species_id and species_name. The first column contains indices (column names) in the Carnivora
-#' incidence matrix. The second column contains the names of the species (which format/schema?)
+#' This table has two columns: species_id and species_name. The first column contains labels (column names) of the Carnivora
+#' incidence matrix. The second column contains the names of the species.
 #'
 "carnivora_species"
 
-#' Sites of the Carnivora incidence in marine territoria.
+#' Site coordinates of the Ccarnivora dataset
 #'
 #' The Carnivora dataset also has a table with for every site the row id in the incidence matrix. The second and third columns give
 #' the coordinates (lon/lat) of the site. The Behrman cylindrical equal area projection is used with
@@ -40,11 +40,12 @@
 "carnivora_sites"
 
 
-#' Exports data.
+#' Exports data
 #'
-#' The exports data set consists of a matrix of 234 rows that represent countries and 1239 columns that represent products.
-#' The entries give the value of exports in 2016 in US $.
-#' The product names (column names) are given by the 4-digit 'Harmonized System' classification. The country names (row names) are ....
+#' The exports dataset is an adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
+#' The matrix value is the value of the export in US dollars in 2016.
+#' The names of the countries and their GDP can be found in \code{exports_countries}. The row names of \code{exports} coorespond to the column
+#' \code{label}.Product names can be found in \code{exports_products}.
 #'
 #' The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,
 #' processed and made publicly available by the Growth Growth Lab at Harvard University.
@@ -55,17 +56,24 @@
 #'
 #'
 #'
-#' @format A list with to elements
+#' @format
 #' \describe{
-#'   \item{M}{Matrix with export values of products (columns) by countries (rows)  }
-#'   \item{country_name}{one column datatable with country names}
-#'   ...
+#'   \item{\emph{rows}}{Exporting countries}
+#'   \item{\emph{columns}}{Exported product categories}
 #' }
 #' @source \url{http://atlas.cid.harvard.edu/about-data}
 "exports"
 
-#' Carnivora Incidence in Marine Territoria (old verion)
+#' Country names of exporting countries and their GDPs
 #'
-"carnivora_old"
+#' See: \link[=exports]{exports}
+#'
+"exports_countries"
+
+#' Exported products
+#'
+#' See: \link[=exports]{exports}
+#'
+"exports_products"
 
 

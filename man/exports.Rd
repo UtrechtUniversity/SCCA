@@ -3,12 +3,10 @@
 \docType{data}
 \name{exports}
 \alias{exports}
-\title{Exports data.}
-\format{A list with to elements
-\describe{
-  \item{M}{Matrix with export values of products (columns) by countries (rows)  }
-  \item{country_name}{one column datatable with country names}
-  ...
+\title{Exports data}
+\format{\describe{
+  \item{\emph{rows}}{Exporting countries}
+  \item{\emph{columns}}{Exported product categories}
 }}
 \source{
 \url{http://atlas.cid.harvard.edu/about-data}
@@ -17,9 +15,10 @@
 exports
 }
 \description{
-The exports data set consists of a matrix of 234 rows that represent countries and 1239 columns that represent products.
-The entries give the value of exports in 2016 in US $.
-The product names (column names) are given by the 4-digit 'Harmonized System' classification. The country names (row names) are ....
+The exports dataset is an adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
+The matrix value is the value of the export in US dollars in 2016.
+The names of the countries and their GDP can be found in \code{exports_countries}. The row names of \code{exports} coorespond to the column
+\code{label}.Product names can be found in \code{exports_products}.
 }
 \details{
 The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,

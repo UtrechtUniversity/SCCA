@@ -30,6 +30,7 @@ Imports:
     network,
     clValid,
     cluster,
+    NbClust,
     factoextra,
     data.tree
 Suggests:

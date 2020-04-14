@@ -12,25 +12,28 @@ scca_compute_tree(
   n_node,
   iter.max = 10,
   nstart = 50,
-  decomp
+  decomp = "svd",
+  heuristic = eigengap_heuristic
 )
 }
 \arguments{
-\item{labels}{Character vector; The labels defining the (sub-)cluster to be analyzed}
+\item{labels}{The labels (character vector) defining the (sub-)set of dataset m to be analyzed}
 
-\item{m}{Numeric matrix; Laplacian}
+\item{m}{Dataset as an bipartite or incidence matrix}
 
-\item{child}{Numeric. Node number within its siblings (= same parent)}
+\item{child}{The child number of this node within its siblings (= same parent)}
 
-\item{depth}{Integer the depth of this node in the tree}
+\item{depth}{The depth (integer) of this node in the tree}
 
 \item{n_node}{Number of this node in the tree. This is a depth-first, pre-order numbering}
 
-\item{iter.max}{Integer; the maximum number of iterations kmeans may take to compute the clusters}
+\item{iter.max}{The maximum number (integer) of iterations kmeans may take to compute the clusters}
 
-\item{nstart}{Integer; the number of clusterings from which kmeans chooses the best}
+\item{nstart}{The number of clusterings from which kmeans chooses the best}
 
-\item{decomp}{The decomposition method to use: 'svd' or 'svds'.}
+\item{decomp}{The decomposition method to use: 'svd' (default) or 'svds'.}
+
+\item{heuristic}{The function to use for calculating the number of expected clusters (k) and the embedding}
 }
 \description{
 Build recursively a scca tree

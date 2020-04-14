@@ -1,15 +1,17 @@
 #' Spectral Clustering Correpondence Analysis.
 #'
-#' The function \code{scca_compute} performs a spectral clustering correspondence analysis on a given
-#' bi-partite or incidence graph (matrix m).
-#' Starting with the the input matrix the spectrum (sorted Eigenvalues) of the matrix is computed. The spectrum is used by a heuristic to determine
-#' the input parameter k of kmeans. If k > 1 then the current clusters is split by kemaens into k subclusters and the proces is
-#' repeated for the k subclusters. Else, the decomposition of this branch ends with current cluster (leaf).
+#' The function \code{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a
+#' bi-partite or incidence matrix. The proces consists of a decompostion of the matrix (svd), a (user-provided) heuristic which transforms
+#' transforms the decompostion to input for kmeans clustering and the kmeans clustering itself. Each of the resulting clusters (sub-matrices) can be analyzed again
+#' And so on till some stopping condition is met.
+#' The output of \code{sccs_compute} is a tree (list of lists) in which every node is a proces step.
+#' The top node represents the first step on the entire matrix
 #'
 #' @param m A matrix representing a bi-partite or incidence graph. The matrix must have row names and column names.
 #' @param iter.max Integer, the maximum number of iterations \code{kmeans} is allowed. Default is 10.
 #' @param nstart Integer, number of random cluster centers kmeans may choose to start with. Default is 25.
 #' @param decomp The decomposition function to use. Choices are 'svd' (default) and 'svds'.
+#' @param heuristic The function to use for calculating the number of expected clusters.
 #'
 #'
 #' @return A tree which describes the hierarchical clustering process.
@@ -34,17 +36,22 @@
 #' scca_compute(carnivora)
 #' }
 #' @export
-scca_compute <- function(m, iter.max = 10, nstart = 25, decomp = 'svd') {
+scca_compute <- function(m, iter.max = 10, nstart = 25, decomp = 'svd', heuristic = eigengap_heuristic) {
   if (!is.matrix(m)) { stop('input not a matrix')}
 
   if (is.null(rownames(m)) || is.null(colnames(m))) {
     stop('matrix m must have row and column labels')
   }
 
-  # The actual Eigen decomposition takes place on the axis (rows/cols) with the shortest dimension. This for
-  # performance reasons only.
-  # The clustering always takes place along the rows. If the decomposition axis is 'columns' then the Eigenvectors will be
-  # translated to the Eigenvectors of rows. See function 'compute_symmetric'.
+  if (!decomp %in% c('svd', 'svds')) {
+    stop('unknown decomposition algoritm')
+  }
+
+  if (!rlang::is_function(heuristic)) {
+    stop('heuristic is not a function')
+  }
+
+  # The clustering always takes place along the rows.
   #
 
   # rows (columns) must be labeled. The labels indentify the cases in the proces of clustering
@@ -62,18 +69,19 @@ scca_compute <- function(m, iter.max = 10, nstart = 25, decomp = 'svd') {
   labels <- rownames(m)
 
 
-  # scca_compute_tree recursively constructs the cluster tree
+  # scca_compute_tree recursively constructs teh analysis tree
   # Of course, it all starts with the top node
   #
 
   scca_top_node   <- scca_compute_tree(
-    m        = m,
-    child    = 1,
-    labels   = labels,
-    depth    = 1,
-    n_node   = 1,
-    iter.max = iter.max,
-    nstart   = nstart,
-    decomp   = decomp)
+    m         = m,
+    child     = 1,
+    labels    = labels,
+    depth     = 1,
+    n_node    = 1,
+    iter.max  = iter.max,
+    nstart    = nstart,
+    decomp    = decomp,
+    heuristic = heuristic)
   return(scca_top_node$cluster_node)
 }
