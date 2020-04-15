@@ -66,6 +66,6 @@ trace_heuristic <- function(eigenvalues, eigenvectors) {
   Y = eigenvectors[, 2:(nr_axes+1)]  #dit is de 'embedding' - ik verwijder de eerste (constante) eigenvector en behoud nr_axes kolommen. Hierop ga ik Kmeans doen.
 
   max.nc = 20
-  min.nc = 1
+  min.nc = 2
   return(list(Y = Y, min.nc = min.nc, max.nc = max.nc))
 }

@@ -19,7 +19,7 @@ gdp_df <- read_csv(
   file = "data-raw/country_GDPpc.csv",
   col_names = TRUE
 )
-gdp_df %<>% rename(gdp = GDPpc) %>% select(country_name, gdp)
+gdp_df %<>% select(country_name, GDPpc)
 
 # check disconnected countries (columns) and products (rows)
 #

@@ -4,7 +4,7 @@
 \name{exports_countries}
 \alias{exports_countries}
 \title{Country names of exporting countries and their GDPs}
-\format{An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 234 rows and 3 columns.}
+\format{An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 234 rows and 4 columns.}
 \usage{
 exports_countries
 }

@@ -17,7 +17,6 @@ rownames(carnivora) <- sprintf('%d', 0:(nrow(carnivora)-1))
 colnames(carnivora) <- sprintf('%d', 0:(ncol(carnivora)-1))
 
 # remove disconnected species (columns) and sites (rows)
-# Under discussion!
 #
 # rows0        <- rowSums(carnivora) == 0
 # names(rows0) <- NULL

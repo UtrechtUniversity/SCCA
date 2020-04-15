@@ -82,7 +82,6 @@ scca_compute_tree <- function(labels, m, child, depth, n_node,
     }
   } else {
     if (h_out$min.nc < h_out$max.nc) { # the optimal number of clusters lies between min.nc and max.nc --> NbClust will find the best k.
-      warning(dim(h_out$Y)[1], '-', h_out$min.nc, '-', h_out$max.nc)
       cl       <- NbClust::NbClust(data = h_out$Y, max.nc = h_out$max.nc, min.nc = h_out$min.nc, method = 'kmeans', index = 'dunn')
       k        <- cl$Best.nc[1]         # this is the best value for k
       clusters <- cl$Best.partition     # and these are the clusters
