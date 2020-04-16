@@ -9,9 +9,11 @@ scca_compute_tree(
   m,
   child,
   depth,
+  max_depth,
   n_node,
   iter.max = 10,
   nstart = 50,
+  max_eigenvalues = max_eigenvalues,
   decomp = "svd",
   heuristic = eigengap_heuristic
 )
@@ -23,13 +25,17 @@ scca_compute_tree(
 
 \item{child}{The child number of this node within its siblings (= same parent)}
 
-\item{depth}{The depth (integer) of this node in the tree}
+\item{depth}{The depth (integer) of this node in the tree.}
+
+\item{max_depth}{The maximum depth the hierarchical process may go down to.}
 
 \item{n_node}{Number of this node in the tree. This is a depth-first, pre-order numbering}
 
 \item{iter.max}{The maximum number (integer) of iterations kmeans may take to compute the clusters}
 
 \item{nstart}{The number of clusterings from which kmeans chooses the best}
+
+\item{max_eigenvalues}{Restrict number of computed eigenvalues to max_eigenvalues.}
 
 \item{decomp}{The decomposition method to use: 'svd' (default) or 'svds'.}
 

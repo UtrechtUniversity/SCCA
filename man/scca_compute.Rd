@@ -9,6 +9,7 @@ scca_compute(
   iter.max = 10,
   nstart = 25,
   disconnect.rm = TRUE,
+  max_eigenvalues = 25,
   decomp = "svd",
   heuristic = eigengap_heuristic
 )
@@ -21,6 +22,8 @@ scca_compute(
 \item{nstart}{Integer, number of random cluster centers kmeans may choose to start with. Default is 25.}
 
 \item{disconnect.rm}{If TRUE (default) disconnected rows and columns in the input data will be removed.}
+
+\item{max_eigenvalues}{At each stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
 
 \item{decomp}{The decomposition function to use. Choices are 'svd' (default) and 'svds'.}
 

@@ -4,11 +4,14 @@
 #'
 #' @param matrix An incidence matrix. The rows are the observations and
 #'   the columns are the variables
-#' @param n_eigenvalues Number of most prominent Eigenvalues to return. Default is 25.
+#' @param max_eigenvalues Max. number of eigenvalues to compute. Default is 25.
 #' @param decomp The decomposition to use: 'svd' (default) or 'svds'.
 #'
+#' @details If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
+#' to max_eigenvalues else the shortest dimension is choosen.
+#'
 
-decomp_symmetric <- function(matrix, n_eigenvalues = 25, decomp = 'svd') {
+decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
 
   if (!decomp %in% c('svds', 'svd')) {
     stop('Unknown decomposition function!')
@@ -52,7 +55,7 @@ decomp_symmetric <- function(matrix, n_eigenvalues = 25, decomp = 'svd') {
   #  number of eigenvalues may not be larger than smallest dimension of the matrix
   #
   min_dim       <- min(dim(a_hat)[1], dim(a_hat)[2])
-  n_eigenvalues <- ifelse(n_eigenvalues > min_dim, min_dim, n_eigenvalues)
+  n_eigenvalues <- ifelse(max_eigenvalues > min_dim, min_dim, max_eigenvalues)
 
   if (decomp == 'svds') {
     singular_decomp <- rARPACK::svds(

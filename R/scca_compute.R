@@ -11,6 +11,7 @@
 #' @param iter.max Integer, the maximum number of iterations \code{kmeans} is allowed. Default is 10.
 #' @param nstart Integer, number of random cluster centers kmeans may choose to start with. Default is 25.
 #' @param disconnect.rm If TRUE (default) disconnected rows and columns in the input data will be removed.
+#' @param max_eigenvalues At each stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.
 #' @param decomp The decomposition function to use. Choices are 'svd' (default) and 'svds'.
 #' @param heuristic The function to use for calculating the number of expected clusters.
 #'
@@ -37,11 +38,14 @@
 #' scca_compute(carnivora)
 #' }
 #' @export
-scca_compute <- function(m,
-  iter.max = 10, nstart = 25,
-  disconnect.rm = TRUE,
-  decomp        = 'svd',
-  heuristic     = eigengap_heuristic) {
+scca_compute <- function(
+  m,
+  iter.max        = 10,
+  nstart          = 25,
+  disconnect.rm   = TRUE,
+  max_eigenvalues = 25,
+  decomp          = 'svd',
+  heuristic       = eigengap_heuristic) {
   if (!is.matrix(m)) { stop('input not a matrix')}
 
   if (is.null(rownames(m)) || is.null(colnames(m))) {
@@ -84,10 +88,12 @@ scca_compute <- function(m,
     child     = 1,
     labels    = labels,
     depth     = 1,
+    max_depth = Inf,
     n_node    = 1,
     iter.max  = iter.max,
     nstart    = nstart,
-    decomp    = decomp,
-    heuristic = heuristic)
+    max_eigenvalues = max_eigenvalues,
+    decomp          = decomp,
+    heuristic       = heuristic)
   return(scca_top_node$cluster_node)
 }

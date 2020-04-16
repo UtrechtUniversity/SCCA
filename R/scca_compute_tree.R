@@ -4,21 +4,24 @@
 #' @param m Dataset as an bipartite or incidence matrix
 #' @param child The child number of this node within its siblings (= same parent)
 #' @param labels The labels (character vector) defining the (sub-)set of dataset m to be analyzed
-#' @param depth The depth (integer) of this node in the tree
+#' @param depth The depth (integer) of this node in the tree.
+#' @param max_depth The maximum depth the hierarchical process may go down to.
 #' @param n_node Number of this node in the tree. This is a depth-first, pre-order numbering
 #' @param iter.max The maximum number (integer) of iterations kmeans may take to compute the clusters
 #' @param nstart The number of clusterings from which kmeans chooses the best
+#' @param max_eigenvalues Restrict number of computed eigenvalues to max_eigenvalues.
 #' @param decomp The decomposition method to use: 'svd' (default) or 'svds'.
 #' @param heuristic The function to use for calculating the number of expected clusters (k) and the embedding
 #'
 #'
 #'
 #'
-scca_compute_tree <- function(labels, m, child, depth, n_node,
-                              iter.max  = 10,
-                              nstart    = 50,
-                              decomp    = 'svd',
-                              heuristic = eigengap_heuristic) {
+scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
+                              iter.max        = 10,
+                              nstart          = 50,
+                              max_eigenvalues = max_eigenvalues,
+                              decomp           = 'svd',
+                              heuristic        = eigengap_heuristic) {
 
   if (!is.matrix(m)) {stop("Argument m is not a matrix")}
 
@@ -44,14 +47,14 @@ scca_compute_tree <- function(labels, m, child, depth, n_node,
 
   # Sets of fewer than 3 observations are not decomposed and clusterd any further.
   #
-  if (length(labels) < 3) {
+  if (length(labels) < 3 || depth == max_depth) {
     cluster_node[['node_type']] <- 'leaf'
     return(list(cluster_node = cluster_node, n_node = n_node))
   }
 
   # Decompose in eigenvalues and eigenvectors
   #
-  decomposition <- decomp_symmetric(matrix = subM, n_eigenvalues = 25, decomp = decomp)
+  decomposition <- decomp_symmetric(matrix = subM, max_eigenvalues = max_eigenvalues, decomp = decomp)
   eigen_vectors <- decomposition$r_vectors
   eigen_values  <- decomposition$values
 
@@ -89,6 +92,7 @@ scca_compute_tree <- function(labels, m, child, depth, n_node,
       if (k == 1) {                     # no clustering at all
         clusters <- NULL
       }
+      max_depth <- depth + 1            # hierarchical process must stop at next level
     } else {
       stop('illegal values for min.nc or max.nc')
     }
@@ -113,9 +117,11 @@ scca_compute_tree <- function(labels, m, child, depth, n_node,
       m        = m,
       child    = child,
       depth    = depth + 1,
-      n_node   = n_node + 1,
-      iter.max = iter.max,
-      nstart   = nstart,
+      max_depth = max_depth,
+      n_node    = n_node + 1,
+      iter.max  = iter.max,
+      nstart    = nstart,
+      max_eigenvalues = max_eigenvalues,
       decomp   = decomp,
       heuristic = heuristic)
     cluster_node$node[[child]] <- child_tree$cluster_node

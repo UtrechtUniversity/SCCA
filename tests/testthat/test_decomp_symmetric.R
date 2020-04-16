@@ -26,7 +26,7 @@ bm_decomp_symmetric <- function() {
   #
   scca        <- sccar:::decomp_symmetric(
                    matrix            = bm_matrix,
-                   n_eigenvalues     = 180)
+                   max_eigenvalues     = 180)
 
   sc_vectors  <- as.matrix(scca$r_vectors)
   sc_vectors  <- abs(round(sc_vectors, digits = 4))  # benchmark data has only 4 digits
