@@ -130,7 +130,11 @@ scca_get_node <- function(scca, node_id) {
 
 scca_get_node <- function(scca, node) {
   if (scca$n_node == node) {
-    return(list(spectrum = scca$spectrum, labels = scca$labels))
+    return(list(spectrum    = scca$spectrum,
+                eigen_vec_1 = scca$eigen_vec_1,
+                eigen_vec_2 = scca$eigen_vec_2,
+                eigen_vec_3 = scca$eigen_vec_3,
+                labels      = scca$labels))
   } else {
     if (scca$node_type == 'leaf') {
       return(NULL)

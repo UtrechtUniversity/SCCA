@@ -19,6 +19,6 @@ test_that("scca_heuristic computes gap", {
 })
 
 test_that("scca_heuristic computes gap", {
-  expect_equal(object = sccar:::eigengap_heuristic(test_ones, test_vectors)$max.nc, expected = 4, info = 'Number of ones not correct')
+  expect_equal(object = sccar:::eigengap_heuristic(test_ones, test_vectors)$k, expected = 4, info = 'Number of ones not correct')
 })
 

@@ -1,13 +1,11 @@
 #' Compute RCA Matrix
 #'
-#' Computes Revealed Comparative Advantage (a.k.a. Location Quotient) from a country/products matrix
-#' (like the exports dataset)
-#' If RCA > 1 the product is 'over-represented' in a country.
-#' A binary version has values 1 if RCA > 1 and 0 otherwise.
+#' Computes Revealed Comparative Advantage (a.k.a. Location Quotient) bi-partite graph (e.g. country <-> exported products)
+#' matrix.
 #' See: \href{https://en.wikipedia.org/wiki/Revealed_comparative_advantage}{Wikipedia}.
 #'
 #' @param m A data matrix representing a bi-partite graph
-#' @param binary If TRUE (default) binary version is calculated
+#' @param binary If TRUE (default) binary values are calculated
 #'
 #' @export
 

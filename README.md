@@ -98,25 +98,33 @@ validity$conn
 
 ### Heuristics 
 
-The function `scca_compute` uses a heuristic to determine the input for the `kmeans` clustering based on the properties of the Eigenvalues (spectrum) and Eigenvectors. The default is `eigengap_heuristic`. The package also contains the `trace_heuristic`. The user has also the option to provide her own heuristic.
+The function `scca_compute` uses a heuristic to determine the input for the `kmeans` clustering based on the properties of the Eigenvalues (spectrum) and Eigenvectors. The default is `eigengap_heuristic`. The user has also the option to provide her own heuristic.
 
 ``` R
 scca <- scca_compute(exports, heuristic = trace_heuristic)
 
 my_heuristic <- function(eigenvalues, eigenvectors) {
   
-  # compute minimum number and maximum number of cluster centers
-  min.nc <- ....
-  max.nc <- ....
+  # compute the number (k) of cluster centers 
+  k <- ....
+
   
   # compute embedding (= data matrix for kmeans)
   #
   Y <- .....
-  return(list(Y = Y, min.nc = min.nc, max.nc = max.nc ))
+  return(list(Y = Y, k = k))
 }
 ```
 
-If `min.nc == max.nc` the standard `kmeans` will be used. Else `NbClust` is used to find the optimal number of clusters witin the range (min.nc, max.nc).
+### Pre-processing
+
+Currently the package contains only one function for pre-processing datasets `compute_rca`. Given an matrix representing a bi-partite graph (e.g. producers <-> products) it computes a matrix with binary values representing the Revealed Comparative Advantage (a.k.a. Location Quotient). Binary (0/1) values are the default but relative values are optional.
+
+``` R
+comput_rca(exports)
+comput_rca(exports, binary = FALSE)
+```
+
 
 
 ### Python implementation of SCCA

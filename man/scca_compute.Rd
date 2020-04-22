@@ -11,6 +11,7 @@ scca_compute(
   disconnect.rm = TRUE,
   max_eigenvalues = 25,
   decomp = "svd",
+  max_depth = Inf,
   heuristic = eigengap_heuristic
 )
 }
@@ -26,6 +27,9 @@ scca_compute(
 \item{max_eigenvalues}{At each stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
 
 \item{decomp}{The decomposition function to use. Choices are 'svd' (default) and 'svds'.}
+
+\item{max_depth}{The maximum allowed depth of the analysis proces.
+If Inf (default) the analysis goes on untill all subclusters can't be split any further.}
 
 \item{heuristic}{The function to use for calculating the number of expected clusters.}
 }

@@ -44,7 +44,7 @@ eigengap_heuristic <- function(eigenvalues, eigenvectors) {
   if (as.integer(threshold) > 1) {
     Y <- eigenvectors[ , 2:threshold, drop = FALSE]
   }
-  return(list(Y = Y, min.nc = as.integer(threshold), max.nc = as.integer(threshold)))
+  return(list(Y = Y, k = as.integer(threshold)))
 }
 
 #' trace_heuristic: An Heuristic to Calculate the Expected Number of Clusters and Embedding Matrix

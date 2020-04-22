@@ -12,6 +12,8 @@
 #' @param nstart Integer, number of random cluster centers kmeans may choose to start with. Default is 25.
 #' @param disconnect.rm If TRUE (default) disconnected rows and columns in the input data will be removed.
 #' @param max_eigenvalues At each stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.
+#' @param max_depth The maximum allowed depth of the analysis proces.
+#'                  If Inf (default) the analysis goes on untill all subclusters can't be split any further.
 #' @param decomp The decomposition function to use. Choices are 'svd' (default) and 'svds'.
 #' @param heuristic The function to use for calculating the number of expected clusters.
 #'
@@ -45,6 +47,7 @@ scca_compute <- function(
   disconnect.rm   = TRUE,
   max_eigenvalues = 25,
   decomp          = 'svd',
+  max_depth       = Inf,
   heuristic       = eigengap_heuristic) {
   if (!is.matrix(m)) { stop('input not a matrix')}
 
@@ -88,7 +91,7 @@ scca_compute <- function(
     child     = 1,
     labels    = labels,
     depth     = 1,
-    max_depth = Inf,
+    max_depth = max_depth,
     n_node    = 1,
     iter.max  = iter.max,
     nstart    = nstart,

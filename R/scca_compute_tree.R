@@ -17,9 +17,9 @@
 #'
 #'
 scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
-                              iter.max        = 10,
-                              nstart          = 50,
-                              max_eigenvalues = max_eigenvalues,
+                              iter.max         = 10,
+                              nstart           = 50,
+                              max_eigenvalues  = max_eigenvalues,
                               decomp           = 'svd',
                               heuristic        = eigengap_heuristic) {
 
@@ -45,9 +45,11 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
                        spectrum    =  vector(mode = 'integer'),  # Eigenvalues of this subset sorted on explained variance
                        node        =  NULL)         # Contains list of children if node-type is 'branch
 
-  # Sets of fewer than 3 observations are not decomposed and clusterd any further.
+  # Sets of fewer than 3 observations are not decomposed any further.
   #
-  if (length(labels) < 3 || depth == max_depth) {
+  if (length(labels) < 3 ) {
+    warning_message <- sprintf('Submatrix at node %d is too small ( < 3) to calculate Eigenvectors', n_node)
+    warning(warning_message)
     cluster_node[['node_type']] <- 'leaf'
     return(list(cluster_node = cluster_node, n_node = n_node))
   }
@@ -67,51 +69,26 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
   }
   cluster_node[['spectrum']]       <- eigen_values
 
+
   # Apply a user-provided heuristic on spectrum (eigenvalues) to calculate the optimal number (k) of clusters
   # and/or the embedding matrix. See @details for conditions an heuristic must meet
   #
   h_out <- heuristic(eigen_values, eigen_vectors)
 
-  # An heuristic always has an embedding matrix as outcome and
-  # 1. A range for the optimal number of clusters (min.nc and max.rc), or
-  # 2. the exact number of clusters (min.rc = max.rc)
-  #
-  if (h_out$min.nc == h_out$max.nc) {
-    k        <- h_out$max.nc   # the heuristic has determined the optimal number of clusters --> kmeans will compute the clusters
-    clusters <- NULL
-    if (k > 1) {
-      cl       <- stats::kmeans(x = h_out$Y, centers = k, iter.max = iter.max, nstart = nstart)  # returns vector cl$cluster which gives the cluster id for each label
-      clusters <- cl$cluster
-    }
-  } else {
-    if (h_out$min.nc < h_out$max.nc) { # the optimal number of clusters lies between min.nc and max.nc --> NbClust will find the best k.
-      cl       <- NbClust::NbClust(data = h_out$Y, max.nc = h_out$max.nc, min.nc = h_out$min.nc, method = 'kmeans', index = 'dunn')
-      k        <- cl$Best.nc[1]         # this is the best value for k
-      clusters <- cl$Best.partition     # and these are the clusters
+  cluster_node[['k']] <- h_out$k
 
-      if (k == 1) {                     # no clustering at all
-        clusters <- NULL
-      }
-      max_depth <- depth + 1            # hierarchical process must stop at next level
-    } else {
-      stop('illegal values for min.nc or max.nc')
-    }
-  }
-
-  cluster_node[['k']] <- k
-
-  # If k == 1 then this subset can't be split any further in meaningful sub-clusters. So recursion on this path stops here
-  #
-  if (k == 1) {
+  if (h_out$k == 1 || depth == max_depth) {
     cluster_node[['node_type']] <- 'leaf'
     return(list(cluster_node = cluster_node, n_node = n_node))
+  } else {
+    cl <- stats::kmeans(x = h_out$Y, centers = h_out$k, iter.max = iter.max, nstart = nstart)  # returns vector cl$cluster which gives the cluster id for each label
   }
 
   # repeat proces for each cluster (C_i with i in 1:k) and combine results in a list which will be
   # stored in the 'nodes' attribute of this node
   #
-  for (child in 1:k) {
-    child_labels <- rownames(subM)[clusters == child]
+  for (child in 1:h_out$k) {
+    child_labels <- rownames(subM)[cl$cluster == child]
     child_tree   <- scca_compute_tree(
       labels   = child_labels,
       m        = m,
