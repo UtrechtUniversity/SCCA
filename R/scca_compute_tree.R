@@ -36,7 +36,7 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
                        child       =  child,        # Number for distinguishing this node from its siblings
                        labels      =  labels,       #
                        n_labs      =  length(labels), # Number of labels (observations) in the subset
-                       k           =  0,            # The optimal number of clusters found in this subset
+                       k           =  0,           # The optimal number of clusters found in this subset
                        n_node      =  n_node,       # Depth-first, pre-order numbering of nodes in the scca tree
                        node_type   = 'branch',      # Values are 'branch' or 'leaf' If 'leaf' the subset can't be analyzed any further
                        eigen_vec_1 =  zero_vector,  # Eigenvectors after decomposition of this subset
@@ -50,6 +50,7 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
   if (length(labels) < 3 ) {
     warning_message <- sprintf('Submatrix at node %d is too small ( < 3) to calculate Eigenvectors', n_node)
     warning(warning_message)
+    cluster_node[['k']]         <- -1
     cluster_node[['node_type']] <- 'leaf'
     return(list(cluster_node = cluster_node, n_node = n_node))
   }
@@ -69,7 +70,11 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
   }
   cluster_node[['spectrum']]       <- eigen_values
 
-
+  if (depth == max_depth) {
+    cluster_node[['node_type']] <- 'leaf'
+    cluster_node[['k']]         <-  0
+    return(list(cluster_node = cluster_node, n_node = n_node))
+  }
   # Apply a user-provided heuristic on spectrum (eigenvalues) to calculate the optimal number (k) of clusters
   # and/or the embedding matrix. See @details for conditions an heuristic must meet
   #
@@ -77,7 +82,7 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
 
   cluster_node[['k']] <- h_out$k
 
-  if (h_out$k == 1 || depth == max_depth) {
+  if (h_out$k == 1) {
     cluster_node[['node_type']] <- 'leaf'
     return(list(cluster_node = cluster_node, n_node = n_node))
   } else {
