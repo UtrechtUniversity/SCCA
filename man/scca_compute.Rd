@@ -2,7 +2,7 @@
 % Please edit documentation in R/scca_compute.R
 \name{scca_compute}
 \alias{scca_compute}
-\title{Spectral Clustering Correpondence Analysis.}
+\title{Spectral Clustering Correpondence Analysis}
 \usage{
 scca_compute(
   m,
@@ -16,51 +16,57 @@ scca_compute(
 )
 }
 \arguments{
-\item{m}{A matrix representing a bi-partite or incidence graph. The matrix must have row names and column names.}
+\item{m}{A matrix representing a bi-partite network. The matrix must have row names and column names.}
 
-\item{iter.max}{Integer, the maximum number of iterations \code{kmeans} is allowed. Default is 10.}
+\item{iter.max}{The maximum number of iterations \emph{kmeans} is allowed to make. Default is 10.}
 
-\item{nstart}{Integer, number of random cluster centers kmeans may choose to start with. Default is 25.}
+\item{nstart}{Number of random cluster sets kmeans may choose to start with. Default is 25.}
 
 \item{disconnect.rm}{If TRUE (default) disconnected rows and columns in the input data will be removed.}
 
-\item{max_eigenvalues}{At each stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
+\item{max_eigenvalues}{At  stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
 
-\item{decomp}{The decomposition function to use. Choices are 'svd' (default) and 'svds'.}
+\item{decomp}{The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}}
 
-\item{max_depth}{The maximum allowed depth of the analysis proces.
-If Inf (default) the analysis goes on untill all subclusters can't be split any further.}
+\item{max_depth}{The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on untill a stop condition has been met.}
 
-\item{heuristic}{The function to use for calculating the number of expected clusters.}
+\item{heuristic}{The function to use for calculating the number of clusters. The default is \emph{eigengap_heuristic}}
 }
 \value{
-A tree which describes the hierarchical clustering process.
-Each node in the tree represents a stage in the analysis. The subnodes  :
+A tree which describes the hierarchical SCCA process. Every node contains the following information:
 \describe{
-  \item{depth}{The depth in the tree.}
-  \item{labels}{The labels (rownames) of the cluster in this node}
-  \item{child}{Number of this cluster among its siblings. No order intended}
-  \item{spectrum}{Vector of the Eigen values found at this node. The Eigenvalues are
+  \item{depth}{The depth of the node in the tree.}
+  \item{labels}{The labels (rownames) of the subset in this node}
+  \item{n_labs}{The number of labels (observations) in the subset}
+  \item{n_node}{Depth-first, pre-order numbering of nodes in the scca tree}
+  \item{child}{Number of this node among its siblings. No order intended}
+  \item{spectrum}{Vector of the Eigen values found at this node. The eigenvalues are
   sorted on explained variance in descending order.}
-  \item{eigen_vec_1}{The first Eigenvector found in the cluster of this node}
+  \item{eigen_vec_1}{The first Eigenvector of the subset of this node}
   \item{eigen_vec_2}{The second ...}
   \item{eigen_vec_3}{The third ...}
-  \item{k}{The number of relevant Eigenvalues. This is the value for parameter k of 'kmeans' }
-  \item{node_type}{The value is 'leaf' if k equals 1, else 'branch'}
-  \item{node}{A list of k child branches if node_type == 'branch'}
+  \item{k}{The number of relevant eigenvalues. This is the value for parameter k of 'kmeans'.}
+  \item{node_type}{The value is 'leaf' if k equals -1, 0, or 1, else 'branch'}
+  \item{node}{A list of k child nodes, if node_type == 'branch'}
 }
 }
 \description{
-The function \code{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a
-bi-partite or incidence matrix. The proces consists of a decompostion of the matrix (svd), a (user-provided) heuristic which transforms
-transforms the decompostion to input for kmeans clustering and the kmeans clustering itself. Each of the resulting clusters (sub-matrices) can be analyzed again
-And so on till some stopping condition is met.
-The output of \code{sccs_compute} is a tree (list of lists) in which every node is a proces step.
-The top node represents the first step on the entire matrix
+The function \emph{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix representing a
+bi-partite network. The proces consists of a decomposition of the matrix (svd), a (user-provided) heuristic which transforms
+the decompostion to input  for kmeans clustering (\emph{k} and the set of observations and, then, the kmeans clustering itself.
+Each of the resulting clusters (sub-matrices) can be analyzed again untill some stopping condition is met.
+The output of \emph{sccs_compute} is a tree (list of lists) in which every node represents one step in the process.
+}
+\details{
+The hierarchical decomposition on a branch stops, when the number of relevant eigenvalues equals 1 or,
+the maximum depth has been reached. This is signaled by \emph{k = 0}.
+When the subset is too small to decompose any further, processing on the branch also stops and a warning is raised.
+Also the value of \emph{k} is set to -1.
+
+The function \emph{scca_compute} is a wrapper function around the workhorse \code{\link{scca_compute_tree}}
 }
 \examples{
 \dontrun{
-data('carnivora', package = 'sccar')
 scca_compute(carnivora)
 }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/scca_print.R
 \name{scca_plot_spectrum}
 \alias{scca_plot_spectrum}
-\title{Plot Spectrum of a Cluster}
+\title{Plot Spectrum of a Node}
 \usage{
 scca_plot_spectrum(scca, node_id, plot = TRUE)
 }
@@ -13,13 +13,14 @@ scca_plot_spectrum(scca, node_id, plot = TRUE)
 
 \item{plot}{If TRUE (default) the spectrum will be plotted. If FALSE only the spectrum data is returned.}
 }
+\value{
+The function returns a tibble containing the spectrum data.
+}
 \description{
-Plots the sorted spectrum of a (sub-)cluster at a specific node in the output tree of
-\code{scca_compute}.
+Plots the spectrum found at a node in a SCCA tree.
 }
 \details{
-The node numbers can be displayed by \code{scca_print(scca)}. The function returns a tibble containing
-  the spectrum data which can (e.g.) be used for your own plotting endeavours.
+The node number can be found by printing the tree with \code{scca_print(scca)}.
 }
 \examples{
   \dontrun{

@@ -2,12 +2,9 @@
 % Please edit documentation in R/scca_heuristic.R
 \name{eigengap_heuristic}
 \alias{eigengap_heuristic}
-\alias{trace_heuristic}
-\title{Heuristics to Calculate the Expected Number of Clusters and Embedding Matrix}
+\title{Heuristic to Calculate the Expected Number of Clusters and Embedding Matrix}
 \usage{
 eigengap_heuristic(eigenvalues, eigenvectors)
-
-trace_heuristic(eigenvalues, eigenvectors)
 }
 \arguments{
 \item{eigenvalues}{Numeric vector of eigenvalues}
@@ -17,14 +14,11 @@ trace_heuristic(eigenvalues, eigenvectors)
 \value{
 A list with 3 elements
 \describe{
-  \item{Y}{The embedding matrix}
-  \item{min.nc}{The minimum number of cluster centers}
-  \item{max.nc}{The maximum number of cluster centers}
+  \item{Y}{Matrix with observations as input for \emph{kmeans}}
+  \item{k}{The number of expected centers}
 }
-
-
 }
 \description{
-Given a spectrum (decreasingly sorted Eigenvalues) and the corresponding Eigenvalues the heuristics compute the number of centers and
-input matrix for kmeans.
+Given a spectrum (decreasingly sorted Eigenvalues) and the corresponding Eigenvalues \emph{eigengap_heuristic}
+computes the number of centers and the input matrix (\emph{embedding} for \emph{kmeans}.
 }

@@ -16,3 +16,6 @@ scca_silhouette_test(scca, dist, plot = TRUE)
 \description{
 Silhouette Width of each Cluster in an SCCA Clustering
 }
+\note{
+Still under construction
+}

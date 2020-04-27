@@ -21,26 +21,35 @@ scca_compute_tree(
 \arguments{
 \item{labels}{The labels (character vector) defining the (sub-)set of dataset m to be analyzed}
 
-\item{m}{Dataset as an bipartite or incidence matrix}
+\item{m}{A matrix representing a bi-partite network. The matrix must have row names and column names.}
 
 \item{child}{The child number of this node within its siblings (= same parent)}
 
 \item{depth}{The depth (integer) of this node in the tree.}
 
-\item{max_depth}{The maximum depth the hierarchical process may go down to.}
+\item{max_depth}{The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on untill a stop condition has been met.}
 
-\item{n_node}{Number of this node in the tree. This is a depth-first, pre-order numbering}
+\item{n_node}{Number of the node in the tree. This is a depth-first, pre-order numbering, starting with 1 at the top node (a.k.a. root)}
 
-\item{iter.max}{The maximum number (integer) of iterations kmeans may take to compute the clusters}
+\item{iter.max}{The maximum number of iterations \emph{kmeans} is allowed to make. Default is 10.}
 
-\item{nstart}{The number of clusterings from which kmeans chooses the best}
+\item{nstart}{Number of random cluster sets kmeans may choose to start with. Default is 25.}
 
-\item{max_eigenvalues}{Restrict number of computed eigenvalues to max_eigenvalues.}
+\item{max_eigenvalues}{At  stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
 
-\item{decomp}{The decomposition method to use: 'svd' (default) or 'svds'.}
+\item{decomp}{The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}}
 
-\item{heuristic}{The function to use for calculating the number of expected clusters (k) and the embedding}
+\item{heuristic}{The function to use for calculating the number of clusters. The default is \emph{eigengap_heuristic}}
 }
 \description{
-Build recursively a scca tree
+See \code{\link{scca_compute}} for description
+}
+\details{
+Function \emph{scca_compute_tree} calls itself recursively for every subcluster found at a node untill one of the  stop conditions
+is met:
+\itemize{
+  \item{The heuristic finds only one prominent eigenvalue (k = 1)}
+  \item{The maximum depth in a branch has been reached. \emph{k} will be set to 0}
+  \item{The number of observations in the subset is too small to perform \emph{svd(s)}. This will raise a warning and \emph{k} will be set to -1}
+}
 }

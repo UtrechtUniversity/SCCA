@@ -1,8 +1,8 @@
 #' Get the Clustering Produced by Python Script
 #'
-#' Output files the Python script are read and the data are used to construct
-#' a cluster tibble which can be compared with a clustering from SCCA provided both clusterings are
-#' based on the same dataset/category.
+#' Output files of the Python script are read a to construct
+#' a tibble with clusters which can be compared with a clustering from SCCA provided both clusterings are
+#' based on the same dataset and axis.
 #'
 #' @param path The path from the working directory to the directory containing the Python output
 #'
@@ -13,6 +13,8 @@
 #'   \item{path}{The sequence of child numbers (seperated by '.') at each level from top to the cluster.}
 #' }
 #'
+#' @details
+#' This function is a helper for \code{\link{scca_py_overlap_test}}
 
 get_py_clustering <- function(path = NULL) {
 
@@ -53,7 +55,7 @@ get_py_clustering <- function(path = NULL) {
 
 #' Overlap Test between an SSCA clustering and a 'Python clustering'
 #'
-#' The sccarr package replaces an implemantation of SCCA in Python.
+#' The \strong{sccarr package} replaces an implementation of SCCA in Python.
 #' \emph{scca_py_overlap_test} compares clusterings from both implementations by calculating
 #' the average proportion of overlap.
 #' For more info see \link{scca_overlap_test}.
@@ -62,10 +64,15 @@ get_py_clustering <- function(path = NULL) {
 #' @param scca An SSCA tree.
 #' @param py_output
 #' The path from the working directory to the directory with the Python output files.
-#' If NULL (default), then the working directory is taken as path to the files.
+#' If NULL (default), then the working directory is taken as path.
 #' @param plot If TRUE an overlap graph is plotted; default is FALSE.
 #'
+#' @details
+#'   For more info see \code{\link{scca_overlap_test}}.
 #'
+#'   In due time this function will be phased out.
+#'
+#' @export
 scca_py_overlap_test <- function(scca, py_output = NULL, plot = FALSE) {
 
   cl.scca <- scca_get_clusters(scca = scca)

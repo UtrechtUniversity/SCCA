@@ -1,14 +1,15 @@
-#' Print SCCA Analysis
+#' Print SCCA tree
 #'
-#' Prints the hierarchical analysis to screen in character-based, human-readable fashion
+#' Prints the output of \emph{compute_scca} to screen in a character-based and human-readable format
 #'
-#' @param scca An output of scca_compute
+#' @param scca An output of \code{\link{scca_compute}} to screen
 #' @param ... The attributes to be printed: 'depth', 'k', 'node_type' and 'n_labs'
 #'
 #' @details
-#'   The nodes (subclusters) are numbered in depth-first pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
+#'   The nodes (subclusters) are numbered depth-first and pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
 #'   of labels in the (sub-)cluster. \code{child} is the numbering within its siblings. And \code{k} is the number of relevant Eigenvalues.
-#'   Each attribute can be ommited. If no attribute is given, then only the hierarchy is printed.
+#'   Every attribute can be ommited. If no attribute is given, then only the tree hierarchy is printed.
+#'
 #' @examples
 #'   \dontrun{
 #'      s <- scca_compute(t(carnivora))
@@ -21,18 +22,19 @@ scca_print <- function(scca, ... ) {
   print(scca_dt, ...)
 }
 
-#' Plot Spectrum of a Cluster
+#' Plot Spectrum of a Node
 #'
-#' Plots the sorted spectrum of a (sub-)cluster at a specific node in the output tree of
-#' \code{scca_compute}.
+#' Plots the spectrum found at a node in a SCCA tree.
 #'
 #' @param scca The output of \code{scca_compute}
 #' @param node_id The node number (integer or coercible to) of the cluster in the output tree
 #' @param plot If TRUE (default) the spectrum will be plotted. If FALSE only the spectrum data is returned.
 #'
 #' @details
-#'   The node numbers can be displayed by \code{scca_print(scca)}. The function returns a tibble containing
-#'   the spectrum data which can (e.g.) be used for your own plotting endeavours.
+#'   The node number can be found by printing the tree with \code{scca_print(scca)}.
+#'
+#' @return
+#'   The function returns a tibble containing the spectrum data.
 #'
 #' @examples
 #'   \dontrun{
@@ -76,54 +78,22 @@ scca_plot_spectrum <- function(scca, node_id, plot = TRUE) {
   return(spectrum_tbl)
 }
 
-scca_get_node <- function(scca, node_id) {
 
-  # helper for Get to retrieve a spectrum of a specific node
-  #
-  get_spectrum <- function(node, n_node) {
-    if (node$name != n_node) {
-      return(NA)
-    }
-    return (node$spectrum)
-  }
-
-  # check input
-  #
-  node_id <- as.character(node_id)
-
-  # Convert scca tree to a data.tree (dt) object
-  #
-  scca_dt <- data.tree::FromListExplicit(scca, nameName = 'n_node', childrenName = 'node')
-
-
-  spectrum <- scca_dt$Get(get_spectrum, n_node = node_id, simplify = 'array')[[node_id]]
-
-  spectrum_tbl <- tibble::tibble(order = 1:length(spectrum), value = spectrum)
-
-  if (plot) {
-    g <- ggplot2::ggplot(data = spectrum_tbl, mapping = ggplot2::aes(x = order, y = value)) +
-      ggplot2::geom_point(color = 'steelblue') +
-      ggplot2::labs(title = sprintf("Spectrum of node %s", node_id))
-    print(g)
-  }
-
-  return(spectrum_tbl)
-}
 
 #' Retrieve Attributes of a Node in an SCCA tree
 #'
-#'
-#'
 #' @param scca An SCCA tree
-#' @param node The number of the node to retrieve the attributes from. The supported attributes are
-#' currently \emph{spectrum} and \emph{labels}
+#' @param node The number of the node to retrieve the attributes from.
 #'
 #' @details Returns NULL if \emph{node} doesn't exists.
 #'
-#' @return List with two elements:
+#' @return List with 5 elements:
 #' \describe{
-#'   \item{labels}{The labels (rownames) of the (sub-)cluster in this node}
-#'   \item{spectrum}{The Eigenvalues of the data matrix}
+#'   \item{labels}{The labels (rownames) defining the subset of observations at this node}
+#'   \item{spectrum}{Sorted eigenvalues}
+#'   \item{eigen_vec_1}{First eigenvector}
+#'   \item{eigen_vec_2}{Second eigenvector}
+#'   \item{eigen_vec_3}{Third eigenvector}
 #' }
 #'
 #' @export

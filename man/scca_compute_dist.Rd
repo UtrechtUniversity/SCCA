@@ -7,9 +7,9 @@
 scca_compute_dist(m, filename = NULL, method = "euclidian")
 }
 \arguments{
-\item{m}{Incidence or adjacency matrix}
+\item{m}{A matrix containing the bi-partite network}
 
-\item{filename}{String, name of the file in which to store the distance matrix. If NULL (default) the
+\item{filename}{Name of the file (string) in which to store the distance matrix. If NULL (default) the
 distance will not be stored, but only returned}
 
 \item{method}{See: \code{\link[stats]{dist}}}
@@ -18,11 +18,8 @@ distance will not be stored, but only returned}
 The distance matrix as an \emph{dist} object
 }
 \description{
-Compute and Store Distance Matrix
-}
-\details{
 This function is a wrapper around \link[stats]{dist}.
-Some validity and stability tests use a distance (or dissimilarity) matrixto calculate their measures (e.g. Dunn Index).
+Some validity and stability tests use a distance (or dissimilarity) matrix to calculate their measures (e.g. Dunn Index).
 Calculating a distance matrix can take a long time (up to hours) depending on the number of observations (rows).
-This function has the option to store the distance matrix in a .rds file.
+This function has the option to store the distance matrix in a .rds file for repeated used.
 }

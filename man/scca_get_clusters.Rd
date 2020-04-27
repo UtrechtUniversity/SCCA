@@ -2,26 +2,23 @@
 % Please edit documentation in R/scca_overlap_test.R
 \name{scca_get_clusters}
 \alias{scca_get_clusters}
-\title{Get Clusters from an SCCA Clustering}
+\title{Get Final Clusters from an SCCA Analysis}
 \usage{
 scca_get_clusters(scca)
 }
 \arguments{
-\item{scca}{An SCCA analysis tree; output from a run of scca_compute on a dataset}
+\item{scca}{An SCCA analysis tree as output from a run of \code{\link{scca_compute}} on a dataset}
 }
 \value{
-A tibble with 3 variables (columns):
+A tibble with 3 variables (columns)
 \describe{
   \item{label}{The label of the case/observation}
   \item{cluster}{The id of the cluster to which the observation is assigned. }
-  \item{path}{The sequence of child numbers (seperated by '.') at each level from top to the cluster}
+  \item{path}{The sequence of child numbers (seperated by '.') on the path from the top node to the leaf node}
 
 }
 }
 \description{
 Produces for every observation a record with the label of the observation
-and the cluster the obeservation is assigned to.
-}
-\note{
-get_clusters is a wrapper around scca:::get_clusters_recursive
+and the final cluster (leaf) to which the observation has been assigned.
 }

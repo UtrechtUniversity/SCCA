@@ -1,16 +1,15 @@
-#' Heuristics to Calculate the Expected Number of Clusters and Embedding Matrix
+#' Heuristic to Calculate the Expected Number of Clusters and Embedding Matrix
 #'
-#' Given a spectrum (decreasingly sorted Eigenvalues) and the corresponding Eigenvalues the heuristics compute the number of centers and
-#' input matrix for kmeans.
+#' Given a spectrum (decreasingly sorted Eigenvalues) and the corresponding Eigenvalues \emph{eigengap_heuristic}
+#' computes the number of centers and the input matrix (\emph{embedding} for \emph{kmeans}.
 #'
 #'
 #' @param eigenvalues Numeric vector of eigenvalues
 #' @param eigenvectors Numeric matrix containing eigenvectors (columns)
 #' @return A list with 3 elements
 #' \describe{
-#'   \item{Y}{The embedding matrix}
-#'   \item{min.nc}{The minimum number of cluster centers}
-#'   \item{max.nc}{The maximum number of cluster centers}
+#'   \item{Y}{Matrix with observations as input for \emph{kmeans}}
+#'   \item{k}{The number of expected centers}
 #' }
 #'
 #' @export
@@ -47,25 +46,3 @@ eigengap_heuristic <- function(eigenvalues, eigenvectors) {
   return(list(Y = Y, k = as.integer(threshold)))
 }
 
-#' trace_heuristic: An Heuristic to Calculate the Expected Number of Clusters and Embedding Matrix
-#'
-#' @param eigenvalues Numeric vector of eigenvalues
-#' @param eigenvectors Numeric matrix containing eigenvectors (columns)
-#' @return
-#' @export
-
-#' @rdname eigengap_heuristic
-trace_heuristic <- function(eigenvalues, eigenvectors) {
-
-  #compute embedding dimension using the trace (which is sum(eigen_values)-1 )
-  #
-  eigenvalue_thresh  <- (sum(eigenvalues) - 1) / length(eigenvalues)
-  nr_axes            <- sum(eigenvalues>eigenvalue_thresh)  # (-1) number of eigenvectors in embedding
-
-  #define embedding with nr_axes columns (excluding first trivial eigenvec)
-  Y = eigenvectors[, 2:(nr_axes+1)]  #dit is de 'embedding' - ik verwijder de eerste (constante) eigenvector en behoud nr_axes kolommen. Hierop ga ik Kmeans doen.
-
-  max.nc = 20
-  min.nc = 2
-  return(list(Y = Y, min.nc = min.nc, max.nc = max.nc))
-}

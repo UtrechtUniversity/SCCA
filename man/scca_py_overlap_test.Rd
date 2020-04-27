@@ -10,14 +10,19 @@ scca_py_overlap_test(scca, py_output = NULL, plot = FALSE)
 \item{scca}{An SSCA tree.}
 
 \item{py_output}{The path from the working directory to the directory with the Python output files.
-If NULL (default), then the working directory is taken as path to the files.}
+If NULL (default), then the working directory is taken as path.}
 
 \item{plot}{If TRUE an overlap graph is plotted; default is FALSE.}
 }
 \description{
-The sccarr package replaces an implemantation of SCCA in Python.
+The \strong{sccarr package} replaces an implementation of SCCA in Python.
 \emph{scca_py_overlap_test} compares clusterings from both implementations by calculating
 the average proportion of overlap.
 For more info see \link{scca_overlap_test}.
 In due time this function will be phased out.
+}
+\details{
+For more info see \code{\link{scca_overlap_test}}.
+
+  In due time this function will be phased out.
 }

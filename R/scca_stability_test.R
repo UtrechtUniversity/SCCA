@@ -1,23 +1,18 @@
 #' SCCA Stability Test
 #'
-#' Tests the stability of an SCCA clustering.
+#' Tests the stability of an SCCA clustering. Only the clustering at the 'leaves' are considered. After a normal
+#' clustering with \code{\link{scca_compute}} the clustering process is repeated while dropping one of variables from the user provided list.
+#' This proces is repeated fro every variable in the list. Every time the clustering output is compared with the original clustering.
 #'
-#' @param m Matrix representing an incidence (or bipartite) network
+#' @param m Matrix representing an incidence (or bipartite) networ
 #' @param drop_vars Integer vector, the index of the variables (columns) to be dropped (one by one) when testing
-#' the stability. When omitted, all the columns are succesively dropped.
+#' the stability. When omitted, all the columns are dropped one by one.
 #'
 #' @details
-#' Performs an SCCCA stability test on a clustering of a dataset.
-#' First, a clustering on the complete dataset is done.
-#' This is the base clustering.
-#' Then, one by one, a variable of the dataset is dropped and a new
-#' clustering is calculated.
-#' Each new clustering is compared with the base clustering.
 #' The stability measure is the average proportion of overlap (APO: the reverse of APN).
 #' APO can be understood as the chance that if 2 observations are in the same cluster in the base clustering they are also
 #' in the same cluster in the clustering with 1 column dropped.
-#' If the user provides a list of column indices (integers), only those columns will be taken into account.
-#' If no columns are provided all variables are successively dropped.
+#'
 #'
 #' @return A tibble with two columns:
 #' \describe{

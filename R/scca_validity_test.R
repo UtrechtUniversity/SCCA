@@ -7,11 +7,13 @@
 #' \href{https://cran.r-project.org/web/packages/clValid/vignettes/clValid.pdf}{clValid, an R package for cluster validation} for more
 #' information
 #'
-#' @param scca List; an SCCA clustering tree
+#' @param scca A tree produced by \code{\link{scca_compute}}.
 #' @param dist A \emph{dist} object; the distance matrix of the data used for producing \emph{scca}
 #'
 #' @return
-#' A list with the three measures
+#' A list with the three measures \strong{Connectivity}, \strong{Silhouette Width} and \strong{Dunn Index}
+#'
+#' See \code{\link{scca_compute_dist}} for calculating a distance matrix.
 #'
 #' @export
 
@@ -37,11 +39,12 @@ scca_validity_test <- function(scca, dist) {
 
 #' Silhouette Width of each Cluster in an SCCA Clustering
 #'
+#' @note Still under construction
+#'
 #' @param scca An SCCA clustering tree
 #' @param dist A \emph{dist} object; a distance matrix of the data used for producing \emph{scca}
 #' @param plot Boolean; if TRUE (default) plots the silhouette width of every obeservation
 #'
-#' @export
 scca_silhouette_test <- function(scca, dist, plot = TRUE) {
   cl         <- scca_get_clusters(scca)
   sil_obj    <- cluster::silhouette(cl$cluster, dist = dist)
@@ -54,13 +57,13 @@ scca_silhouette_test <- function(scca, dist, plot = TRUE) {
 
 #' Compute and Store Distance Matrix
 #'
-#' @details This function is a wrapper around \link[stats]{dist}.
-#' Some validity and stability tests use a distance (or dissimilarity) matrixto calculate their measures (e.g. Dunn Index).
+#' This function is a wrapper around \link[stats]{dist}.
+#' Some validity and stability tests use a distance (or dissimilarity) matrix to calculate their measures (e.g. Dunn Index).
 #' Calculating a distance matrix can take a long time (up to hours) depending on the number of observations (rows).
-#' This function has the option to store the distance matrix in a .rds file.
+#' This function has the option to store the distance matrix in a .rds file for repeated used.
 #'
-#' @param m Incidence or adjacency matrix
-#' @param filename String, name of the file in which to store the distance matrix. If NULL (default) the
+#' @param m A matrix containing the bi-partite network
+#' @param filename Name of the file (string) in which to store the distance matrix. If NULL (default) the
 #' distance will not be stored, but only returned
 #' @param method See: \code{\link[stats]{dist}}
 #'

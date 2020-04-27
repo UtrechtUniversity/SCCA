@@ -7,17 +7,19 @@
 decomp_symmetric(matrix, max_eigenvalues, decomp = "svd")
 }
 \arguments{
-\item{matrix}{An incidence matrix. The rows are the observations and
-the columns are the variables}
+\item{matrix}{. The rows are the observations and the columns are the variables}
 
 \item{max_eigenvalues}{Max. number of eigenvalues to compute. Default is 25.}
 
 \item{decomp}{The decomposition to use: 'svd' (default) or 'svds'.}
 }
 \description{
-See <<link>>
+Decompose Large and Sparse Matrix
 }
 \details{
 If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
-to max_eigenvalues else the shortest dimension is choosen.
+to max_eigenvalues else the shortest dimension is chosen.
+}
+\note{
+Documentation Under Construction
 }

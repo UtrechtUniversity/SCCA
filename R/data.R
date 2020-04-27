@@ -44,7 +44,7 @@
 #'
 #' The exports dataset is an adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
 #' The matrix value is the value of the export in US dollars in 2016.
-#' The names of the countries and their GDP can be found in \code{exports_countries}. The row names of \code{exports} coorespond to the column
+#' The countries names, codes and their GDP can be found in \code{exports_countries}. The row names of \code{exports} coorespond to the column
 #' \code{label}.Product names can be found in \code{exports_products}.
 #'
 #' The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,

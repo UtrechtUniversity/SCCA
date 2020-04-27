@@ -2,19 +2,17 @@
 % Please edit documentation in R/scca_overlap_test.R
 \name{get_clusters_recursive}
 \alias{get_clusters_recursive}
-\title{Get Cluster Recursively}
+\title{Get Clusters}
 \usage{
-get_clusters_recursive(scca, id = 0, cluster_path = NULL, leaves_only = TRUE)
+get_clusters_recursive(scca, cluster_path = NULL, leaves_only = TRUE)
 }
 \arguments{
-\item{scca}{An SCCA tree or sub-tree}
+\item{scca}{An SCCA tree}
 
-\item{id}{Integer; the number of the last found node. Equals 0 when no cluster has been found yet.}
-
-\item{cluster_path}{Character string, sequence of child numbers (seperated by '.') from top.}
+\item{cluster_path}{Sequence of child numbers (seperated by '.') visited from top node to this node.}
 
 \item{leaves_only}{Boolean, default is TRUE. Use default.}
 }
 \description{
-Descends recursively the analysis tree and collects the final clusters (leaves).
+Descends recursively the analysis tree and collects the final clusters at the leaves.
 }

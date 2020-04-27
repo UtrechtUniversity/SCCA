@@ -2,7 +2,7 @@
 % Please edit documentation in R/scca_overlap_test.R
 \name{plot_overlap}
 \alias{plot_overlap}
-\title{Plot the overlap between two clusterings (X and Y) based on the same dataset and category}
+\title{Plot the overlap between two final clusterings (X and Y) based on the same dataset and category}
 \usage{
 plot_overlap(overlap_xy)
 }
@@ -10,9 +10,9 @@ plot_overlap(overlap_xy)
 \item{overlap_xy}{A tibble with overlaps between pairs of clusters. See details.}
 }
 \description{
-Plot the overlap between two clusterings (X and Y) based on the same dataset and category
+Plot the overlap between two final clusterings (X and Y) based on the same dataset and category
 }
 \note{
 If the number of clusters in X is equal to number of Y, there is a disconnected node
-'ignore_me' added to clustering X. This is due to a fix of a bug in ploting package (GGally)
+\strong{ignore_me} added to clustering X. This is node is added as a fix of a bug in ploting package (GGally)
 }

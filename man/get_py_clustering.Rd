@@ -18,7 +18,10 @@ A tibble with 3 variables:
 }
 }
 \description{
-Output files the Python script are read and the data are used to construct
-a cluster tibble which can be compared with a clustering from SCCA provided both clusterings are
-based on the same dataset/category.
+Output files of the Python script are read a to construct
+a tibble with clusters which can be compared with a clustering from SCCA provided both clusterings are
+based on the same dataset and axis.
+}
+\details{
+This function is a helper for \code{\link{scca_py_overlap_test}}
 }

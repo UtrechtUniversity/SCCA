@@ -2,22 +2,22 @@
 % Please edit documentation in R/scca_print.R
 \name{scca_print}
 \alias{scca_print}
-\title{Print SCCA Analysis}
+\title{Print SCCA tree}
 \usage{
 scca_print(scca, ...)
 }
 \arguments{
-\item{scca}{An output of scca_compute}
+\item{scca}{An output of \code{\link{scca_compute}} to screen}
 
 \item{...}{The attributes to be printed: 'depth', 'k', 'node_type' and 'n_labs'}
 }
 \description{
-Prints the hierarchical analysis to screen in character-based, human-readable fashion
+Prints the output of \emph{compute_scca} to screen in a character-based and human-readable format
 }
 \details{
-The nodes (subclusters) are numbered in depth-first pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
+The nodes (subclusters) are numbered depth-first and pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
   of labels in the (sub-)cluster. \code{child} is the numbering within its siblings. And \code{k} is the number of relevant Eigenvalues.
-  Each attribute can be ommited. If no attribute is given, then only the hierarchy is printed.
+  Every attribute can be ommited. If no attribute is given, then only the tree hierarchy is printed.
 }
 \examples{
   \dontrun{

@@ -9,14 +9,16 @@ scca_get_node(scca, node)
 \arguments{
 \item{scca}{An SCCA tree}
 
-\item{node}{The number of the node to retrieve the attributes from. The supported attributes are
-currently \emph{spectrum} and \emph{labels}}
+\item{node}{The number of the node to retrieve the attributes from.}
 }
 \value{
-List with two elements:
+List with 5 elements:
 \describe{
-  \item{labels}{The labels (rownames) of the (sub-)cluster in this node}
-  \item{spectrum}{The Eigenvalues of the data matrix}
+  \item{labels}{The labels (rownames) defining the subset of observations at this node}
+  \item{spectrum}{Sorted eigenvalues}
+  \item{eigen_vec_1}{First eigenvector}
+  \item{eigen_vec_2}{Second eigenvector}
+  \item{eigen_vec_3}{Third eigenvector}
 }
 }
 \description{

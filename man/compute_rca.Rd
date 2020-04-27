@@ -7,12 +7,13 @@
 compute_rca(m, binary = TRUE)
 }
 \arguments{
-\item{m}{A data matrix representing a bi-partite graph}
+\item{m}{A data matrix representing a bi-partite network}
 
-\item{binary}{If TRUE (default) binary values are calculated}
+\item{binary}{If TRUE (default) binary RCA values are calculated}
 }
 \description{
-Computes Revealed Comparative Advantage (a.k.a. Location Quotient) bi-partite graph (e.g. country <-> exported products)
-matrix.
+Computes Revealed Comparative Advantage (a.k.a. Location Quotient) of a bi-partite network (e.g. country <-> exported products)
+}
+\details{
 See: \href{https://en.wikipedia.org/wiki/Revealed_comparative_advantage}{Wikipedia}.
 }

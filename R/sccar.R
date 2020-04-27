@@ -1,20 +1,21 @@
-#' An R package for Spectral Clustering Correspondence Analysis
+#' An package for Spectral Clustering Correspondence Analysis in R
 #'
 #' @description
-#' SCCA is a technique developed by/at ....
+#' SCCA is a methode for ....................
 #'
-#' @section Package functions:
-#' \describe{
-#'   \item{\link{scca_compute}}{Performs a spectral clustering correspondence analysis on a bi-partite or
-#'    incidence graph. See: \code{\link{scca_compute}}}
-#'   \item{\link{scca_write_clustering}}{Writes the result of an SCCA run to .csv files}
-#'   \item{\link{scca_get_clusters}}{Produces for every observation a record with the label of the observation and the cluster the obeservation is assigned to}
-#'   \item{\link{scca_compute_dist}}{Computes and Store Distance Matrix}
-#'   \item{\link{scca_validity_test}}{Tests the validity of a clustering produced by \emph{scca_compute}}
-#'   \item{\link{scca_overlap_test}}{Calculates the average proportion of overlap between the two SCCA clusterings on the same dataset and category}
-#'   \item{\link{scca_stability_test}}{Tests the stability of an SCCA clustering}
-#'   \item{\link{scca_py_overlap_test}}{Overlap Test between an SSCA clustering and a 'Python clustering.
-#'    \strong{NOT EXPORTED!}}
+#' @section Exported functions:
+#' \itemize{
+#'   \item \code{\link{scca_compute}}
+#'   \item \code{\link{scca_compute_dist}}
+#'   \item \code{\link{scca_get_clusters}}
+#'   \item \code{\link{scca_get_node}}
+#'   \item \code{\link{scca_overlap_test}}
+#'   \item \code{\link{scca_plot_spectrum}}
+#'   \item \code{\link{scca_print}}
+#'   \item \code{\link{scca_py_overlap_test}}
+#'   \item \code{\link{scca_stability_test}}
+#'   \item \code{\link{scca_validity_test}}
+#'   \item \code{\link{scca_write_clustering}}
 #'  }
 #'
 #'

@@ -36,7 +36,7 @@ A list with 3 elements:
 }
 }
 \description{
-The function \code{scca_overlap_test} compares two SCCA clusterings of the same dataset and category to
+The function \emph{scca_overlap_test} compares two SCCA clusterings of the same dataset and category to
 establish their ovelap. It calculates the average proportion of overlap between the two clusterings.
 }
 \examples{

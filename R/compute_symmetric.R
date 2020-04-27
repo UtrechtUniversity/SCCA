@@ -1,14 +1,13 @@
 #' Decompose Large and Sparse Matrix
 #'
-#' See <<link>>
+#' @note Documentation Under Construction
 #'
-#' @param matrix An incidence matrix. The rows are the observations and
-#'   the columns are the variables
+#' @param matrix . The rows are the observations and the columns are the variables
 #' @param max_eigenvalues Max. number of eigenvalues to compute. Default is 25.
 #' @param decomp The decomposition to use: 'svd' (default) or 'svds'.
 #'
 #' @details If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
-#' to max_eigenvalues else the shortest dimension is choosen.
+#' to max_eigenvalues else the shortest dimension is chosen.
 #'
 
 decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
@@ -34,13 +33,7 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
   r_sums   <- Matrix::rowSums(matrix_a)
   c_sums   <- Matrix::colSums(matrix_a)
 
-  #matrix_a <- matrix_a[ , c_sums != 0]
 
-  # columns/rows can become disconnected (sum == 0). To prevent division by 0
-  # set the sum to 1
-  #
-  r_sums[r_sums == 0] <- 1
-  c_sums[c_sums == 0] <- 1
 
   # Compute inverted diagonal matrices.
   # Will be used for scaling and axis transformations
@@ -48,7 +41,7 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
   d_r_inv <- Matrix::Diagonal(x = 1/r_sums) # n X n
   d_c_inv <- Matrix::Diagonal(x = 1/c_sums) # m X m
 
-  # For explanation of following decomposition see:
+  # For explanation of following decomposition see:  ......
   #
   a_hat <- sqrt(d_r_inv) %*% matrix_a %*% sqrt(d_c_inv)
 
@@ -63,11 +56,13 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
       k    = n_eigenvalues,
       opts = list(maxitr = 1000))
   } else {
-    singular_decomp <- base::svd(x = a_hat, nu = n_eigenvalues, nv = 0)
+    singular_decomp <- base::svd(
+      x  = a_hat,
+      nu = n_eigenvalues,
+      nv = 0)
   }
 
   row_eigen_vectors <- sqrt(d_r_inv) %*% singular_decomp$u
-  #col_eigen_vectors <- sqrt(d_c_inv) %*% singular_decomp$v
   eigen_values      <- singular_decomp$d[1:n_eigenvalues]^2
 
 
@@ -77,18 +72,16 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
   #
   tolerance = 1e-7
   if (any(eigen_values < -tolerance)) {
-    stop('Negative Eigenvalues! Something is definitely going wrong!')
+    stop('Negative Eigenvalues! Something has definitely gone wrong!')
   }
   eigen_values[abs(eigen_values) < tolerance] <- 0
 
   # some scaling but why?
   #
   row_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
-  #col_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
 
   return(list(r_vectors = row_eigen_vectors,
-              #c_vectors = col_eigen_vectors,
-              values = eigen_values))
+              values    = eigen_values))
 }
 
 

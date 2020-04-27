@@ -2,7 +2,7 @@
 % Please edit documentation in R/scca_write_clustering.R
 \name{scca_write_clustering}
 \alias{scca_write_clustering}
-\title{Write a SCCA Clustering to Files}
+\title{Write an Output of SCCA to Files}
 \usage{
 scca_write_clustering(
   scca_tree,
@@ -14,24 +14,24 @@ scca_write_clustering(
 \arguments{
 \item{scca_tree}{list; the tree resulting from a call to 'scca_compute'}
 
-\item{vec_name}{character string; prefix of the files with the clusters and the Eigenvectors}
+\item{vec_name}{Prefix  (string) of the names of files with the labels and the Eigenvectors}
 
-\item{spec_name}{character string; prefix of files with the spectra}
+\item{spec_name}{Prefix of the names of he files with the spectra}
 
-\item{leaves_only}{boolean; if TRUE (default) only writes out the final clusters (leaf nodes)}
+\item{leaves_only}{If TRUE (default) only the final clusters (leaf nodes) are written}
 }
 \value{
 TRUE
 }
 \description{
-Write a SCCA Clustering to Files
+Writes the results of an SCCA to .csv files. For every tree node two files are written:
 }
 \details{
-Writes the results of an SCCA to .csv files. At every tree node two files are written
-
-1. Eigenvectors: The first column contains labels of the subcluster and columns 2 to 4 are the 3 most prominent Eigenvectors
-
-2. Spectrum: The first column contains the spectrum of the subcluster and the second column the explained variance
+\describe{
+  \item{Eigenvectors}{The first column contains labels of the subcluster which is analyzed at the node,
+and columns 2 to 4 are the 3 most prominent Eigenvectors}
+  \item{Spectrum}{The first column contains the spectrum of the subcluster and the second column the explained variance}
+}
 
 The filename contains the path from the top to the tree node.
 }

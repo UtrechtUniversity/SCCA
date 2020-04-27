@@ -1,18 +1,19 @@
-#' Write a SCCA Clustering to Files
+#' Write an Output of SCCA to Files
 #'
-#' @details
-#' Writes the results of an SCCA to .csv files. At every tree node two files are written
+#' Writes the results of an SCCA to .csv files. For every tree node two files are written:
 #'
-#' 1. Eigenvectors: The first column contains labels of the subcluster and columns 2 to 4 are the 3 most prominent Eigenvectors
-#'
-#' 2. Spectrum: The first column contains the spectrum of the subcluster and the second column the explained variance
+#' \describe{
+#'   \item{Eigenvectors}{The first column contains labels of the subcluster which is analyzed at the node,
+#' and columns 2 to 4 are the 3 most prominent Eigenvectors}
+#'   \item{Spectrum}{The first column contains the spectrum of the subcluster and the second column the explained variance}
+#' }
 #'
 #' The filename contains the path from the top to the tree node.
 #'
 #' @param scca_tree list; the tree resulting from a call to 'scca_compute'
-#' @param vec_name character string; prefix of the files with the clusters and the Eigenvectors
-#' @param spec_name character string; prefix of files with the spectra
-#' @param leaves_only boolean; if TRUE (default) only writes out the final clusters (leaf nodes)
+#' @param vec_name Prefix  (string) of the names of files with the labels and the Eigenvectors
+#' @param spec_name Prefix of the names of he files with the spectra
+#' @param leaves_only If TRUE (default) only the final clusters (leaf nodes) are written
 #'
 #' @return
 #' TRUE

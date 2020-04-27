@@ -1,11 +1,11 @@
 #' Compute RCA Matrix
 #'
-#' Computes Revealed Comparative Advantage (a.k.a. Location Quotient) bi-partite graph (e.g. country <-> exported products)
-#' matrix.
+#' Computes Revealed Comparative Advantage (a.k.a. Location Quotient) of a bi-partite network (e.g. country <-> exported products)
+#'
 #' See: \href{https://en.wikipedia.org/wiki/Revealed_comparative_advantage}{Wikipedia}.
 #'
-#' @param m A data matrix representing a bi-partite graph
-#' @param binary If TRUE (default) binary values are calculated
+#' @param m A data matrix representing a bi-partite network
+#' @param binary If TRUE (default) binary RCA values are calculated
 #'
 #' @export
 

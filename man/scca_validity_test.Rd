@@ -7,12 +7,14 @@
 scca_validity_test(scca, dist)
 }
 \arguments{
-\item{scca}{List; an SCCA clustering tree}
+\item{scca}{A tree produced by \code{\link{scca_compute}}.}
 
 \item{dist}{A \emph{dist} object; the distance matrix of the data used for producing \emph{scca}}
 }
 \value{
-A list with the three measures
+A list with the three measures \strong{Connectivity}, \strong{Silhouette Width} and \strong{Dunn Index}
+
+See \code{\link{scca_compute_dist}} for calculating a distance matrix.
 }
 \description{
 Tests the validity of a clustering produced by \emph{scca_compute}.
