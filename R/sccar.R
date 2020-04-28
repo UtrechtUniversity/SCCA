@@ -1,7 +1,7 @@
 #' An package for Spectral Clustering Correspondence Analysis in R
 #'
 #' @description
-#' SCCA is a methode for ....................
+#' SCCAR is a package that provides functionality for clustering and gradient analysis of incidence matrices. The package allows the user to calculate CA axes of a given dataset, obtain a clustering from those resutls based on either a user-provided heuristic or the eigengap heuristic, and re-run CA within each cluster recursively. 
 #'
 #' @section Exported functions:
 #' \itemize{

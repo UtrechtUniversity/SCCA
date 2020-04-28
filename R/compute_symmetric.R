@@ -1,10 +1,10 @@
 #' Decompose Large and Sparse Matrix
 #'
-#' @note Documentation Under Construction
+#' @note Documentation The method computes a weighted singular value decomposition of a matrix, resulting in the CA axes given in 'principal components'.  
 #'
-#' @param matrix . The rows are the observations and the columns are the variables
+#' @param matrix Incidence matrix (e.g. species - location), which can be interpreted as the  bi-adjacency matrix of a bipartite network. The rows are taken to be the unit of analysis. 
 #' @param max_eigenvalues Max. number of eigenvalues to compute. Default is 25.
-#' @param decomp The decomposition to use: 'svd' (default) or 'svds'.
+#' @param decomp The decomposition to use: 'svd' (default) or 'svds' (uses the rARPACK implementation of the singular value decomposition for efficient approximateion of singular decomposition for large sparse matrices).
 #'
 #' @details If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
 #' to max_eigenvalues else the shortest dimension is chosen.
