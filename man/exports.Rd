@@ -17,7 +17,7 @@ exports
 \description{
 The exports dataset is an adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
 The matrix value is the value of the export in US dollars in 2016.
-The countries names, codes and their GDP can be found in \code{exports_countries}. The row names of \code{exports} coorespond to the column
+The countries names, codes and their GDP can be found in \code{exports_countries}. The row names of \code{exports} correspond to the column
 \code{label}.Product names can be found in \code{exports_products}.
 }
 \details{
@@ -27,5 +27,7 @@ For detailed we refer to http://atlas.cid.harvard.edu/about-data.
 
 The Growth Lab at Harvard University, 2019, "country_partner_hsproduct4digit_year_2016.tab",
 International Trade Data (HS, 92), https://doi.org/10.7910/DVN/T4CHWJ/T3KWV0, Harvard Dataverse
+
+Data on the GDP per capita of countries was obtained from the World Bank https://data.worldbank.org/, and is given in constant 2011 international $.
 }
 \keyword{datasets}

@@ -7,19 +7,18 @@
 decomp_symmetric(matrix, max_eigenvalues, decomp = "svd")
 }
 \arguments{
-\item{matrix}{. The rows are the observations and the columns are the variables}
+\item{matrix}{Incidence matrix (e.g. species - location), which can be interpreted as the  bi-adjacency matrix of a bipartite network. The rows are taken to be the unit of analysis.}
 
 \item{max_eigenvalues}{Max. number of eigenvalues to compute. Default is 25.}
 
-\item{decomp}{The decomposition to use: 'svd' (default) or 'svds'.}
+\item{decomp}{The decomposition to use: \strong{svd} (default) or \strong{svds}.}
 }
 \description{
-Decompose Large and Sparse Matrix
+The method computes a weighted singular value decomposition of a matrix, resulting in the CA axes given in 'principal components'.
 }
 \details{
 If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
 to max_eigenvalues else the shortest dimension is chosen.
-}
-\note{
-Documentation Under Construction
+
+\strong{svds} uses the rARPACK implementation of the singular value decomposition for efficient approximateion of singular decomposition for large sparse matrices.
 }

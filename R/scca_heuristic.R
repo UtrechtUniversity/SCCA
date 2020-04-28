@@ -1,6 +1,10 @@
-#' Heuristic to Calculate the Expected Number of Clusters based on the spectrum of of eigenvalues of the normalized Laplacian. 
+#' Heuristic to Calculate the Expected Number of Clusters based on the spectrum of of eigenvalues of the normalized Laplacian.
 #'
-#' Given the spectrum (a set of decreasingly sorted eigenvalues), \emph{eigengap_heuristic} computes the position of the largest decrease in the spectrum, indicating the expected number of clusters to be found in the data. The matrix of corresponding eigenvectors is also returned. The number of clusters and the matrix of eigenvectors can serve as an input for a clustering algorithm like kmeans. 
+#' Given the spectrum (a set of decreasingly sorted eigenvalues),
+#' \emph{eigengap_heuristic} computes the position of the largest decrease in the spectrum,
+#' indicating the expected number of clusters to be found in the data.
+#' The matrix of corresponding eigenvectors is also returned.
+#' The number of clusters and the matrix of eigenvectors can serve as an input for a clustering algorithm like kmeans.
 #'
 #'
 #' @param eigenvalues Numeric vector of eigenvalues
