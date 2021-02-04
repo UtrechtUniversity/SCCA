@@ -18,7 +18,6 @@
 #' @return
 #' TRUE
 #'
-#' @export
 scca_write_clustering <- function(scca_tree, vec_name = 'V_', spec_name = 'S_', leaves_only = TRUE) {
   if (!is.list(scca_tree) || is.null(scca_tree)) {
     stop("argument 'analysis_tree' does not have a valid value.")

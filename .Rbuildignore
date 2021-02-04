@@ -4,6 +4,7 @@
 ^Python$
 ^try_out$
 ^output$
+^old$
 
 ^doc$
 ^Meta$
@@ -15,3 +16,4 @@ demo.R
 
 ^R/write_scca_leaf.R$
 ^R/silhouette.R$
+^R/deprecated$

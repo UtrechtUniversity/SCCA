@@ -1,14 +1,14 @@
 #' Print SCCA tree
 #'
-#' Prints the output of \emph{compute_scca} to screen in a character-based and human-readable format
+#' Prints the output of \emph{compute_scca} to screen in a human-readable format.
 #'
 #' @param scca An output of \code{\link{scca_compute}} to screen
-#' @param ... The attributes to be printed: 'depth', 'k', 'node_type' and 'n_labs'
+#' @param ... The attributes to be printed: 'depth', 'k', 'node_type' and/or 'n_labs'
 #'
 #' @details
-#'   The nodes (subclusters) are numbered depth-first and pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
+#'   The nodes in the analysis tree (clusters) are numbered depth-first and pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
 #'   of labels in the (sub-)cluster. \code{child} is the numbering within its siblings. And \code{k} is the number of relevant Eigenvalues.
-#'   Every attribute can be ommited. If no attribute is given, then only the tree hierarchy is printed.
+#'   Every attribute can be omitted. If no attribute is given, only the tree hierarchy will be printed.
 #'
 #' @examples
 #'   \dontrun{
@@ -24,10 +24,10 @@ scca_print <- function(scca, ... ) {
 
 #' Plot Spectrum of a Node
 #'
-#' Plots the spectrum found at a node in a SCCA tree.
+#' Output and plot the spectrum (Eigenvalues in descending order) found at a particular node in a SCCA tree.
 #'
 #' @param scca The output of \code{scca_compute}
-#' @param node_id The node number (integer or coercible to) of the cluster in the output tree
+#' @param node_id The node number (numeric) in the output tree
 #' @param plot If TRUE (default) the spectrum will be plotted. If FALSE only the spectrum data is returned.
 #'
 #' @details
@@ -35,6 +35,9 @@ scca_print <- function(scca, ... ) {
 #'
 #' @return
 #'   The function returns a tibble containing the spectrum data.
+#'
+#'
+#' @importFrom rlang .data
 #'
 #' @examples
 #'   \dontrun{
@@ -69,7 +72,7 @@ scca_plot_spectrum <- function(scca, node_id, plot = TRUE) {
   spectrum_tbl <- tibble::tibble(order = 1:length(spectrum), value = spectrum)
 
   if (plot) {
-    g <- ggplot2::ggplot(data = spectrum_tbl, mapping = ggplot2::aes(x = order, y = value)) +
+    g <- ggplot2::ggplot(data = spectrum_tbl, mapping = ggplot2::aes(x = order, y = .data$value)) +
       ggplot2::geom_point(color = 'steelblue') +
       ggplot2::labs(title = sprintf("Spectrum of node %s", node_id))
     print(g)
@@ -83,7 +86,7 @@ scca_plot_spectrum <- function(scca, node_id, plot = TRUE) {
 #' Retrieve Attributes of a Node in an SCCA tree
 #'
 #' @param scca An SCCA tree
-#' @param node The number of the node to retrieve the attributes from.
+#' @param node The number of the node from which to retrieve the attributes.
 #'
 #' @details Returns NULL if \emph{node} doesn't exists.
 #'

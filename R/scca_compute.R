@@ -2,16 +2,16 @@
 #'
 #' The function \emph{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix representing a
 #' bi-partite network. The proces consists of a decomposition of the matrix (svd), a (user-provided) heuristic which transforms
-#' the decompostion to input  for kmeans clustering (\emph{k} and the set of observations and, then, the kmeans clustering itself.
-#' Each of the resulting clusters (sub-matrices) can be analyzed again untill some stopping condition is met.
+#' the decompostion to input  for kmeans clustering (\emph{k} and the set of observations) and, then, the kmeans clustering itself.
+#' Each of the resulting clusters (sub-matrices) can be analyzed again until some stopping condition is met.
 #' The output of \emph{sccs_compute} is a tree (list of lists) in which every node represents one step in the process.
 #'
 #' @param m A matrix representing a bi-partite network. The matrix must have row names and column names.
 #' @param iter.max The maximum number of iterations \emph{kmeans} is allowed to make. Default is 10.
 #' @param nstart Number of random cluster sets kmeans may choose to start with. Default is 25.
 #' @param disconnect.rm If TRUE (default) disconnected rows and columns in the input data will be removed.
-#' @param max_eigenvalues At  stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.
-#' @param max_depth The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on untill a stop condition has been met.
+#' @param max_eigenvalues Restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.
+#' @param max_depth The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on until a stop condition has been met.
 #' @param decomp The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}
 #' @param heuristic The function to use for calculating the number of clusters. The default is \emph{eigengap_heuristic}
 #' @param disconnect.rm If TRUE (default) disconnected rows and columns in the input data will be removed.
@@ -45,6 +45,7 @@
 #' scca_compute(carnivora)
 #' }
 #' @export
+#'
 scca_compute <- function(
   m,
   iter.max        = 10,
@@ -86,8 +87,7 @@ scca_compute <- function(
 
   labels <- rownames(m)
 
-
-  # scca_compute_tree recursively constructs teh analysis tree
+  # scca_compute_tree recursively constructs the analysis tree
   # Of course, it all starts with the top node
   #
 

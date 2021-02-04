@@ -1,65 +1,3 @@
-#' Get Final Clusters from an SCCA Analysis
-#'
-#' Produces for every observation a record with the label of the observation
-#' and the final cluster (leaf) to which the observation has been assigned.
-#'
-#'
-#' @param scca An SCCA analysis tree as output from a run of \code{\link{scca_compute}} on a dataset
-#'
-#'
-#' @return A tibble with 3 variables (columns)
-#' \describe{
-#'   \item{label}{The label of the case/observation}
-#'   \item{cluster}{The id of the cluster to which the observation is assigned. }
-#'   \item{path}{The sequence of child numbers (seperated by '.') on the path from the top node to the leaf node}
-#'
-#' }
-#'
-#' @import magrittr
-#'
-#' @export
-#'
-scca_get_clusters <- function(scca) {
-  cl <- get_clusters_recursive(scca = scca, cluster_path = NULL, leaves_only = TRUE)
-  if(is.null(cl$clustering)) {
-    return(NULL)
-  }
-  return(cl$clustering %>% dplyr::arrange(factor(labels, levels = scca$labels)) %>%
-                           dplyr::rename(label = labels, cluster = id, path = .data$cluster_path))
-}
-
-#' Get Clusters
-#'
-#' Descends recursively the analysis tree and collects the final clusters at the leaves.
-#'
-#' @param scca An SCCA tree
-#' @param cluster_path Sequence of child numbers (seperated by '.') visited from top node to this node.
-#' @param leaves_only Boolean, default is TRUE. Use default.
-#'
-get_clusters_recursive <- function(scca, cluster_path = NULL, leaves_only = TRUE) {
-
-  if (is.null(cluster_path)) {
-    cluster_path <- as.character(scca$child)
-  } else {
-    cluster_path <- paste(cluster_path, as.character(scca$child), sep = '.')
-  }
-
-  if (scca$node_type == 'leaf') {
-    clustering  <- tibble::tibble(labels = scca$labels, id = scca$n_node, cluster_path = cluster_path) # these cases belong to the same cluster
-  }
-
-  # if this node is a 'branch' then recursively call the childs and bind the results of those childs
-  #
-  if (scca$node_type == 'branch') {
-    clustering <- tibble::tibble(labels = character(), id = integer(), cluster_name = character())
-    for (child in 1:length(scca$node)) {
-      cl            <- get_clusters_recursive(scca = scca$node[[child]], cluster_path = cluster_path, leaves_only = leaves_only)
-      clustering    <- rbind(clustering, cl$clustering)
-    }
-  }
-  return(list(clustering=clustering, id = id, cluster_path = cluster_path))
-}
-
 #' SCCA Overlap Test
 #'
 #' The function \emph{scca_overlap_test} compares two SCCA clusterings of the same dataset and category to
@@ -94,15 +32,14 @@ get_clusters_recursive <- function(scca, cluster_path = NULL, leaves_only = TRUE
 #'
 #' @examples
 #' \dontrun{
-#' data('carnivora', package = 'sccar')
+#' data('carnivora', package = 'SCCA')
 #' sc1 <- scca_compute(carnivora)
 #' sc2 <- scca_compute(carnivora)
 #' scca_overlap_test(x = sc1, y = sc2, plot = TRUE)
 #' }
 #' @import magrittr
 #'
-#'
-#' @export
+#' @noRd
 
 scca_overlap_test <- function(x, y, plot = FALSE) {
 
@@ -175,6 +112,7 @@ clustering_overlap <- function(cl.x, cl.y, plot = FALSE) {
 #' @note If the number of clusters in X is equal to number of Y, there is a disconnected node
 #' \strong{ignore_me} added to clustering X. This is node is added as a fix of a bug in ploting package (GGally)
 #'
+#' @noRd
 plot_overlap <- function(overlap_xy) {
 
   overlap_xy <- overlap_xy %>%

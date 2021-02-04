@@ -11,14 +11,15 @@ decomp_symmetric(matrix, max_eigenvalues, decomp = "svd")
 
 \item{max_eigenvalues}{Max. number of eigenvalues to compute. Default is 25.}
 
-\item{decomp}{The decomposition to use: \strong{svd} (default) or \strong{svds}.}
+\item{decomp}{The decomposition to use: \strong{svd} (default) or \strong{svds}.
+The later only computes the k leading singular values and vectors of an rectangular matrix}
 }
 \description{
-The method computes a weighted singular value decomposition of a matrix, resulting in the CA axes given in 'principal components'.
+The function computes weighted singular values and correponding singular vectors
 }
 \details{
 If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
 to max_eigenvalues else the shortest dimension is chosen.
 
-\strong{svds} uses the rARPACK implementation of the singular value decomposition for efficient approximateion of singular decomposition for large sparse matrices.
+\strong{svds} uses the rARPACK implementation of the singular value decomposition for efficient approximation of singular decomposition for large sparse matrices.
 }

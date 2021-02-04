@@ -9,7 +9,7 @@ scca_plot_spectrum(scca, node_id, plot = TRUE)
 \arguments{
 \item{scca}{The output of \code{scca_compute}}
 
-\item{node_id}{The node number (integer or coercible to) of the cluster in the output tree}
+\item{node_id}{The node number (numeric) in the output tree}
 
 \item{plot}{If TRUE (default) the spectrum will be plotted. If FALSE only the spectrum data is returned.}
 }
@@ -17,7 +17,7 @@ scca_plot_spectrum(scca, node_id, plot = TRUE)
 The function returns a tibble containing the spectrum data.
 }
 \description{
-Plots the spectrum found at a node in a SCCA tree.
+Output and plot the spectrum (Eigenvalues in descending order) found at a particular node in a SCCA tree.
 }
 \details{
 The node number can be found by printing the tree with \code{scca_print(scca)}.

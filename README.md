@@ -1,12 +1,16 @@
-# Spectral Clustering Correspondence Analysis in R
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-Several methods of data analysis, widely used in different fields, and most prominently in ecology and in economics, have recently been recognised to be coincident (Mealy et al 2019). The method known in economics as the 'Economic Complexity Index' (ECI) (Hidalgo et al 2009, Baudena et al 2015) is in fact mathematically identical to a statistical method known as **Correspondence Analysis** (CA). Though originally derived as an ordination method in ecology (Hill, 1973), CA scores also arise in methods known in network science as spectral clustering and graph embedding. In this paper we illustrate how the use of CA can be extended and the understanding deepened thanks to the insights from network theory and we give guidelines for applications to different types of networks in ecology and economics. We focus in particular on applications to data that gives rise to modular networks.
 
-This R-package is meant to allow application of correspondence analysis to data that gives rise to modular networks by first clustering the data using a iterative procedure based on spectral clustering and subsequently apply correspondence analysis to each of the individual clusters. The package contains funciton to compute the similarity network defined by a bipartite network using stochastic complementation, and compute the spectrum and eigenvalues of the Laplacian of this network. It also provides the option to perform an iterative procedure that clusters the data based on the properties of the spectrum of the, and to analyze the resulting clusters using correspondence analysis.
+
+# SCCA: Spectral Clustering Correspondence Analysis in R
+
+## Introduction
+
+The SCCA package implements in R the methodological approach to CA as proposed in **A network view of correspondence analysis: applications to ecology and economic complexity** (van Dam et al 2021). This package is publicly available for use with proper citation.
 
 ## Installation
 
-This R package can be installed directly from Github with the code below. Ensure that the package `devtools` is installed.
+The package can be installed directly from Github with the code below. Ensure that the package devtools is installed.
 
 ``` R 
 #install.packages("devtools")
@@ -14,134 +18,54 @@ library(devtools)
 install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 ```
 
-## Usage
+## Exported functions and data sets
 
-The main function of the package is `scca_compute`. The value is an SCCA clustering tree (recursive list).
+There are quite a few functions available to the user and also the two datasets which has been used in the formentioned article (Dam, Alje van, e.a. 2021). After loading the package a list of all exported functions  can be retrieved by `?SCCA` and the documentation of an individual function by `?<function name>`; e.g. `?scca_compute`.
 
-``` R
-scca <- scca_compute(m = carnivora)
+The use of functions is explained in the included vignettes. Use `browseVignettes('SCCA')` to get the links to these vingettes.
+
+## Exported data
+
+The package contains two datasets: carnivora
+
+### Carnivora
+
+The data describes the global geographical distributions of the species of the mammalian order Carnivora. The carnivora data are described with a presence-absence incidedence matrix, with 288 extant terrestrial and marine species (rows) and 41,580 non-empty sites (columns). The sites represent grid-cells rasterized at a resolution of 0.78 latitudinal degrees.  The distributional data were extracted from the  mammal  range  map  database  Phylacine  v1.232,  which  we  downloaded from  [DRYAD](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20) (last accessed in November 2019) and pruned to only include extant carnivorans. Data were processed in R (R Core Development Team 2014) and mapped in QGIS336v2.18.16 (QGIS Development Team 2015)
+
+carnivora
+carnivora_sites
+carnivora_species
+
+### Exports 
+
+The exports dataset is a ‘presence-absence’ matrix with 234 countries (rows) and 1239 products (columns), in which a ‘presence’ indicates that a country was a significant exporter of a product in the year 2016. (see Appendix B387for an exact description of this procedure). This matrix is derived from data on international trade is from Harvard’s Growth Lab. We also use data on gross domestic product per capita (GDPpc) in 2016, as given in PPP constant 2017 international dollars, and taken from the [World Bank databank](https://databank.worldbank.org). (see Appendix B387for an exact description of this procedure).
+
+See for more information the on-line documentation and vignette X.
+
+## License
+
+The software is licensed under **MIT**
+
+## Links
+
+## References
+
+Dam, Alje van. e.a. 2021. "A network view of correspondence analysis: applications to ecology and economic complexity". *<name of journal>*. DOI: <doi>.
+
+## The team
+
+The package SCCA has been developed as part of the project "Title of project" by "Mara Baudena" etc. This project was funded by "X" and received support from the Research Engineering team of Utrecht University. The technical
+implementation of the package was done by [Kees van Eijden](k.vaneijden@uu.nl) with contributions of Johan de Bruin and Raoul Schram. Ignacio Morales Castilla did the real life testing.
+
+## How to cite SCCA
+
+To cite the SCCA repository and R package, use
+
+```R
+citation("SCCA")
 ```
 
-To get the final clusters:
+to retrieve the BibTex entry otherwise use the following format:
 
-``` R
-clusters <- scca_get_clusters(scca)
-```
-
-The value is a cluster table. For each observation a record with the label of the observation and the cluster the observation is assigned to.
-
-SCCA is a stochastic process. Two runs will produce different outputs. The overlap between those outputs can be computed (and optionally plotted) with
-
-``` R
-scca1   <- scca_compute(m = carnivora)
-overlap <- scca_overlap_test(x = scca, y = scca1, plot = TRUE)
-```
-
-### Singular Value Decomposition
-
-The default is `svd`, but the user can opt for `svds`
-
-``` R
-scca <- scca_compute(carnivora, decomp = 'svds`)
-```
-
-### Retrieving information
-
-The package provides three functions for retrieving information out of the hierachical analysis tree produced by `scca_compute`
-
-The function \code{scca_print} prints the tree to screen.
-
-``` R
-s <- scca_compute(carnivora, decomp = 'svd')
-scca_print(scca = s, 'k', 'n_labs')
-```
-
-The print function shows the tree structure in which the nodes are numbered. Use `scca_get_node` to collect labels of the data cluster at that node and its spectrum. 
-
-``` R
-s <- scca_compute(carnivora, decomp = 'svd')
-scca_print(scca = s, 'k', 'n_labs')
-
-# user finds node N interesting and want to see its attributes
-#
-
-scca_get_node(scca = s, node = N)
-```
-
-The function \code{scca_plot_spectrum} plots the spectrum of ....
-
-### Stability
-
-Let `cl` be a clustering on a set of observation and `cl_i` the clustering of same observations with variable `i` dropped. The clustering process is called stable if `cl` is (almost) the same (by some measure) as cl_i. The measure is the average proportion of overlap.
-
-``` R
-library(dplyr)
-drop          <- sample(ncol(carnivora), ncol(carnivora) %/% 10)
-stability     <- scca_stability_test(m = carnivora, drop_vars = drop)
-avg_stability <- stability %>% summarise(mean(var_APO))
-``` 
-### Validity
-
-The package `clValid` and `cluster` provide functions to calculate the internal validity of a clustering. The measures are Silhoutette Width, Dunn Index and Connectivity. This package provides a wrapper around these functions. It needs a distance matrix which must be calculated. Save the distance matrix for repeated uses, because the distance computation may take a while. 
-
-``` R
-library(dplyr)
-library(readr)
-d_species    <- scca_compute_dist(m = t(carnivora), filename = 'd_species')
-# d_species  <- read_rds('some_path/d_species_carn') # path from working directory
-scca_species <- scca_compute(m = t(carnivora))
-validity     <- scca_validity_test(scca = scca_species, dist = d_species)
-validity$sil
-validity$dunn
-validity$conn
-```
-
-### Heuristics 
-
-The function `scca_compute` uses a heuristic to determine the input for the `kmeans` clustering based on the properties of the Eigenvalues (spectrum) and Eigenvectors. The default is `eigengap_heuristic`. The user has also the option to provide her own heuristic.
-
-``` R
-scca <- scca_compute(exports, heuristic = trace_heuristic)
-
-my_heuristic <- function(eigenvalues, eigenvectors) {
-  
-  # compute the number (k) of cluster centers 
-  k <- ....
-
-  
-  # compute embedding (= data matrix for kmeans)
-  #
-  Y <- .....
-  return(list(Y = Y, k = k))
-}
-```
-
-### Pre-processing
-
-Currently the package contains only one function for pre-processing datasets `compute_rca`. Given an matrix representing a bi-partite graph (e.g. producers <-> products) it computes a matrix with binary values representing the Revealed Comparative Advantage (a.k.a. Location Quotient). Binary (0/1) values are the default but relative values are optional.
-
-``` R
-comput_rca(exports)
-comput_rca(exports, binary = FALSE)
-```
-
-
-
-### Python implementation of SCCA
-
-Last but not least, there is a function to compare clusterings form `scca_compute` with clusterings on the same data/category from the Python implementation. See ?scca_py_overlap_test
-
-``` R
-s <- scca_compute(m = carnivora)
-scca_py_overlap_test(scca = s, 
-     py_output = 'location of the Python output files',
-     plot      = TRUE)
-```
-
-## License and citation
-
-## Contact
-
-Contributors, contact info, reference to ITS and description `[[ By Alje and ITS ]]`
-
+Dam, Alje van, Kees van Eijden. 2021. *SCCA: Spectral Clustering Correspondence Analysis in R*. Utrecht University. Available at https://github.com/UtrechtUniversity/SCCA. DOI: 12.1234/xxxxxx.1234567.
 

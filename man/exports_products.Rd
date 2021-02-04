@@ -4,7 +4,9 @@
 \name{exports_products}
 \alias{exports_products}
 \title{Exported products}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1239 rows and 2 columns.}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1239 rows and 2 columns.
+}
 \usage{
 exports_products
 }

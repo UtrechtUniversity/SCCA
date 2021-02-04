@@ -19,11 +19,11 @@ scca_compute_tree(
 )
 }
 \arguments{
-\item{labels}{The labels (character vector) defining the (sub-)set of dataset m to be analyzed}
+\item{labels}{The labels (character vector) defining the (sub-)set of data set m to be analyzed}
 
 \item{m}{A matrix representing a bi-partite network. The matrix must have row names and column names.}
 
-\item{child}{The child number of this node within its siblings (= same parent)}
+\item{child}{The child number of this node within its siblings (= nodes with same parent)}
 
 \item{depth}{The depth (integer) of this node in the tree.}
 
@@ -35,7 +35,7 @@ scca_compute_tree(
 
 \item{nstart}{Number of random cluster sets kmeans may choose to start with. Default is 25.}
 
-\item{max_eigenvalues}{At  stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
+\item{max_eigenvalues}{Restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
 
 \item{decomp}{The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}}
 
@@ -45,7 +45,7 @@ scca_compute_tree(
 See \code{\link{scca_compute}} for description
 }
 \details{
-Function \emph{scca_compute_tree} calls itself recursively for every subcluster found at a node untill one of the  stop conditions
+Function \emph{scca_compute_tree} calls itself recursively for every sub cluster found at a node until one of the  stop conditions
 is met:
 \itemize{
   \item{The heuristic finds only one prominent eigenvalue (k = 1)}

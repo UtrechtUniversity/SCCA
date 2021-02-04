@@ -19,7 +19,7 @@ A list with 3 elements
 }
 }
 \description{
-Given the spectrum (a set of decreasingly sorted eigenvalues),
+Given the spectrum (a set of in decreasing order sorted eigenvalues),
 \emph{eigengap_heuristic} computes the position of the largest decrease in the spectrum,
 indicating the expected number of clusters to be found in the data.
 The matrix of corresponding eigenvectors is also returned.

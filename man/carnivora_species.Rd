@@ -4,7 +4,9 @@
 \name{carnivora_species}
 \alias{carnivora_species}
 \title{Species of the Carnivora incidence in marine territoria.}
-\format{An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 288 rows and 2 columns.}
+\format{
+An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 288 rows and 2 columns.
+}
 \usage{
 carnivora_species
 }

@@ -4,10 +4,12 @@
 \name{exports}
 \alias{exports}
 \title{Exports data}
-\format{\describe{
+\format{
+\describe{
   \item{\emph{rows}}{Exporting countries}
   \item{\emph{columns}}{Exported product categories}
-}}
+}
+}
 \source{
 \url{http://atlas.cid.harvard.edu/about-data}
 }

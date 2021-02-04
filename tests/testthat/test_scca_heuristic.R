@@ -11,14 +11,14 @@ test_ones     <- append(x = rep(1.0, 3), test_sorted)
 
 
 test_that("scca_heuristic only accepts sorted values", {
-  expect_error(object = sccar:::eigengap_heuristic(test_unsorted, test_vectors), 'Eigenvalues are not sorted decreasingly')
+  expect_error(object = SCCA:::eigengap_heuristic(test_unsorted, test_vectors), 'Eigenvalues are not sorted in descending order')
 })
 
 test_that("scca_heuristic computes gap", {
-  expect_error(object = sccar:::eigengap_heuristic(test_sorted, test_vectors), NA)
+  expect_error(object = SCCA:::eigengap_heuristic(test_sorted, test_vectors), NA)
 })
 
 test_that("scca_heuristic computes gap", {
-  expect_equal(object = sccar:::eigengap_heuristic(test_ones, test_vectors)$k, expected = 4, info = 'Number of ones not correct')
+  expect_equal(object = SCCA:::eigengap_heuristic(test_ones, test_vectors)$k, expected = 4, info = 'Number of ones not correct')
 })
 

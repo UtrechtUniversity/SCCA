@@ -9,7 +9,7 @@ scca_get_node(scca, node)
 \arguments{
 \item{scca}{An SCCA tree}
 
-\item{node}{The number of the node to retrieve the attributes from.}
+\item{node}{The number of the node from which to retrieve the attributes.}
 }
 \value{
 List with 5 elements:

@@ -1,6 +1,6 @@
 #' Heuristic to Calculate the Expected Number of Clusters based on the spectrum of of eigenvalues of the normalized Laplacian.
 #'
-#' Given the spectrum (a set of decreasingly sorted eigenvalues),
+#' Given the spectrum (a set of in decreasing order sorted eigenvalues),
 #' \emph{eigengap_heuristic} computes the position of the largest decrease in the spectrum,
 #' indicating the expected number of clusters to be found in the data.
 #' The matrix of corresponding eigenvectors is also returned.
@@ -22,11 +22,11 @@ eigengap_heuristic <- function(eigenvalues, eigenvectors) {
   # checking parameters
   #
   if (is.unsorted(rev(eigenvalues))) {
-    stop('Eigenvalues are not sorted decreasingly')
+    stop('Eigenvalues are not sorted in descending order')
   }
   error <- 1e-7      # ?
 
-  # if a number ( > 1) of Eigenvalues equals 1 (within error) then k is equal to that number else
+  # if N Eigen values (N >= 2) equal 1 then k is equal to the number N else
   # k is the number of the first Eigenvalue of the two consecutive Eigenvalues with the greatest gap
   # between their values
   #

@@ -4,10 +4,12 @@
 \name{carnivora}
 \alias{carnivora}
 \title{Carnivora Incidence in Marine Territoria}
-\format{A list with to elements
+\format{
+A list with to elements
 \describe{
   \item{M}{absence-presence (0/1) matrix. The columns are species and the rows are the sites }
-}}
+}
+}
 \source{
 \url{http://www.somewhere}
 }

@@ -4,7 +4,7 @@
 #'
 #' See: \href{https://en.wikipedia.org/wiki/Revealed_comparative_advantage}{Wikipedia}.
 #'
-#' @param m A data matrix 
+#' @param m A data matrix
 #' @param binary If TRUE (default) the function returns a binary matrix with entry 1 if RCA>1 and 0 otherwise
 #'
 #' @export

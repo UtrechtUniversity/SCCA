@@ -24,11 +24,11 @@ scca_compute(
 
 \item{disconnect.rm}{If TRUE (default) disconnected rows and columns in the input data will be removed.}
 
-\item{max_eigenvalues}{At  stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
+\item{max_eigenvalues}{Restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.}
 
 \item{decomp}{The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}}
 
-\item{max_depth}{The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on untill a stop condition has been met.}
+\item{max_depth}{The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on until a stop condition has been met.}
 
 \item{heuristic}{The function to use for calculating the number of clusters. The default is \emph{eigengap_heuristic}}
 }
@@ -53,8 +53,8 @@ A tree which describes the hierarchical SCCA process. Every node contains the fo
 \description{
 The function \emph{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix representing a
 bi-partite network. The proces consists of a decomposition of the matrix (svd), a (user-provided) heuristic which transforms
-the decompostion to input  for kmeans clustering (\emph{k} and the set of observations and, then, the kmeans clustering itself.
-Each of the resulting clusters (sub-matrices) can be analyzed again untill some stopping condition is met.
+the decompostion to input  for kmeans clustering (\emph{k} and the set of observations) and, then, the kmeans clustering itself.
+Each of the resulting clusters (sub-matrices) can be analyzed again until some stopping condition is met.
 The output of \emph{sccs_compute} is a tree (list of lists) in which every node represents one step in the process.
 }
 \details{

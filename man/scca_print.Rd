@@ -9,15 +9,15 @@ scca_print(scca, ...)
 \arguments{
 \item{scca}{An output of \code{\link{scca_compute}} to screen}
 
-\item{...}{The attributes to be printed: 'depth', 'k', 'node_type' and 'n_labs'}
+\item{...}{The attributes to be printed: 'depth', 'k', 'node_type' and/or 'n_labs'}
 }
 \description{
-Prints the output of \emph{compute_scca} to screen in a character-based and human-readable format
+Prints the output of \emph{compute_scca} to screen in a human-readable format.
 }
 \details{
-The nodes (subclusters) are numbered depth-first and pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
+The nodes in the analysis tree (clusters) are numbered depth-first and pre-order. \code{depth} is the level in the tree. \code{n_labs} is the number of
   of labels in the (sub-)cluster. \code{child} is the numbering within its siblings. And \code{k} is the number of relevant Eigenvalues.
-  Every attribute can be ommited. If no attribute is given, then only the tree hierarchy is printed.
+  Every attribute can be omitted. If no attribute is given, only the tree hierarchy will be printed.
 }
 \examples{
   \dontrun{
