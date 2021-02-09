@@ -14,7 +14,7 @@ scca_get_node(scca, node)
 \value{
 List with 5 elements:
 \describe{
-  \item{labels}{The labels (rownames) defining the subset of observations at this node}
+  \item{labels}{The labels (rownames) defining the subset (cluster) of observations at this node}
   \item{spectrum}{Sorted eigenvalues}
   \item{eigen_vec_1}{First eigenvector}
   \item{eigen_vec_2}{Second eigenvector}
@@ -25,5 +25,7 @@ List with 5 elements:
 Retrieve Attributes of a Node in an SCCA tree
 }
 \details{
+The node number can be found by printing the tree with scca_print(scca).
+
 Returns NULL if \emph{node} doesn't exists.
 }

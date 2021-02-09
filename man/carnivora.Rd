@@ -5,29 +5,29 @@
 \alias{carnivora}
 \title{Carnivora Incidence in Marine Territoria}
 \format{
-A list with to elements
+A matrix with 41,580 rows (sites) and and 288 columns (species)
 \describe{
-  \item{M}{absence-presence (0/1) matrix. The columns are species and the rows are the sites }
+  \item{\strong{cell value}}{absence-presence (0/1) values}
+  \item{\strong{row name}}{label which can be used to retrieve the site specs from the data frame \code{carnivora_sites}}
+  \item{\strong{column name}}{label which can be used to retrieve the species name from the data frame \code{carnivora_species}}
 }
 }
 \source{
-\url{http://www.somewhere}
+\url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
 }
 \usage{
 carnivora
 }
 \description{
-To explore an example of application of CA to a common-use dataset in Ecology, we used the global
-geographical distributions of the mammalian order Carnivora. The dataset is comprised by an incidence matrix M
+This common-used dataset in Ecology, gives the geographical distributions of the mammalian order Carnivora.
+The data set is comprised by an incidence matrix M
 (i.e. presence-absence matrix), with 41,580 non-empty sites (rows) and 288 extant terrestrial and marine species (columns).
-The sites represent grid-cells rasterized at a resolution of 0.78 latitudinal degrees. The distributional data results
-from rasterizing range map distributions published as part of the Phylacine v1.2 dataset (Faurby et al. 2018), which includes
-data on the geographic distributions of mammals both extant and extinct over the last 130,000 years. We downloaded the data
-(last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and prunned distributions
-to only include carnivores. Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
-The incidences of certain species (carnivora) at marine sites are given by a bipartite adjacency matrix.
-}
-\details{
-The table \code{carnivora_species}
+The sites represent grid-cells rasterised at a resolution of 0.78 latitudinal degrees.
+The distributional data results from rasterizing range map distributions published as part of
+the Phylacine v1.2 dataset (Faurby et al. 2018), which includes
+data on the geographic distributions of mammals both extant and extinct over the last 130,000 years.
+The data was downloaded (last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and pruned
+to only include carnivores.
+Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
 }
 \keyword{datasets}

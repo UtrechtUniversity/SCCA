@@ -1,10 +1,13 @@
 #' Spectral Clustering Correspondence Analysis in R
 #'
 #' @description
-#' SCCA is a package that provides functionality for clustering and gradient analysis of incidence matrices.
-#' The package allows the user to calculate CA axes of a given dataset,
-#' a clustering from those resutls based on either a user-provided heuristic or the eigengap heuristic, and re-run CA within each cluster recursively.
+#' The SCCA package implements in R the methodological approach to CA as proposed
+#' in \strong{A network view of correspondence analysis: applications to ecology and economic complexity}
+#' (\href{https://www.uu.nl}{van Dam et al; 2021}).
 #'
+#'
+
+
 #' @section Exported functions:
 #' \itemize{
 #'   \item \code{\link{scca_compute}}
@@ -17,8 +20,8 @@
 #' }
 #' @section Exported data:
 #' \itemize{
-#'   \item \code{\link{carnivora}}
-#'   \item \code{\link{exports}}
+#'   \item \code{\link{carnivora} \link{carnivora_sites} \link{carnivora_species}}
+#'   \item \code{\link{exports} \link{exports_products} \link{exports_products}}
 #'  }
 #'
 #'

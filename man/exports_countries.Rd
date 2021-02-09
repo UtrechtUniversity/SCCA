@@ -3,14 +3,23 @@
 \docType{data}
 \name{exports_countries}
 \alias{exports_countries}
-\title{Country names of exporting countries and their GDPs}
+\title{Countries of the Exports data and their GDP per capita}
 \format{
-An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 234 rows and 4 columns.
+Data frame of 234 rows (countries) and 4 columns
+\describe{
+  \item{\strong{label}}{Label of the exporting country used in matrix \code{exports} as row name.}
+  \item{\strong{country_name}}{Name of the country}
+  \item{\strong{country_code}}{Code of the country}
+  \item{\strong{GDPcp}}{Gross Domestic Product per capita }
+}
 }
 \usage{
 exports_countries
 }
 \description{
-See: \link[=exports]{exports}
+Countries of the Exports data and their GDP per capita
+}
+\details{
+Data on the GDP per capita of was obtained from the World Bank (\url{https://data.worldbank.org/}), and is given in constant 2011 international $.
 }
 \keyword{datasets}

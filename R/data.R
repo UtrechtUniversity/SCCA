@@ -7,35 +7,49 @@
 #' The distributional data results from rasterizing range map distributions published as part of
 #' the Phylacine v1.2 dataset (Faurby et al. 2018), which includes
 #' data on the geographic distributions of mammals both extant and extinct over the last 130,000 years.
-#' We downloaded the data (last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and pruned
+#' The data was downloaded (last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and pruned
 #' to only include carnivores.
 #' Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
-#' The incidences of certain species (carnivora) at marine sites are given by a bipartite adjacency matrix.
 #'
 #'
-#' @format A list with to elements
+#' @format A matrix with 41,580 rows (sites) and and 288 columns (species)
 #' \describe{
-#'   \item{M}{absence-presence (0/1) matrix. The columns are species and the rows are the sites }
+#'   \item{\strong{cell value}}{absence-presence (0/1) values}
+#'   \item{\strong{row name}}{label which can be used to retrieve the site specs from the data frame \code{carnivora_sites}}
+#'   \item{\strong{column name}}{label which can be used to retrieve the species name from the data frame \code{carnivora_species}}
 #' }
 #'
-#' @details
-#'
-#'   The table \code{carnivora_species}
-#' @source \url{http://www.somewhere}
+#' @source \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
 "carnivora"
-"carnivora_species"
 
-#' Species of the Carnivora incidence in marine territoria.
+
+#' Species of the Carnivora Incidence in Marine Territoria.
 #'
 #' This table has two columns: species_id and species_name. The first column contains labels (column names) of the Carnivora
 #' incidence matrix. The second column contains the names of the species.
 #'
+#' @format A data frame with 288 rows (species)
+#' \describe{
+#'   \item{species_id}{Species labels used in matrix \code{carnivora} as column names}
+#'   \item{species_name}{The actual names of the species}
+#' }
+#'
+#' @source \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
 "carnivora_species"
 
-#' Site coordinates of the Carnivora dataset
+#' Sites of the Carnivora Incidence in Marine Territoria
 #'
-#' The Carnivora dataset also has a table with for every site the row id in the incidence matrix. The second and third columns give
-#' the coordinates (lon/lat) of the site. The Behrman cylindrical equal area projection is used with
+#' @format A data frame with 41,580 rows (sites) and 3 columns
+#' \describe{
+#'   \item{site}{Site labels used in matrix \code{carnivora} as row names}
+#'   \item{lon}{Longitude of the site. See details.}
+#'   \item{lat}{Lattitude of the site. See details.}
+#' }
+#'
+#' @source \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
+#'
+#' @details
+#' The Behrman cylindrical equal area projection is used with
 #' a resolution of 96.5 km by 96.5 km at 30° North and 30° South.
 #' The full projection description following R-notation is
 #' “+proj=cea +lon_0=0+lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84+towgs84=0,0,0”.
@@ -43,40 +57,49 @@
 "carnivora_sites"
 
 
-#' Exports data
+#' Exports
 #'
-#' The exports dataset is an adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
-#' The matrix value is the value of the export in US dollars in 2016.
-#' The countries names, codes and their GDP can be found in \code{exports_countries}. The row names of \code{exports} correspond to the column
-#' \code{label}.Product names can be found in \code{exports_products}.
+#' An adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
+#' The each cell contains the value of the export in US dollars in 2016. See vignette X an CA of this data with SCCA.
+#' See \strong{details} for description of the data.
 #'
-#' The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,
-#' processed and made publicly available by the Growth Growth Lab at Harvard University.
-#' For detailed we refer to http://atlas.cid.harvard.edu/about-data.
-#'
-#' The Growth Lab at Harvard University, 2019, "country_partner_hsproduct4digit_year_2016.tab",
-#' International Trade Data (HS, 92), https://doi.org/10.7910/DVN/T4CHWJ/T3KWV0, Harvard Dataverse
-#'
-#' Data on the GDP per capita of countries was obtained from the World Bank https://data.worldbank.org/, and is given in constant 2011 international $.
-#'
-#'
-#' @format
+#' @format Matrix of 234 rows (countries) and 1239 columns (products)
 #' \describe{
-#'   \item{\emph{rows}}{Exporting countries}
-#'   \item{\emph{columns}}{Exported product categories}
+#'   \item{\strong{cell value}}{Value of the export in US dollars in 2016.}
+#'   \item{\strong{row name}}{label of the exporting country which can be used to retrieve country data from \code{exports_countries}.}
+#'   \item{\strong{column name}}{label of the exported product which can be used to retrieve product data from \code{exports_products}.}
 #' }
+#'
+#' @details
+#' The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,
+#' processed and made publicly available by the Growth Growth Lab at Harvard University (\url{http://atlas.cid.harvard.edu/about-data}).
+#'
 #' @source \url{http://atlas.cid.harvard.edu/about-data}
 "exports"
 
-#' Country names of exporting countries and their GDPs
+#' Countries of the Exports data and their GDP per capita
 #'
-#' See: \link[=exports]{exports}
+#' @format Data frame of 234 rows (countries) and 4 columns
+#' \describe{
+#'   \item{\strong{label}}{Label of the exporting country used in matrix \code{exports} as row name.}
+#'   \item{\strong{country_name}}{Name of the country}
+#'   \item{\strong{country_code}}{Code of the country}
+#'   \item{\strong{GDPcp}}{Gross Domestic Product per capita }
+#' }
+#'
+#'@details
+#'Data on the GDP per capita of was obtained from the World Bank (\url{https://data.worldbank.org/}), and is given in constant 2011 international $.
+#'
 #'
 "exports_countries"
 
-#' Exported products
+#' Products of the Exports data
 #'
-#' See: \link[=exports]{exports}
+#' @format Data frame of 1239 rows (products) and 2 columns
+#' \describe{
+#'   \item{\strong{label}}{Label of the exported product used in matrix \code{exports} as column name.}
+#'   \item{\strong{product_name}}{Name of the product}
+#' }
 #'
 "exports_products"
 

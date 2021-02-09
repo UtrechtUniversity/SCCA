@@ -5,8 +5,8 @@
 .Ruserdata
 Python/
 output/
-*.csv
 *.png
+*.csv
 
 inst/doc
 doc

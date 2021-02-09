@@ -2,7 +2,7 @@
 % Please edit documentation in R/scca_get_clusters.R
 \name{scca_get_clusters}
 \alias{scca_get_clusters}
-\title{Get Final Clusters from an SCCA Analysis}
+\title{Get Leaf Clusters from an SCCA Analysis}
 \usage{
 scca_get_clusters(scca)
 }
@@ -20,5 +20,5 @@ A tibble with 3 variables (columns)
 }
 \description{
 Produces for every observation a record with the label of the observation
-and the final (or leaf) cluster to which the observation has been assigned by scca_compute.
+and the final for leaf cluster to which the observation has been assigned by scca_compute.
 }

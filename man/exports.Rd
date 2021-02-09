@@ -3,11 +3,13 @@
 \docType{data}
 \name{exports}
 \alias{exports}
-\title{Exports data}
+\title{Exports}
 \format{
+Matrix of 234 rows (countries) and 1239 columns (products)
 \describe{
-  \item{\emph{rows}}{Exporting countries}
-  \item{\emph{columns}}{Exported product categories}
+  \item{\strong{cell value}}{Value of the export in US dollars in 2016.}
+  \item{\strong{row name}}{label of the exporting country which can be used to retrieve country data from \code{exports_countries}.}
+  \item{\strong{column name}}{label of the exported product which can be used to retrieve product data from \code{exports_products}.}
 }
 }
 \source{
@@ -17,19 +19,12 @@
 exports
 }
 \description{
-The exports dataset is an adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
-The matrix value is the value of the export in US dollars in 2016.
-The countries names, codes and their GDP can be found in \code{exports_countries}. The row names of \code{exports} correspond to the column
-\code{label}.Product names can be found in \code{exports_products}.
+An adjacency matrix of 234 countries (rows) exporting 1239 products (columns).
+The each cell contains the value of the export in US dollars in 2016. See vignette X an CA of this data with SCCA.
+See \strong{details} for description of the data.
 }
 \details{
 The matrix is derived from trade data originally collected by the United Nations Statistical Division (COMTRADE) that was cleaned,
-processed and made publicly available by the Growth Growth Lab at Harvard University.
-For detailed we refer to http://atlas.cid.harvard.edu/about-data.
-
-The Growth Lab at Harvard University, 2019, "country_partner_hsproduct4digit_year_2016.tab",
-International Trade Data (HS, 92), https://doi.org/10.7910/DVN/T4CHWJ/T3KWV0, Harvard Dataverse
-
-Data on the GDP per capita of countries was obtained from the World Bank https://data.worldbank.org/, and is given in constant 2011 international $.
+processed and made publicly available by the Growth Growth Lab at Harvard University (\url{http://atlas.cid.harvard.edu/about-data}).
 }
 \keyword{datasets}

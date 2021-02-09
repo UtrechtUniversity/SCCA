@@ -3,16 +3,26 @@
 \docType{data}
 \name{carnivora_sites}
 \alias{carnivora_sites}
-\title{Site coordinates of the Carnivora dataset}
+\title{Sites of the Carnivora Incidence in Marine Territoria}
 \format{
-An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 41580 rows and 3 columns.
+A data frame with 41,580 rows (sites) and 3 columns
+\describe{
+  \item{site}{Site labels used in matrix \code{carnivora} as row names}
+  \item{lon}{Longitude of the site. See details.}
+  \item{lat}{Lattitude of the site. See details.}
+}
+}
+\source{
+\url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
 }
 \usage{
 carnivora_sites
 }
 \description{
-The Carnivora dataset also has a table with for every site the row id in the incidence matrix. The second and third columns give
-the coordinates (lon/lat) of the site. The Behrman cylindrical equal area projection is used with
+Sites of the Carnivora Incidence in Marine Territoria
+}
+\details{
+The Behrman cylindrical equal area projection is used with
 a resolution of 96.5 km by 96.5 km at 30° North and 30° South.
 The full projection description following R-notation is
 “+proj=cea +lon_0=0+lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84+towgs84=0,0,0”.

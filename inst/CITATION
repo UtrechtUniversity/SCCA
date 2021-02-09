@@ -2,8 +2,7 @@ citHeader("To cite lubridate in publications use:")
 
 citEntry(entry = "Misc",
   title        = "Spectral Clustering Corespondence Analysis",
-  author       = personList(as.person("Alje van Dam"),
-                   as.person("Kees van Eijden")),
+  author       = personList(as.person("Alje van Dam e.a.")),
   year         = "2021",
   institution  = "Utrecht University",
   url          = "https://github.com/UtrechtUniversity/SCCA",

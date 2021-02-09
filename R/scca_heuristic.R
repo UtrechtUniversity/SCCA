@@ -1,18 +1,19 @@
-#' Heuristic to Calculate the Expected Number of Clusters based on the spectrum of of eigenvalues of the normalized Laplacian.
+#' Heuristic to Calculate the Expected Number of Clusters based on the spectrum of of eigenvalues.
 #'
-#' Given the spectrum (a set of in decreasing order sorted eigenvalues),
-#' \emph{eigengap_heuristic} computes the position of the largest decrease in the spectrum,
-#' indicating the expected number of clusters to be found in the data.
+#' Given the spectrum (a set of sorted eigenvalues in descending order),
+#' \emph{eigengap_heuristic} looks for the position of the largest gap (difference in value of 2 consecutive eigenvalues) in the spectrum,
+#' indicating the expected number of clusters to be found in the data. If N (N>= 2) eigenvalues are equal to 1,
+#' then N N is the expected number of clusters is equal
 #' The matrix of corresponding eigenvectors is also returned.
 #' The number of clusters and the matrix of eigenvectors can serve as an input for a clustering algorithm like kmeans.
 #'
 #'
-#' @param eigenvalues Numeric vector of eigenvalues
+#' @param eigenvalues Numeric vector of sorted eigenvalues
 #' @param eigenvectors Numeric matrix containing eigenvectors (columns)
 #' @return A list with 3 elements
 #' \describe{
 #'   \item{Y}{Matrix with observations as input for \emph{kmeans}}
-#'   \item{k}{The position of the eigengap (the expected number of clusters in the data}
+#'   \item{k}{The position of largest gap or number the expected number of clusters in the data}
 #' }
 #'
 #' @export
@@ -24,19 +25,15 @@ eigengap_heuristic <- function(eigenvalues, eigenvectors) {
   if (is.unsorted(rev(eigenvalues))) {
     stop('Eigenvalues are not sorted in descending order')
   }
-  error <- 1e-7      # ?
+  error <- 1e-7      #
 
-  # if N Eigen values (N >= 2) equal 1 then k is equal to the number N else
-  # k is the number of the first Eigenvalue of the two consecutive Eigenvalues with the greatest gap
-  # between their values
-  #
-  value_is_one <- abs(eigenvalues - 1) < error
+  value_is_one <- abs(eigenvalues - 1) < error # are there eigenvalues == 1?
   n_ones       <- length(which(value_is_one))
   if (n_ones > 1) {
     threshold <- n_ones
   } else {
     # look for successive eigenvalues with greatest difference in value (gradient)
-    # number of Eigenvalues before this gap is the required value for kmeans
+    # number of the eigenvalue before the gap will be returned
     #
     gaps      <- eigenvalues[2:length(eigenvalues)] - eigenvalues[1:(length(eigenvalues)-1)] # gaps
     threshold <- match(min(gaps), gaps)   # returns first match

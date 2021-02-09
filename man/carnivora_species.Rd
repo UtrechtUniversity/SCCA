@@ -3,9 +3,16 @@
 \docType{data}
 \name{carnivora_species}
 \alias{carnivora_species}
-\title{Species of the Carnivora incidence in marine territoria.}
+\title{Species of the Carnivora Incidence in Marine Territoria.}
 \format{
-An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 288 rows and 2 columns.
+A data frame with 288 rows (species)
+\describe{
+  \item{species_id}{Species labels used in matrix \code{carnivora} as column names}
+  \item{species_name}{The actual names of the species}
+}
+}
+\source{
+\url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
 }
 \usage{
 carnivora_species

@@ -1,7 +1,7 @@
-#' Get Final Clusters from an SCCA Analysis
+#' Get Leaf Clusters from an SCCA Analysis
 #'
 #' Produces for every observation a record with the label of the observation
-#' and the final (or leaf) cluster to which the observation has been assigned by scca_compute.
+#' and the final for leaf cluster to which the observation has been assigned by scca_compute.
 #'
 #'
 #' @param scca An SCCA analysis tree as output from a run of \code{\link{scca_compute}} on a dataset

@@ -2,12 +2,12 @@
 % Please edit documentation in R/scca_heuristic.R
 \name{eigengap_heuristic}
 \alias{eigengap_heuristic}
-\title{Heuristic to Calculate the Expected Number of Clusters based on the spectrum of of eigenvalues of the normalized Laplacian.}
+\title{Heuristic to Calculate the Expected Number of Clusters based on the spectrum of of eigenvalues.}
 \usage{
 eigengap_heuristic(eigenvalues, eigenvectors)
 }
 \arguments{
-\item{eigenvalues}{Numeric vector of eigenvalues}
+\item{eigenvalues}{Numeric vector of sorted eigenvalues}
 
 \item{eigenvectors}{Numeric matrix containing eigenvectors (columns)}
 }
@@ -15,13 +15,14 @@ eigengap_heuristic(eigenvalues, eigenvectors)
 A list with 3 elements
 \describe{
   \item{Y}{Matrix with observations as input for \emph{kmeans}}
-  \item{k}{The position of the eigengap (the expected number of clusters in the data}
+  \item{k}{The position of largest gap or number the expected number of clusters in the data}
 }
 }
 \description{
-Given the spectrum (a set of in decreasing order sorted eigenvalues),
-\emph{eigengap_heuristic} computes the position of the largest decrease in the spectrum,
-indicating the expected number of clusters to be found in the data.
+Given the spectrum (a set of sorted eigenvalues in descending order),
+\emph{eigengap_heuristic} looks for the position of the largest gap (difference in value of 2 consecutive eigenvalues) in the spectrum,
+indicating the expected number of clusters to be found in the data. If N (N>= 2) eigenvalues are equal to 1,
+then N N is the expected number of clusters is equal
 The matrix of corresponding eigenvectors is also returned.
 The number of clusters and the matrix of eigenvectors can serve as an input for a clustering algorithm like kmeans.
 }
