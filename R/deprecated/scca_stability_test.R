@@ -20,7 +20,6 @@
 #'   \item{var_apo}{The average proportion of overlap between base clustering and clustering after dropping variable}
 #' }
 #'
-#' @export
 #'
 scca_stability_test <- function(m, drop_vars = NULL) {
 

@@ -15,7 +15,7 @@
 #'
 #' See \code{\link{scca_compute_dist}} for calculating a distance matrix.
 #'
-#' @export
+
 
 scca_validity_test <- function(scca, dist) {
 
@@ -70,7 +70,6 @@ scca_silhouette_test <- function(scca, dist, plot = TRUE) {
 #' @return
 #' The distance matrix as an \emph{dist} object
 #'
-#' @export
 scca_compute_dist <- function(m, filename = NULL, method = 'euclidian') {
   if (is.null(filename)) {
     filepath = NULL

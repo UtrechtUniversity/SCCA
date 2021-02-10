@@ -5,17 +5,17 @@
 #' @param m A matrix representing a bi-partite network. The matrix must have row names and column names.
 #' @param iter.max The maximum number of iterations \emph{kmeans} is allowed to make. Default is 10.
 #' @param nstart Number of random cluster sets kmeans may choose to start with. Default is 25.
-#' @param max_eigenvalues At  stage restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.
+#' @param max_eigenvalues Restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.
 #' @param max_depth The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on untill a stop condition has been met.
 #' @param decomp The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}
 #' @param heuristic The function to use for calculating the number of clusters. The default is \emph{eigengap_heuristic}
 #'
-#' @param child The child number of this node within its siblings (= same parent)
-#' @param labels The labels (character vector) defining the (sub-)set of dataset m to be analyzed
+#' @param child The child number of this node within its siblings (= nodes with same parent)
+#' @param labels The labels (character vector) defining the (sub-)set of data set m to be analyzed
 #' @param n_node Number of the node in the tree. This is a depth-first, pre-order numbering, starting with 1 at the top node (a.k.a. root)
 #' @param depth The depth (integer) of this node in the tree.
 
-#' @details Function \emph{scca_compute_tree} calls itself recursively for every subcluster found at a node untill one of the  stop conditions
+#' @details Function \emph{scca_compute_tree} calls itself recursively for every sub cluster found at a node until one of the  stop conditions
 #' is met:
 #' \itemize{
 #'   \item{The heuristic finds only one prominent eigenvalue (k = 1)}
@@ -40,12 +40,12 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
 
   # create a list of attributes to collect analysis data
   #
-  zero_vector  <- rep(0, length(labels))            # Used as a place holder for eigenvectors
+  zero_vector  <- rep(0, length(labels))            # Used as a place holder for Eigen vectors
   cluster_node <- list(depth       =  depth,        # Steps taken form top to this node
                        child       =  child,        # Number for distinguishing this node from its siblings
                        labels      =  labels,       #
                        n_labs      =  length(labels), # Number of labels (observations) in the subset
-                       k           =  0,           # The optimal number of clusters found in this subset
+                       k           =  0,            # The optimal number of clusters found in this subset
                        n_node      =  n_node,       # Depth-first, pre-order numbering of nodes in the scca tree
                        node_type   = 'branch',      # Values are 'branch' or 'leaf' If 'leaf' the subset can't be analyzed any further
                        eigen_vec_1 =  zero_vector,  # Eigenvectors after decomposition of this subset
@@ -98,7 +98,7 @@ scca_compute_tree <- function(labels, m, child, depth, max_depth, n_node,
     cl <- stats::kmeans(x = h_out$Y, centers = h_out$k, iter.max = iter.max, nstart = nstart)  # returns vector cl$cluster which gives the cluster id for each label
   }
 
-  # repeat proces for each cluster (C_i with i in 1:k) and combine results in a list which will be
+  # repeat process for each cluster (C_i with i in 1:k) and combine results in a list which will be
   # stored in the 'nodes' attribute of this node
   #
   for (child in 1:h_out$k) {

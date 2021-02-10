@@ -3,12 +3,18 @@
 \docType{data}
 \name{exports_products}
 \alias{exports_products}
-\title{Exported products}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1239 rows and 2 columns.}
+\title{Products of the Exports data}
+\format{
+Data frame of 1239 rows (products) and 2 columns
+\describe{
+  \item{\strong{label}}{Label of the exported product used in matrix \code{exports} as column name.}
+  \item{\strong{product_name}}{Name of the product}
+}
+}
 \usage{
 exports_products
 }
 \description{
-See: \link[=exports]{exports}
+Products of the Exports data
 }
 \keyword{datasets}

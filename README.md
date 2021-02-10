@@ -1,147 +1,70 @@
-# Spectral Clustering Correspondence Analysis in R
+---
+title: "SCCA: Spectral Clustering Correspondence Analysis in R"
+output:
+  html_document: default
+  pdf_document: default
+---
 
-Several methods of data analysis, widely used in different fields, and most prominently in ecology and in economics, have recently been recognised to be coincident (Mealy et al 2019). The method known in economics as the 'Economic Complexity Index' (ECI) (Hidalgo et al 2009, Baudena et al 2015) is in fact mathematically identical to a statistical method known as **Correspondence Analysis** (CA). Though originally derived as an ordination method in ecology (Hill, 1973), CA scores also arise in methods known in network science as spectral clustering and graph embedding. In this paper we illustrate how the use of CA can be extended and the understanding deepened thanks to the insights from network theory and we give guidelines for applications to different types of networks in ecology and economics. We focus in particular on applications to data that gives rise to modular networks.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-This R-package is meant to allow application of correspondence analysis to data that gives rise to modular networks by first clustering the data using a iterative procedure based on spectral clustering and subsequently apply correspondence analysis to each of the individual clusters. The package contains funciton to compute the similarity network defined by a bipartite network using stochastic complementation, and compute the spectrum and eigenvalues of the Laplacian of this network. It also provides the option to perform an iterative procedure that clusters the data based on the properties of the spectrum of the, and to analyze the resulting clusters using correspondence analysis.
 
-## Installation
+### Introduction
 
-This R package can be installed directly from Github with the code below. Ensure that the package `devtools` is installed.
+The SCCA package implements in R the methodological approach to CA as proposed in **A network view of correspondence analysis: applications to ecology and economic complexity** (van Dam et al; 2021).
 
-``` R 
+### Installation
+
+The package can be installed directly from Github with the code below. Ensure the package `devtools` has been installed installed.
+
+```
 #install.packages("devtools")
 library(devtools)
 install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 ```
 
-## Usage
+### Exported functions and data sets
 
-The main function of the package is `scca_compute`. The value is an SCCA clustering tree (recursive list).
+After loading the package a list of all exported functions and data sets can be retrieved by `?SCCA` and the documentation of an individual function by `?<function name>`; e.g. `?scca_compute`.
 
-``` R
-scca <- scca_compute(m = carnivora)
-```
+The methodology and the use of the functions and the data are explained in the included vignettes. After installing package SCCA use `browseVignettes('SCCA')` in the R(Studio) console.
 
-To get the final clusters:
+### License
 
-``` R
-clusters <- scca_get_clusters(scca)
-```
+The software code is licensed under [**MIT**](https://opensource.org/licenses/MIT). The next section (References) provides links to 
+sources of the included datasets. See there for licences of those data sets.
 
-The value is a cluster table. For each observation a record with the label of the observation and the cluster the observation is assigned to.
+### References
 
-SCCA is a stochastic process. Two runs will produce different outputs. The overlap between those outputs can be computed (and optionally plotted) with
+Dam, Alje van., e.a. 2021; **A network view of correspondence analysis: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
 
-``` R
-scca1   <- scca_compute(m = carnivora)
-overlap <- scca_overlap_test(x = scca, y = scca1, plot = TRUE)
-```
+#### Included data sets
+Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20)
 
-### Singular Value Decomposition
+[Growth Growth Lab at Harvard University](http://atlas.cid.harvard.edu/about-data)
 
-The default is `svd`, but the user can opt for `svds`
+### The team
 
-``` R
-scca <- scca_compute(carnivora, decomp = 'svds`)
-```
+The team members are::
 
-### Retrieving information
+* Mathematical foundations  of the code
+   - Alje van Dam, Copernicus Institute of Sustainable Development, Utrecht University, the Netherlands
+   - Mark Dekker, Centre for Complex Systems Studies, Utrecht University, the Netherlands
 
-The package provides three functions for retrieving information out of the hierachical analysis tree produced by `scca_compute`
+* Programming and packaging
+   - [Kees van Eijden](k.vaneijden@uu.nl) Research Engineering/ITS, Utrecht University, the Netherlands
 
-The function \code{scca_print} prints the tree to screen.
-
-``` R
-s <- scca_compute(carnivora, decomp = 'svd')
-scca_print(scca = s, 'k', 'n_labs')
-```
-
-The print function shows the tree structure in which the nodes are numbered. Use `scca_get_node` to collect labels of the data cluster at that node and its spectrum. 
-
-``` R
-s <- scca_compute(carnivora, decomp = 'svd')
-scca_print(scca = s, 'k', 'n_labs')
-
-# user finds node N interesting and want to see its attributes
-#
-
-scca_get_node(scca = s, node = N)
-```
-
-The function \code{scca_plot_spectrum} plots the spectrum of ....
-
-### Stability
-
-Let `cl` be a clustering on a set of observation and `cl_i` the clustering of same observations with variable `i` dropped. The clustering process is called stable if `cl` is (almost) the same (by some measure) as cl_i. The measure is the average proportion of overlap.
-
-``` R
-library(dplyr)
-drop          <- sample(ncol(carnivora), ncol(carnivora) %/% 10)
-stability     <- scca_stability_test(m = carnivora, drop_vars = drop)
-avg_stability <- stability %>% summarise(mean(var_APO))
-``` 
-### Validity
-
-The package `clValid` and `cluster` provide functions to calculate the internal validity of a clustering. The measures are Silhoutette Width, Dunn Index and Connectivity. This package provides a wrapper around these functions. It needs a distance matrix which must be calculated. Save the distance matrix for repeated uses, because the distance computation may take a while. 
-
-``` R
-library(dplyr)
-library(readr)
-d_species    <- scca_compute_dist(m = t(carnivora), filename = 'd_species')
-# d_species  <- read_rds('some_path/d_species_carn') # path from working directory
-scca_species <- scca_compute(m = t(carnivora))
-validity     <- scca_validity_test(scca = scca_species, dist = d_species)
-validity$sil
-validity$dunn
-validity$conn
-```
-
-### Heuristics 
-
-The function `scca_compute` uses a heuristic to determine the input for the `kmeans` clustering based on the properties of the Eigenvalues (spectrum) and Eigenvectors. The default is `eigengap_heuristic`. The user has also the option to provide her own heuristic.
-
-``` R
-scca <- scca_compute(exports, heuristic = trace_heuristic)
-
-my_heuristic <- function(eigenvalues, eigenvectors) {
-  
-  # compute the number (k) of cluster centers 
-  k <- ....
-
-  
-  # compute embedding (= data matrix for kmeans)
-  #
-  Y <- .....
-  return(list(Y = Y, k = k))
-}
-```
-
-### Pre-processing
-
-Currently the package contains only one function for pre-processing datasets `compute_rca`. Given an matrix representing a bi-partite graph (e.g. producers <-> products) it computes a matrix with binary values representing the Revealed Comparative Advantage (a.k.a. Location Quotient). Binary (0/1) values are the default but relative values are optional.
-
-``` R
-comput_rca(exports)
-comput_rca(exports, binary = FALSE)
-```
+* With contributions of
+   - Ignacio Morales Castilla, Global Change Ecology and Evolution Group, Department of Life Sciences, University of Alcala´, Spain 
+   - Jonathan de Bruin, Research Engineering/ITS, Utrecht University, the Netherlands
+   - Raoul Schram, Research Engineering/ITS, Utrecht University, the Netherlands
 
 
 
-### Python implementation of SCCA
+### How to cite SCCA
 
-Last but not least, there is a function to compare clusterings form `scca_compute` with clusterings on the same data/category from the Python implementation. See ?scca_py_overlap_test
+To cite the SCCA repository and R package, use `citation("SCCA")` to retrieve the BibTex entry. Otherwise use the following format:
 
-``` R
-s <- scca_compute(m = carnivora)
-scca_py_overlap_test(scca = s, 
-     py_output = 'location of the Python output files',
-     plot      = TRUE)
-```
-
-## License and citation
-
-## Contact
-
-Contributors, contact info, reference to ITS and description `[[ By Alje and ITS ]]`
+Dam, Alje van, e.a. 2021. "SCCA: Spectral Clustering Correspondence Analysis in R". Utrecht University. DOI: 12.1234/xxxxxx.1234567.
+Available at [Utrecht University](https://github.com/UtrechtUniversity/SCCA). 
 
 

@@ -1,15 +1,19 @@
 #' Decompose Large and Sparse Matrix
 #'
-#' The method computes a weighted singular value decomposition of a matrix, resulting in the CA axes given in 'principal components'.
+#' Computes Eigenvalues of the symmetric matrix MM^T (M is the input matrix), By first computing the weighted singular values and the corresponding singular vectors of matrix M: M = USV.
+#' The left singular vectors (U) are the eigenvectors of MM^T and the right singular vectors (V) are eigenvectors of M^TM.
+#' The non-zero elements of S are the square roots of the non-zero eigenvalues of MM^T or M^TM.
+#' See for a elaborate description of the algorithm: XXXXX
 #'
-#' @param matrix Incidence matrix (e.g. species - location), which can be interpreted as the  bi-adjacency matrix of a bipartite network. The rows are taken to be the unit of analysis.
+#' @param matrix Incidence matrix (e.g. species - location), which can be interpreted as the  bi-adjacency matrix of a bipartite network.
 #' @param max_eigenvalues Max. number of eigenvalues to compute. Default is 25.
 #' @param decomp The decomposition to use: \strong{svd} (default) or \strong{svds}.
+#' The later only computes the k leading singular values and vectors of an rectangular matrix
 #'
 #' @details If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
 #' to max_eigenvalues else the shortest dimension is chosen.
 #'
-#' \strong{svds} uses the rARPACK implementation of the singular value decomposition for efficient approximateion of singular decomposition for large sparse matrices.
+#' \strong{svds} uses the rARPACK implementation of the singular value decomposition for efficient approximation of singular decomposition for large sparse matrices.
 #'
 #'
 
@@ -18,13 +22,7 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
   if (!decomp %in% c('svds', 'svd')) {
     stop('Unknown decomposition function!')
   }
-  # Compute symmetric matrix S
-  # Steps:
-  #   A  matrix with observations (n rows) and variables (m columns)
-  #   D_c = colsum A    (m*m)
-  #   D_r = rowsum A    (n*n)
-  #   S_r = A * D_c^{-1} * A^T (n*m X m*m X m*n --> n*n)
-  #   S_c = A^T * D_r^{-1} * A (m*n X n*n X n*m --> m*m)
+
 
 
   matrix_a <- Matrix::Matrix(matrix, sparse = TRUE)     # Use sparse matrix to speed up computations
@@ -44,7 +42,7 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
   d_r_inv <- Matrix::Diagonal(x = 1/r_sums) # n X n
   d_c_inv <- Matrix::Diagonal(x = 1/c_sums) # m X m
 
-  # For explanation of following decomposition see:  ......
+  # For explanation
   #
   a_hat <- sqrt(d_r_inv) %*% matrix_a %*% sqrt(d_c_inv)
 
@@ -69,9 +67,9 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
   eigen_values      <- singular_decomp$d[1:n_eigenvalues]^2
 
 
-  # due to rounding errors zero's, values don't have to be exactly zero. They even can be negative and that
-  # will give errors when taking square roots. Such values within a small tolerance will be reset to 0,
-  # otherwise will raise errors
+  # due to rounding errors values don't have to be exactly zero which they theoretically should be. They even can be negative and that
+  # will give errors when taking square roots. Such rounding errors within a small tolerance will be set to 0,
+  # otherwise negative eigenvalues will raise errors.
   #
   tolerance = 1e-7
   if (any(eigen_values < -tolerance)) {
@@ -79,7 +77,7 @@ decomp_symmetric <- function(matrix, max_eigenvalues, decomp = 'svd') {
   }
   eigen_values[abs(eigen_values) < tolerance] <- 0
 
-  # some scaling but why?
+  # scaling
   #
   row_eigen_vectors <- row_eigen_vectors %*% sqrt(Matrix::Diagonal(x=eigen_values))
 

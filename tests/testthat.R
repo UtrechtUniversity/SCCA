@@ -1,4 +1,4 @@
 library(testthat)
-library(sccar)
+library(SCCA)
 
-test_check("sccar")
+test_check("SCCA")

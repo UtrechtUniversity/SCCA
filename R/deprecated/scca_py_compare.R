@@ -55,7 +55,7 @@ get_py_clustering <- function(path = NULL) {
 
 #' Overlap Test between an SSCA clustering and a 'Python clustering'
 #'
-#' The \strong{sccarr package} replaces an implementation of SCCA in Python.
+#' The \strong{SCCA package} replaces an implementation of SCCA in Python.
 #' \emph{scca_py_overlap_test} compares clusterings from both implementations by calculating
 #' the average proportion of overlap.
 #' For more info see \link{scca_overlap_test}.
@@ -72,7 +72,6 @@ get_py_clustering <- function(path = NULL) {
 #'
 #'   In due time this function will be phased out.
 #'
-#' @export
 scca_py_overlap_test <- function(scca, py_output = NULL, plot = FALSE) {
 
   cl.scca <- scca_get_clusters(scca = scca)

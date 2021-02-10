@@ -1,37 +1,27 @@
-Package: sccar
+Package: SCCA
 Type: Package
 Title: Spectral Clustering Correspondence Analysis in R
-Version: 0.1.0
+Version: 0.9.0.9000
 Authors@R: c(
-    person("Alje", "van Dam", email = "aljevdam@gmail.com", role = "aut"),
-    person("Mark", "Dekker", email = "m.m.dekker@uu.nl", role = "aut"),
-    person("Kees", "van Eijden", email = "k.vaneijden@uu.nl", role = "cre"),
-    person("Jonathan", "de Bruin", email = "j.debruin1@uu.nl", role = "aut"),
-    person("Raoul", "Schram", email = "r.d.schram@uu.nl", role = "aut")
+    person("Alje", "van Dam", email = "aljevdam@gmail.com", role = "aut", comment = "Leading Scientist"),
+    person("Mark", "Dekker", email = "m.m.dekker@uu.nl", role = "aut", comment = "Mathematical foundations of the code"),
+    person("Kees", "van Eijden", email = "k.vaneijden@uu.nl", role = c("aut", "cre")),
+    person("Jonathan", "de Bruin", email = "j.debruin1@uu.nl", role = "ctb"),
+    person("Raoul", "Schram", email = "r.d.schram@uu.nl", role = "ctb"),
+    person("Ignacio", "Morales Castilla", email = "ignacio.moralesc@uah.es", role = "ctb")
   )
 Description: This R-package is meant to allow application of CA to data that gives rise to modular networks
     by first clustering the data using a iterative procedure based on spectral clustering and subsequently
     apply CA to each of the individual clusters.
 Depends: R (>= 3.5.0)
 Imports:
-    stringr,
     Matrix,
-    matlib,
     rARPACK,
     stats,
     rlang,
     tibble,
     dplyr,
-    tidyr,
-    magrittr,
     ggplot2,
-    graphics,
-    GGally,
-    network,
-    clValid,
-    cluster,
-    NbClust,
-    factoextra,
     data.tree
 Suggests:
     readr,
@@ -41,5 +31,5 @@ Suggests:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

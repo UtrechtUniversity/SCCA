@@ -1,6 +1,7 @@
 context('decomp_symmetric')
 
 library(readr)
+library(dplyr)
 
 
 #' Benchmark SCCA Decomposition Against a Known Decomposition
@@ -24,7 +25,7 @@ bm_decomp_symmetric <- function() {
 
   # decompose matrix with decomp_symmetric
   #
-  scca        <- sccar:::decomp_symmetric(
+  scca        <- SCCA:::decomp_symmetric(
                    matrix            = bm_matrix,
                    max_eigenvalues     = 180)
 
