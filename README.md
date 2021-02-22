@@ -10,11 +10,11 @@ output:
 
 ### Introduction
 
-The SCCA package implements in R the methodological approach to CA as proposed in **A network view of correspondence analysis: applications to ecology and economic complexity** (van Dam et al; 2021).
+The SCCA package implements in R the methodological approach to CA as proposed in **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity** (van Dam et al; 2021).
 
 ### Installation
 
-The package can be installed directly from Github with the code below. Ensure the package `devtools` has been installed installed.
+The package can be installed directly from Github with the code below. Ensure the package `devtools` has been installed.
 
 ```
 #install.packages("devtools")
@@ -35,7 +35,7 @@ sources of the included datasets. See there for licences of those data sets.
 
 ### References
 
-Dam, Alje van., e.a. 2021; **A network view of correspondence analysis: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
+Dam, Alje van., e.a. 2021; **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
 
 #### Included data sets
 Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20)
@@ -47,8 +47,8 @@ Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroe
 The team members are::
 
 * Mathematical foundations  of the code
-   - Alje van Dam, Copernicus Institute of Sustainable Development, Utrecht University, the Netherlands
-   - Mark Dekker, Centre for Complex Systems Studies, Utrecht University, the Netherlands
+   - Alje van Dam, Copernicus Institute of Sustainable Development and Centre for Complex Systems Studies, Utrecht University, the Netherlands
+   - Mark Dekker, Department of Information and Computing Sciences and Centre for Complex Systems Studies, Utrecht University, the Netherlands
 
 * Programming and packaging
    - [Kees van Eijden](k.vaneijden@uu.nl) Research Engineering/ITS, Utrecht University, the Netherlands
@@ -57,6 +57,7 @@ The team members are::
    - Ignacio Morales Castilla, Global Change Ecology and Evolution Group, Department of Life Sciences, University of Alcala´, Spain 
    - Jonathan de Bruin, Research Engineering/ITS, Utrecht University, the Netherlands
    - Raoul Schram, Research Engineering/ITS, Utrecht University, the Netherlands
+   - Mara Baudena, National Research Council of Italy, Institute of Atmospheric Science and Climate (CNR-ISAC), Turin, Italy; Copernicus Institute of Sustainable Development and Centre for Complex Systems Studies, Utrecht University, the Netherlands
 
 
 
