@@ -24,7 +24,7 @@ install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 
 ### Exported functions and data sets
 
-After loading the package a list of all exported functions and data sets can be retrieved by `?SCCA` and the documentation of an individual function by `?<function name>`; e.g. `?scca_compute`.
+After   loading the package a list of all exported functions and data sets can be retrieved by `?SCCA` and the documentation of an individual function by `?<function name>`; e.g. `?scca_compute`.
 
 The methodology and the use of the functions and the data are explained in the included vignettes. After installing package SCCA use `browseVignettes('SCCA')` in the R(Studio) console.
 
