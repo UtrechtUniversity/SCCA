@@ -40,7 +40,7 @@ Dam, Alje van., e.a. 2021; **Correspondence analysis, spectral clustering and gr
 #### Included data sets
 Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20)
 
-[Growth Growth Lab at Harvard University](http://atlas.cid.harvard.edu/about-data)
+[Growth Lab at Harvard University](http://atlas.cid.harvard.edu/about-data)
 
 ### The team
 
@@ -65,7 +65,8 @@ The team members are:
 
 To cite the SCCA repository and R package, use `citation("SCCA")` to retrieve the BibTex entry. Otherwise use the following format:
 
-Dam, Alje van, e.a. 2021. "SCCA: Spectral Clustering Correspondence Analysis in R". Utrecht University. DOI: 12.1234/xxxxxx.1234567.
+van Dam, Alje, e.a. 2021. "SCCA: Spectral Clustering Correspondence Analysis in R". Utrecht University. DOI: 12.1234/xxxxxx.1234567.
 Available at [Utrecht University](https://github.com/UtrechtUniversity/SCCA). 
 
+Please also cite the paper van Dam et al, 2021 Scientific Report (in review) when using the SCCA repository.
 
