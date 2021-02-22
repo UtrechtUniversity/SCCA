@@ -6,7 +6,7 @@ output: rmarkdown::html_vignette
 description: >
   This vignette walks readers through useful applications of package SCCA in the    field of ecology.
 vignette: >
-  %\VignetteIndexEntry{usingSCCA}
+  %\VignetteIndexEntry{using SCCA}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -19,7 +19,7 @@ options(tibble.print_min = 4, tibble.print_max = 4)
 
 
 
-This vignette walks readers through useful applications of package scca.R in the field of ecology. Specifically, it does so using a case study for global carnivores, allowing to replicate the results in [van Dam et al](#van_dam).
+This vignette walks readers through useful applications of package scca.R in the field of ecology. Specifically, it does so using a case study for global carnivores, allowing to replicate the results in [van Dam, et al](#van_dam).
 
 ## Overview
 
@@ -54,17 +54,18 @@ Next, if it is the first time using `scca.R` we need to install the package. Unt
 
 And then it should be loaded.
 ```{r loadsccar, message = FALSE}
-###library(sccar)
-###set.seed(0)
+library(sccar)
+set.seed(0)
 ```
 
 ## Data on global Carnivora
 The data has a pre-loaded incidence matrix of presences-absences of global carnivores (Mammalia) from both land and oceans. A quick glance to the data: 
 
 ```{r datainspect, message = FALSE, echo = TRUE}
-###dim(carnivora)
 
-###head(carnivora[1:6,1:10])
+dim(carnivora)
+
+head(carnivora[1:6,1:10])
 
 ```
 
