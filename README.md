@@ -44,7 +44,7 @@ Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroe
 
 ### The team
 
-The team members are::
+The team members are:
 
 * Mathematical foundations  of the code
    - Alje van Dam, Copernicus Institute of Sustainable Development and Centre for Complex Systems Studies, Utrecht University, the Netherlands
