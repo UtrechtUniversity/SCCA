@@ -3,15 +3,15 @@
 #' Computes Eigenvalues of the symmetric matrix MM^T (M is the input matrix), By first computing the weighted singular values and the corresponding singular vectors of matrix M: M = USV.
 #' The left singular vectors (U) are the eigenvectors of MM^T and the right singular vectors (V) are eigenvectors of M^TM.
 #' The non-zero elements of S are the square roots of the non-zero eigenvalues of MM^T or M^TM.
-#' See for a elaborate description of the algorithm: XXXXX
+#' See for a elaborate description of the algorithm: XXXXX 
 #'
 #' @param matrix Incidence matrix (e.g. species - location), which can be interpreted as the  bi-adjacency matrix of a bipartite network.
 #' @param max_eigenvalues Max. number of eigenvalues to compute. Default is 25.
 #' @param decomp The decomposition to use: \strong{svd} (default) or \strong{svds}.
-#' The later only computes the k leading singular values and vectors of an rectangular matrix
+#' The later only computes the k leading singular values and vectors of a rectangular matrix
 #'
 #' @details If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
-#' to max_eigenvalues else the shortest dimension is chosen.
+#' to max_eigenvalues; otherwise, the shortest dimension is chosen.
 #'
 #' \strong{svds} uses the rARPACK implementation of the singular value decomposition for efficient approximation of singular decomposition for large sparse matrices.
 #'
