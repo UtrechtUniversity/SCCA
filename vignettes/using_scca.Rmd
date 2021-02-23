@@ -17,17 +17,15 @@ knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4, tibble.print_max = 4)
 ```
 
+## Introduction
+
+This vignette walks readers through a useful application of the package SCCA in the field of ecology.
+Specifically, it does so using a case study for global carnivores, allowing to replicate the results in [van Dam, et al](#van_dam).
 
 
-This vignette walks readers through useful applications of package scca.R in the field of ecology. Specifically, it does so using a case study for global carnivores, allowing to replicate the results in [van Dam, et al](#van_dam).
+This vignette shows how to perform Correspondence Analysis to an incidence (presence-absence) matrix representing the distribution of the global Carnivora, including both marine and terrestrial species. We demonstrate the most common functions to obtain bioregions and/or chorotypes and to visualize analytic results.
 
-## Overview
 
-1.  The code installs and load the package.
-
-1.  `sccar.R` applies Correspondance Analysis to an incidence (presence-absence) matrix representing the distribution of the global Carnivora, including both marine and terrestrial species.
-    
-1.  This vignette walks users through most common functions to obtain bioregions and/or chorotypes and to visualize analytic results. 
     
 
 ## Installing the package and R setup
@@ -52,14 +50,15 @@ Next, if it is the first time using `scca.R` we need to install the package. Unt
 
 ```
 
-And then it should be loaded.
+We assume the package SCCA has already been installed ([see READme](https://www.uu.nl)), but the package must also be loaded before using.
+
 ```{r loadsccar, message = FALSE}
-library(sccar)
+library(SCCA)
 set.seed(0)
 ```
 
 ## Data on global Carnivora
-The data has a pre-loaded incidence matrix of presences-absences of global carnivores (Mammalia) from both land and oceans. A quick glance to the data: 
+The package has a pre-loaded incidence matrix of presences-absences of global carnivores (Mammalia) from both land and oceans. A quick glance to the data: 
 
 ```{r datainspect, message = FALSE, echo = TRUE}
 
@@ -75,35 +74,34 @@ We can have a look at the geographic distribution of those sites by loading the 
 
 ```{r datainspectmap,, message = FALSE, echo = TRUE,fig.height=5,fig.width=8}
 # retrieve coordinates
-###sites <- carnivora_sites
+sites <- carnivora_sites
 
 # inspect 
-###head(sites)
+head(sites)
 
 # retrieve species
-###carnivores <- carnivora_species
+carnivores <- carnivora_species
 
 # inspect 
-###head(carnivores)
+head(carnivores)
 
 # plot geographic coordinates of sites
-###plot(sites$lon,sites$lat,
-###     col=adjustcolor('grey',0.4),pch=19,cex=0.3)
+plot(sites$lon, sites$lat,
+  col = adjustcolor('grey',0.4),
+  pch = 19,
+  cex=0.3
+)
 
 ```
 
 
+## Using SCCA
 
+Once familiar with the data we can now review basic functions in the package.
+In this example, we apply Correspondence Analyses aiming to analyze sites according to their species composition
+(but we could have as well aimed at analyzing species based on their geographic distributions by applying the same procedure to columns instead of rows). The analysis yields a number of clusters in which data can be classified, and which are interpreted as bioregions.
 
-## Using `scca.R`
-
-Once familiar with the data we can now review basic functions in the package. In this example, we apply Correspondance Analyses aiming to analyze sites according to their species composition (but we could have as well aimed at analyzing species based on their geographic distributions by applying the same procedure to columns instead of rows). The analysis yields a number of clusters in which data can be classified, and which are interpreted as bioregions.
-
-<!--Application of CA reveals that the dataset consists of multiple clusters. As introduced in Section \ref{sec:clusvsord}, we first split the dataset into separate subsets that each consist of a single cluster. These clusters represent sites with similar species composition (termed bioregions). Once we defined the bioregions, we asked whether the sites within them showed any distributional gradient, which would be reflected by the arrangement of sites along “meaningful” CA axes, i.e. axes explaining a considerable amount of variation, as given by the corresponding eigenvalue. If so, it would then be possible to ask whether this gradient would relate to some environmental factor or other spatially patterned process (e.g. distance to main areas of species interchange with other regions \cite{Morales-Castilla2012}). These kinds of questions are common in CA-based ecological investigations and are oftentimes addressed through correlational analyses between meaningful CA-axes and explanatory factors. Since this is well-known practice among ecologists, we did not include this part in the present analysis.-->
-
-scca <- scca_compute(m = carnivora, nstart=100)
-
-## `scca_compute()`: apply CA to a matrix _m_ 
+### `scca_compute()`: apply CA to a matrix _m_ 
 
 `sccar::scca_compute()` The function scca_compute performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix representing a bi-partite network. The proces consists of a decomposition of the matrix (svd), a (user-provided) heuristic which transforms the decompostion to input for kmeans clustering (k and the set of observations and, then, the kmeans clustering itself. Each of the resulting clusters (sub-matrices) can be analyzed again untill some stopping condition is met. The output of sccs_compute is a tree (list of lists) in which every node represents one step in the process.
 
