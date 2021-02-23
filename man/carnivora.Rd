@@ -3,7 +3,7 @@
 \docType{data}
 \name{carnivora}
 \alias{carnivora}
-\title{Carnivora Incidence in Marine Territoria}
+\title{Geographical distributions of the mammalian order Carnivora}
 \format{
 A matrix with 41,580 rows (sites) and and 288 columns (species)
 \describe{

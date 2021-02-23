@@ -1,4 +1,4 @@
-#' Carnivora Incidence in Marine Territoria
+#' Geographical distributions of the mammalian order Carnivora
 #'
 #' This common-used dataset in Ecology, gives the geographical distributions of the mammalian order Carnivora.
 #' The data set is comprised by an incidence matrix M
@@ -23,7 +23,7 @@
 "carnivora"
 
 
-#' Species of the Carnivora Incidence in Marine Territoria.
+#' Species of the Carnivora Incidence matrix
 #'
 #' This table has two columns: species_id and species_name. The first column contains labels (column names) of the Carnivora
 #' incidence matrix. The second column contains the names of the species.
@@ -37,7 +37,7 @@
 #' @source \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
 "carnivora_species"
 
-#' Sites of the Carnivora Incidence in Marine Territoria
+#' Sites of the Carnivora Incidence matrix
 #'
 #' @format A data frame with 41,580 rows (sites) and 3 columns
 #' \describe{
@@ -84,11 +84,11 @@
 #'   \item{\strong{label}}{Label of the exporting country used in matrix \code{exports} as row name.}
 #'   \item{\strong{country_name}}{Name of the country}
 #'   \item{\strong{country_code}}{Code of the country}
-#'   \item{\strong{GDPcp}}{Gross Domestic Product per capita }
+#'   \item{\strong{GDPpc}}{Gross Domestic Product per capita }
 #' }
 #'
 #'@details
-#'Data on the GDP per capita of was obtained from the World Bank (\url{https://data.worldbank.org/}), and is given in constant 2011 international $.
+#'Data on the GDP per capita was obtained from the World Bank (\url{https://data.worldbank.org/}), and is given in constant 2011 international $.
 #'
 #'
 "exports_countries"
