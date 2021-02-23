@@ -22,35 +22,20 @@ options(tibble.print_min = 4, tibble.print_max = 4)
 This vignette walks readers through a useful application of the package SCCA in the field of ecology.
 Specifically, it does so using a case study for global carnivores, allowing to replicate the results in [van Dam, et al](#van_dam).
 
+We will show how to perform Correspondence Analysis to an incidence (presence-absence) matrix representing the distribution of the global Carnivora, including both marine and terrestrial species. We demonstrate the most common functions to obtain bioregions and/or chorotypes and to visualize analytic results.
 
-This vignette shows how to perform Correspondence Analysis to an incidence (presence-absence) matrix representing the distribution of the global Carnivora, including both marine and terrestrial species. We demonstrate the most common functions to obtain bioregions and/or chorotypes and to visualize analytic results.
+## Installing and loading the package
 
-
-    
-
-## Installing the package and R setup
-
-For starters, we will install and load the package. First we do some housekeeping to get R ready.
-
-```{r houskeep, message = FALSE}
-## housekeeping
-## remove objects and set factors as false
-###rm(list=ls())
-###options(stringsAsFactors = FALSE)
-
-```
-
-Next, if it is the first time using `scca.R` we need to install the package. Until it is officially published, it can be easily accessed by:
+If not already been done, the package must be installed from GitHub:
 
 ```{r install, message = FALSE, eval = FALSE}
-
 ## install and load packages
-###library(devtools)
-###install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
-
+#library(devtools)
+#install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 ```
 
-We assume the package SCCA has already been installed ([see READme](https://www.uu.nl)), but the package must also be loaded before using.
+Assuming the package SCCA has been installed ([see READme](https://www.uu.nl)), the package can now be loaded.
+__Because CA is a stochastic process, the seed ....__
 
 ```{r loadsccar, message = FALSE}
 library(SCCA)
@@ -64,7 +49,7 @@ The package has a pre-loaded incidence matrix of presences-absences of global ca
 
 dim(carnivora)
 
-head(carnivora[1:6,1:10])
+head(carnivora[14000:14006, 150:160])
 
 ```
 
@@ -94,10 +79,9 @@ plot(sites$lon, sites$lat,
 
 ```
 
-
 ## Using SCCA
 
-Once familiar with the data we can now review basic functions in the package.
+Once familiar with the data we can now review the basic functions in the package.
 In this example, we apply Correspondence Analyses aiming to analyze sites according to their species composition
 (but we could have as well aimed at analyzing species based on their geographic distributions by applying the same procedure to columns instead of rows). The analysis yields a number of clusters in which data can be classified, and which are interpreted as bioregions.
 
@@ -109,69 +93,68 @@ The function to calculate a number of clusters is a heuristic _eigengap_heuristi
 
 We can apply the function to the carnivora dataset, generate an object that we call `scca` and inspect the results using the function `scca_print()`.
 
-```{r applyCA, message = FALSE, echo = FALSE}
+```{r applyCA, message = FALSE, echo = TRUE}
 
 # application of this function to a large dataset sucha as the carnivora dataset here
 # can take up to a minute.
-###scca <- scca_compute(m = carnivora, 
-###                    iter.max = 10,
-###                    nstart = 100,
-###                    disconnect.rm = TRUE,
-###                    max_eigenvalues = 25,
-###                    decomp = "svd",
-###                    max_depth = Inf,
-###                    heuristic = eigengap_heuristic)
+scca <- scca_compute(m = carnivora, 
+  iter.max = 10,
+  nstart   = 100,
+  disconnect.rm   = TRUE,
+  max_eigenvalues = 25,
+  decomp    = "svd",
+  max_depth = Inf,
+  heuristic = eigengap_heuristic)
 
-### scca_print(scca , 'k', 'n_labs', 'depth', 'node_type')
+scca_print(scca , 'k', 'n_labs', 'depth', 'node_type')
 
 ```
 
+### `scca_print()`: print hierarchical cluster _m_ 
 
-
-## `scca_print()`: print hierarchical cluster _m_ 
-
-`sccar::scca_print()` The function scca_prints shows the hierarchical structure of fitted clusters. 
-
-
+This function shows the hierarchical structure of fitted clusters. 
 
 ```{r inspectresults, message = FALSE, echo = TRUE}
 
 ## inspect the structure of object scca
-###scca_print(scca , 'k', 'n_labs', 'depth', 'node_type')
+scca_print(scca , 'k', 'n_labs', 'depth', 'node_type')
 
 ```
 
-There are 17 _leaf nodes_ or clusters identified by the heuristic. The attributes asked to be printed in `scca_print()` have the following meaning: _n_labs_ is the number of obesrvations, _k_ is the number of relevant Eigenvalues (i.e. before the eigengap) at each branch node, _note_type_ is the type of branch (internal) or leaf (terminal) nodes. If no attribute is given, then only the tree hierarchy is printed.
+There are `r length(unique(scca_get_clusters(scca)$cluster))` _leaf nodes_ or clusters identified by the heuristic. The attributes asked to be printed in `scca_print()` have the following meaning:
+_n_labs_ is the number of observations (labels),
+_k_ is the number of relevant Eigenvalues (i.e. before the eigengap) at each branch node,
+_node_type_ is the type of branch (internal) or leaf (terminal) nodes.
+If no attribute is given, then only the tree hierarchy is printed.
 
+### `scca_get_clusters()`: retrieve and plot or map clusters 
 
-
-
-
-## `scca_get_clusters()`: retrieve and plot or map clusters 
-
-`sccar::scca_get_clusters()` The function `scca_get_clusters` saves the observations to an object, which allows to map obtained clusters or bioregions.
-
-
+The function `scca_get_clusters` saves the observations and the cluster it has been assigned to, in an object.
+which allows to map obtained clusters or bioregions.
 
 ```{r saveplotclusters, message = FALSE, echo = TRUE, fig.height=5,fig.width=8}
 
-## save the clusters in object scca
-###clusts<-scca_get_clusters(scca)
+# save the clusters in object scca
+(clusts<-scca_get_clusters(scca))
 
 ## how many clusters?
-###length(unique(clusts$cluster))
+length(unique(clusts$cluster))
 
 
 # plotting clusters
-###plot(sites$lon,sites$lat,
-###     col=adjustcolor('grey',0.4),pch=19,cex=0.3)
+plot(sites$lon,sites$lat,
+     col = adjustcolor('grey',0.4),
+     pch = 19,
+     cex = 0.3)
 
-###for(i in sort(unique(clusts$cluster))){#i=2
-###points(sites$lon[which(clusts$cluster==i)],
-###       sites$lat[which(clusts$cluster==i)],
-###       pch=19,cex=0.5,
-###       col=adjustcolor(hcl.colors(22)[i],0.6))
-###}
+for(i in sort(unique(clusts$cluster))) {#i=2
+  points(
+    sites$lon[which(clusts$cluster==i)],
+    sites$lat[which(clusts$cluster==i)],
+    pch = 19,
+    cex = 0.5,
+    col = adjustcolor(hcl.colors(22)[i],0.6))
+}
 
 ```
 
@@ -181,74 +164,37 @@ Regions shaded in different colors represent each cluster or bioregion. The loop
 
 ## `scca_get_node()`: retrieve any given node (axis) and plot its eigen-spectrum
 
-`sccar::scca_get_node()` The function `scca_get_node` retrieves the values for any given node in object scca, which allows to, for example plot eigenspectrums.
+This function retrieves the values for any given node in object scca, which allows to, for example plot eigenspectrums.
+Type `?scca_get_node` at the R console to see which information is stored in a node. Not only for leaf nodes but also for bracnch nodes.
 
-There is however, a more direct function to plot the eigen spectrum for any given node: `scca_plot_spectrum()`.
 
+```{r spectralclust1, message = FALSE, echo = TRUE}
 
-```{r spectralclust, message = FALSE, echo = TRUE}
-
-#node1 <- scca_get_node(scca, node = 1)
+node1 <- scca_get_node(scca, node = 1)
 
 ## check eigenvalues:
 
 ## plot eigenspectrum
-###plot(1:length(node1$spectrum),
-###     node1$spectrum,ylab="Eigenvalues",xlab="Index")
+plot(
+  x = 1:length(node1$spectrum),
+  y = node1$spectrum,
+  ylab = "Eigenvalues",
+  xlab = "Index")
+```
 
+There is however, a more direct function to plot the eigen spectrum for any given node: `scca_plot_spectrum()`.
+
+```{r spectralclust2, message = FALSE, echo = TRUE}
 ## the same can be done directly with function scca_plot_spectrum()
-###scca_plot_spectrum(scca,1)
-
+scca_plot_spectrum(scca,
+  node = 1,
+  plot = TRUE)
 ```
 
-These plots show the sorted spectrum for all data (node 1), showing two eigenvectors with value equal 1, indicating that there are two fully disconnected clusters. 
-
-
-
-## `scca_stability_test()`: run stability test
-
-Tests the stability of an SCCA clustering. Only the clustering at the 'leaves' are considered. After a normal clustering with scca_compute the clustering process is repeated while dropping one of variables from the user provided list. This proces is repeated fro every variable in the list. Every time the clustering output is compared with the original clustering.
-
-The stability measure is the average proportion of overlap (APO: the reverse of APN). APO can be understood as the chance that if 2 observations are in the same cluster in the base clustering they are also in the same cluster in the clustering with 1 column dropped.
-
-```{r stability, message = FALSE, echo = TRUE, fig.height=5,fig.width=8, eval = FALSE}
-
-## check stability (WARNING: takes long time to compute)
-###stability <- scca_stability_test(m = carnivora)
-
-# inspect
-###stability
-
-
-```
-
-
-## `scca_validity_test()`: runs validity test 
-
-Tests the validity of a clustering produced by scca_compute. Computes the three internal validity measures: Connectivity, Silhouette Width and Dunn Index. This function requires a distance matrix, generated by the accessory function `scca_compute_dist()`.
-
-```{r validity, message = FALSE, echo = TRUE, fig.height=5,fig.width=8, eval = FALSE}
-
-##(WARNING: takes long time to compute and uses a lot of memory)
-
-## get distances
-###dists <- scca_compute_dist(m = carnivora)
-
-
-## check stability:
-###validity <- scca_valididty_test(scca, dists)
-
-# inspect
-###head(validity)
-
-
-```
-
-
-
+These plots show the sorted spectrum for all data (node 1), showing two eigenvectors with value equal 1, indicating that there are two fully disconnected clusters. Function `scc_plot_spectrum()` also prints the sorted eigenvalues as a table.
 
 ### References
 
 <a name="van_dam">
-van Dam, Alje, e.a.
+Dam, Alje van., e.a. 2021; **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
 </a>
