@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The SCCA package implements in R the methodological approach to CA as proposed
-#' in \strong{A network view of correspondence analysis: applications to ecology and economic complexity}
+#' in \strong{Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity}
 #' (\href{https://www.uu.nl}{van Dam et al; 2021}).
 #'
 #'
