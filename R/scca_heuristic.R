@@ -3,9 +3,9 @@
 #' Given the spectrum (a set of sorted eigenvalues in descending order),
 #' \emph{eigengap_heuristic} looks for the position of the largest gap (difference in value of 2 consecutive eigenvalues) in the spectrum,
 #' indicating the expected number of clusters to be found in the data. If N (N>= 2) eigenvalues are equal to 1,
-#' then N N is the expected number of clusters is equal
+#' then N is the expected number of clusters
 #' The matrix of corresponding eigenvectors is also returned.
-#' The number of clusters and the matrix of eigenvectors can serve as an input for a clustering algorithm like kmeans.
+#' The number of clusters and the matrix of eigenvectors can serve as an input for a clustering algorithm, e.g. kmeans. See also van Dam et al 2021 for further explanations.
 #'
 #'
 #' @param eigenvalues Numeric vector of sorted eigenvalues
