@@ -20,10 +20,9 @@
 #' @param nstart Number of random cluster sets kmeans may choose to start with. Default is 25.
 #' @param disconnect.rm If TRUE (default) disconnected rows and columns in the input data will be removed.
 #' @param max_eigenvalues Restrict the number of computed eigenvalues to max_eigenvalues. The default is 25.
-#' @param max_depth The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on until a stop condition has been met.
+#' @param max_depth The maximum allowed depth of the analysis process. If Inf (default) the analysis goes on until a stop condition has been met.
 #' @param decomp The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}
 #' @param heuristic The function to use for calculating the number of clusters. The default is \emph{eigengap_heuristic}
-#' @param disconnect.rm If TRUE (default) disconnected rows and columns in the input data will be removed.
 #'
 #' @return A tree which describes the hierarchical SCCA process. Every node contains the following information:
 #' \describe{
