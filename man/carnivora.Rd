@@ -12,9 +12,6 @@ A matrix with 41,580 rows (sites) and and 288 columns (species)
   \item{\strong{column name}}{label which can be used to retrieve the species name from the data frame \code{carnivora_species}}
 }
 }
-\source{
-\url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}
-}
 \usage{
 carnivora
 }
@@ -24,10 +21,13 @@ The data set is comprised by an incidence matrix M
 (i.e. presence-absence matrix), with 41,580 non-empty sites (rows) and 288 extant terrestrial and marine species (columns).
 The sites represent grid-cells rasterised at a resolution of 0.78 latitudinal degrees.
 The distributional data results from rasterizing range map distributions published as part of
-the Phylacine v1.2 dataset (Faurby et al. 2018), which includes
+the Phylacine v1.2 dataset \strong{Faurby 2019}, which includes
 data on the geographic distributions of mammals both extant and extinct over the last 130,000 years.
-The data was downloaded (last accessed on November 2019; \url{https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20}) and pruned
+The data was downloaded (last accessed on November 2019) and pruned
 to only include carnivores.
 Data was processed in R (R Core Development Team 2014) and mapped in QGIS v2.18.16 (QGIS Development Team 2015).
+}
+\references{
+Faurby, Søren et al. (2019), Data from: PHYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology, Dryad, Dataset, \url{https://doi.org/10.5061/dryad.bp26v20}
 }
 \keyword{datasets}

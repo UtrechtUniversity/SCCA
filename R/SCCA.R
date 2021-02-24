@@ -21,7 +21,6 @@
 #' @section Exported data:
 #' \itemize{
 #'   \item \code{\link{carnivora} \link{carnivora_sites} \link{carnivora_species}}
-#'   \item \code{\link{exports} \link{exports_products} \link{exports_products}}
 #'  }
 #'
 #'

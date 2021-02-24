@@ -28,7 +28,7 @@ scca_compute(
 
 \item{decomp}{The decomposition function to use. Choices are \emph{svd} (default) and \emph{svd}}
 
-\item{max_depth}{The maximum allowed depth of the analysis proces. If Inf (default) the analysis goes on until a stop condition has been met.}
+\item{max_depth}{The maximum allowed depth of the analysis process. If Inf (default) the analysis goes on until a stop condition has been met.}
 
 \item{heuristic}{The function to use for calculating the number of clusters. The default is \emph{eigengap_heuristic}}
 }
@@ -42,29 +42,28 @@ A tree which describes the hierarchical SCCA process. Every node contains the fo
   \item{child}{Number of this node among its siblings. No order intended}
   \item{spectrum}{Vector of the Eigen values found at this node. The eigenvalues are
   sorted on explained variance in descending order.}
-  \item{eigen_vec_1}{The first Eigenvector of the subset of this node}
-  \item{eigen_vec_2}{The second ...}
-  \item{eigen_vec_3}{The third ...}
+  \item{eigen_vec_1}{The first eigenvector of the subset of this node}
+  \item{eigen_vec_2}{The second eigenvector}
+  \item{eigen_vec_3}{The third eigenvector}
   \item{k}{The number of relevant eigenvalues. This is the value for parameter k of 'kmeans'.}
   \item{node_type}{The value is 'leaf' if k equals -1, 0, or 1, else 'branch'}
   \item{node}{A list of k child nodes, if node_type == 'branch'}
 }
 }
 \description{
-Please refer to \href{http://www.uu.nl}{Dam, Alje van, e.a. 2021} for a
+Please see \strong{van Dam, et al. 2021} for a
 detailed description of the theory and mathematical foundation of Spectral Clustering Correspondence Analysis.
 }
 \details{
 The function \emph{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix M representing a
 bi-partite network. The process consists of the following steps:
 \enumerate{
-    \item Computation of the eigenvalues and eigenvectors of MM* (M* transpose of M) by means of a singular value decomposition of matrix M.
-    \item Application of an heuristic on the resulting spectrum (ordered eigenvalues on descending values) to establish the set most relevant k eigenvectors.
-    \item If k is more then 1, apply kmeans on the matrix of corresponding eigenvectors to find the k clusters.
+    \item Computation of eigenvalues and eigenvectors of the similarity matrix derived from M.
+    \item Determine K, being how many relevant eigenvectors should be found.
+    \item Apply K-means to find a clustering of the elements of M into K clusters in a hierarchical manner.
 }
-
-The process can be (hierarchical) repeated on the resulting clusters till no cluster can't be split anymore.
-The output of \emph{sccs_compute} is a tree (list of lists) in which every node represents one step in the process.
+The process can be (hierarchical) repeated on the resulting clusters.
+The output of \emph{sccs_compute} is a tree in which every node represents one step in the process.
 
 The hierarchical decomposition on a branch stops, when the number of relevant eigenvalues equals 1 or,
 the maximum depth has been reached. This is signaled by \emph{k = 0}.
@@ -77,4 +76,10 @@ The function \emph{scca_compute} is a wrapper function around the workhorse \cod
 \dontrun{
 scca_compute(carnivora)
 }
+}
+\references{
+van Dam, et al. (2021),
+\strong{Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity},
+*name of journal*,
+DOI: <doi>.
 }

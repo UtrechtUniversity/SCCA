@@ -6,7 +6,7 @@
 \title{Spectral Clustering Correspondence Analysis in R}
 \description{
 The SCCA package implements in R the methodological approach to CA as proposed
-in \strong{A network view of correspondence analysis: applications to ecology and economic complexity}
+in \strong{Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity}
 (\href{https://www.uu.nl}{van Dam et al; 2021}).
 }
 \section{Exported functions}{
@@ -26,7 +26,6 @@ in \strong{A network view of correspondence analysis: applications to ecology an
 
 \itemize{
   \item \code{\link{carnivora} \link{carnivora_sites} \link{carnivora_species}}
-  \item \code{\link{exports} \link{exports_products} \link{exports_products}}
  }
 }
 

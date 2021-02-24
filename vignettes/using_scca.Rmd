@@ -31,19 +31,21 @@ If not already been done, the package must be installed from GitHub:
 ```{r install, message = FALSE, eval = FALSE}
 ## install and load packages
 #library(devtools)
-#install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
+#install_github("UtrechtUniversity/SCCA", build_vignettes = TRUE)
 ```
 
-Assuming the package SCCA has been installed ([see READme](https://www.uu.nl)), the package can now be loaded.
-__Because CA is a stochastic process, the seed ....__
+Assuming the package SCCA has been installed the package can now be loaded.
+__Explanation why setting a seed? See also my remark __
 
-```{r loadsccar, message = FALSE}
+```{r loadSCCA, message = FALSE}
 library(SCCA)
 set.seed(0)
 ```
 
 ## Data on global Carnivora
-The package has a pre-loaded incidence matrix of presences-absences of global carnivores (Mammalia) from both land and oceans. A quick glance to the data: 
+The package has a pre-loaded incidence matrix of presences-absences of global carnivores (Mammalia) from both land and oceans.
+The data set is downloaded from [DRYAD](#faurby).
+A quick glance to the data: 
 
 ```{r datainspect, message = FALSE, echo = TRUE}
 
@@ -87,9 +89,17 @@ In this example, we apply Correspondence Analyses aiming to analyze sites accord
 
 ### `scca_compute()`: apply CA to a matrix _m_ 
 
-`sccar::scca_compute()` The function scca_compute performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix representing a bi-partite network. The proces consists of a decomposition of the matrix (svd), a (user-provided) heuristic which transforms the decompostion to input for kmeans clustering (k and the set of observations and, then, the kmeans clustering itself. Each of the resulting clusters (sub-matrices) can be analyzed again untill some stopping condition is met. The output of sccs_compute is a tree (list of lists) in which every node represents one step in the process.
+This function scca_compute performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix representing a bi-partite network. The proces consists of a decomposition of the matrix (svd), a (user-provided) heuristic which transforms the decompostion to input for kmeans clustering (k and the set of observations and, then, the kmeans clustering itself. Each of the resulting clusters (sub-matrices) can be analyzed again until some stopping condition is met. The output of sccs_compute is a tree (list of lists) in which every node represents one step in the process.
 
-The function to calculate a number of clusters is a heuristic _eigengap_heuristic_, which inspects the eigenspectrum and finds the number of axis before the largest _eigengap_ or distance between each axis and the next.
+**Eijden: Mark suggested the following text to document scca_compute. It can also be used to replace the previous paragraph**
+
+The function \emph{scca_compute} performs a hierarchical, Spectral Clustering Correspondence Analysis on a matrix M representing a bi-partite network. The process consists of the following steps:
+
++ Computation of eigenvalues and eigenvectors of the similarity matrix derived from M.
++ Determine K, being how many relevant eigenvectors should be found.
++ Apply K-means to find a clustering of the elements of M into K clusters in a hierarchical manner.
+
+The function to calculate a number of clusters is a heuristic _eigengap_heuristic_, which inspects the eigenspectrum and finds the number of axis before the largest _eigengap_ or distance between each axis and the next. **Eijden: What about one eigenvalue with 1 one or several eigenvalues with value 1**
 
 We can apply the function to the carnivora dataset, generate an object that we call `scca` and inspect the results using the function `scca_print()`.
 
@@ -110,7 +120,7 @@ scca_print(scca , 'k', 'n_labs', 'depth', 'node_type')
 
 ```
 
-### `scca_print()`: print hierarchical cluster _m_ 
+### `scca_print()`: print hierarchical clustering 
 
 This function shows the hierarchical structure of fitted clusters. 
 
@@ -121,13 +131,15 @@ scca_print(scca , 'k', 'n_labs', 'depth', 'node_type')
 
 ```
 
-There are `r length(unique(scca_get_clusters(scca)$cluster))` _leaf nodes_ or clusters identified by the heuristic. The attributes asked to be printed in `scca_print()` have the following meaning:
+There are `r length(unique(scca_get_clusters(scca)$cluster))` _leaf nodes_ or clusters identified by the heuristic. **Eijden: What about the stochastic nature? The number of clusters can differ per run of scca_compute. **
+
+The attributes asked to be printed in `scca_print()` have the following meaning:
 _n_labs_ is the number of observations (labels),
 _k_ is the number of relevant Eigenvalues (i.e. before the eigengap) at each branch node,
 _node_type_ is the type of branch (internal) or leaf (terminal) nodes.
 If no attribute is given, then only the tree hierarchy is printed.
 
-### `scca_get_clusters()`: retrieve and plot or map clusters 
+### `scca_get_clusters()`: retrieve and plot/map clusters 
 
 The function `scca_get_clusters` saves the observations and the cluster it has been assigned to, in an object.
 which allows to map obtained clusters or bioregions.
@@ -196,5 +208,9 @@ These plots show the sorted spectrum for all data (node 1), showing two eigenvec
 ### References
 
 <a name="van_dam">
-Dam, Alje van., e.a. 2021; **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
+van Dam, Alje et al. (2021), **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
+</a>
+
+<a name="faurby">
+Faurby, Søren et al. (2019), Data from: PHYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology, Dryad, Dataset, [https://doi.org/10.5061/dryad.bp26v20]
 </a>

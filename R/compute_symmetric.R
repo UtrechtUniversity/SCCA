@@ -1,9 +1,10 @@
 #' Decompose Large and Sparse Matrix
 #'
-#' Computes Eigenvalues of the symmetric matrix MM^T (M is the input matrix), By first computing the weighted singular values and the corresponding singular vectors of matrix M: M = USV.
-#' The left singular vectors (U) are the eigenvectors of MM^T and the right singular vectors (V) are eigenvectors of M^TM.
-#' The non-zero elements of S are the square roots of the non-zero eigenvalues of MM^T or M^TM.
-#' See for a elaborate description of the algorithm: XXXXX 
+#' Computes Eigenvalues of the similarity matrix. As input, the contingency matrix M should be given.
+#' See for a elaborate description \strong{van Dam, et al, (2021)}
+#'
+#' @references
+#' van Dam, et al. (2021), \strong{Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity}; *name of journal*; DOI: <doi>.
 #'
 #' @param matrix Incidence matrix (e.g. species - location), which can be interpreted as the  bi-adjacency matrix of a bipartite network.
 #' @param max_eigenvalues Max. number of eigenvalues to compute. Default is 25.

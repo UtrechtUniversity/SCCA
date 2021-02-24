@@ -3,7 +3,7 @@
 \docType{data}
 \name{carnivora_species}
 \alias{carnivora_species}
-\title{Species of the Carnivora Incidence in Marine Territoria.}
+\title{Species of the Carnivora Incidence matrix}
 \format{
 A data frame with 288 rows (species)
 \describe{

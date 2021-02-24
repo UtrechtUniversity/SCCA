@@ -3,7 +3,7 @@
 \docType{data}
 \name{carnivora_sites}
 \alias{carnivora_sites}
-\title{Sites of the Carnivora Incidence in Marine Territoria}
+\title{Sites of the Carnivora Incidence matrix}
 \format{
 A data frame with 41,580 rows (sites) and 3 columns
 \describe{
@@ -19,7 +19,7 @@ A data frame with 41,580 rows (sites) and 3 columns
 carnivora_sites
 }
 \description{
-Sites of the Carnivora Incidence in Marine Territoria
+Sites of the Carnivora Incidence matrix
 }
 \details{
 The Behrman cylindrical equal area projection is used with
