@@ -1,8 +1,9 @@
-citHeader("To cite lubridate in publications use:")
+citHeader("To cite SCCA in publications use:")
 
-citEntry(entry = "Misc",
+citEntry(
+  entry        = "Misc",
   title        = "Spectral Clustering Corespondence Analysis",
-  author       = personList(as.person("Alje van Dam e.a.")),
+  author       = personList(as.person("Alje van Dam et al.")),
   year         = "2021",
   institution  = "Utrecht University",
   url          = "https://github.com/UtrechtUniversity/SCCA",

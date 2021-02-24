@@ -1,7 +1,9 @@
 #' Decompose Large and Sparse Matrix
 #'
-#' Computes Eigenvalues of the similarity matrix. As input, the contingency matrix M should be given.
-#' See for a elaborate description \strong{van Dam, et al, (2021)}
+#' Computes Eigenvalues of the similarity matrix.
+#' As input, the contingency matrix M should be given.
+#' The similarity matrix and associated eigenvectors and eigenvalues are determined internally.
+#' See for a elaborate description \strong{van Dam, et al, 2021}
 #'
 #' @references
 #' van Dam, et al. (2021), \strong{Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity}; *name of journal*; DOI: <doi>.
