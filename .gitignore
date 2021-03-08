@@ -8,8 +8,8 @@ output/
 *.png
 *.csv
 
-inst/doc
-doc
+inst/doc/
+
 Meta
 
 try_out/

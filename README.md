@@ -17,7 +17,7 @@ library(devtools)
 install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 ```
 
-### Exported functions and data sets
+### Documentation of exported functions and data set
 
 After loading the package a list of all exported functions and data sets can be retrieved by `?SCCA` and the documentation of an individual function by `?<function name>`; e.g. `?scca_compute`.
 
@@ -30,12 +30,12 @@ sources of the included datasets. See there for licences of those data sets.
 
 ### References
 
+#### Software
 Dam, Alje van., e.a. 2021; **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
 
-#### Included data sets
+#### Included data set
 Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20)
 
-[Growth Lab at Harvard University](http://atlas.cid.harvard.edu/about-data)
 
 ### The team
 
@@ -60,7 +60,7 @@ The team members are:
 
 To cite the SCCA repository and R package, use `citation("SCCA")` to retrieve the BibTex entry. Otherwise use the following format:
 
-van Dam, Alje, e.a. 2021. "SCCA: Spectral Clustering Correspondence Analysis in R". Utrecht University. DOI: 12.1234/xxxxxx.1234567.
+van Dam et al, 2021 SCCA: Spectral Clustering Correspondence Analysis in R. Utrecht University. DOI: 12.1234/xxxxxx.1234567.
 Available at [Utrecht University](https://github.com/UtrechtUniversity/SCCA). 
 
 Please also cite the paper van Dam et al, 2021 Scientific Report (in review) when using the SCCA repository.
