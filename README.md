@@ -21,7 +21,7 @@ install_github("UtrechtUniversity/scca", build_vignettes = TRUE)
 
 After loading the package a list of all exported functions and data sets can be retrieved by `?SCCA` and the documentation of an individual function by `?<function name>`; e.g. `?scca_compute`.
 
-The methodology and the use of the functions and the data are explained in the included vignettes. After installing package SCCA use `browseVignettes('SCCA')` in the R(Studio) console.
+The methodology and the use of the functions and the data are explained in the included vignette. After installing package SCCA use `browseVignettes('SCCA')` in the R(Studio) console.
 
 ### License
 
@@ -31,7 +31,7 @@ sources of the included datasets. See there for licences of those data sets.
 ### References
 
 #### Software
-Dam, Alje van., e.a. 2021; **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; *name of journal*; DOI: <doi>.
+Dam, Alje van et al; 2021 (in review); **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; Scientific Reports; DOI: <doi>.
 
 #### Included data set
 Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20)

@@ -15,8 +15,10 @@ decomp_symmetric(matrix, max_eigenvalues, decomp = "svd")
 The later only computes the k leading singular values and vectors of a rectangular matrix}
 }
 \description{
-Computes Eigenvalues of the similarity matrix. As input, the contingency matrix M should be given.
-See for a elaborate description \strong{van Dam, et al, (2021)}
+Computes Eigenvalues of the similarity matrix.
+As input, the contingency matrix M should be given.
+The similarity matrix and associated eigenvectors and eigenvalues are determined internally.
+See for a elaborate description \strong{van Dam, et al, 2021}
 }
 \details{
 If both dimensions of data matrix are greater than max_eigenvalues, then the number of computed eigenvalues is restricted
