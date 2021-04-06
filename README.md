@@ -5,7 +5,7 @@
 
 ### Introduction
 
-The SCCA package implements in R the methodological approach to CA as proposed in **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity** (van Dam et al; 2021).
+The SCCA package implements in R the methodological approach to CA as proposed in **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity** [van Dam et al; 2021](#article).
 
 ### Installation
 
@@ -31,7 +31,7 @@ sources of the included datasets. See there for licences of those data sets.
 ### References
 
 #### Software
-Dam, Alje van et al; 2021 (in review); **Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity**; Scientific Reports; DOI: <doi>.
+<a name="article"></a>van Dam, Alje, Dekker, Mark,  Morales-Castilla, Ignacio, Rodríguez, Miguel Á., Wichmann, David and Baudena, Mara (2021); Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity; _Scientific Reports_.
 
 #### Included data set
 Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20)
@@ -55,13 +55,12 @@ The team members are:
    - Mara Baudena, National Research Council of Italy, Institute of Atmospheric Science and Climate (CNR-ISAC), Turin, Italy; Copernicus Institute of Sustainable Development and Centre for Complex Systems Studies, Utrecht University, the Netherlands
 
 
-
 ### How to cite SCCA
 
 To cite the SCCA repository and R package, use `citation("SCCA")` to retrieve the BibTex entry. Otherwise use the following format:
 
-van Dam et al, 2021 SCCA: Spectral Clustering Correspondence Analysis in R. Utrecht University. DOI: 12.1234/xxxxxx.1234567.
-Available at [Utrecht University](https://github.com/UtrechtUniversity/SCCA). 
+van Eijden, Kees et al; 2021; SCCA: Spectral Clustering Correspondence Analysis in R; Utrecht University; DOI: 10.5281/zenodo.4665670.
+Also available at [Utrecht University](https://github.com/UtrechtUniversity/SCCA). 
 
-Please also cite the paper van Dam et al, 2021 Scientific Report (in review) when using the SCCA repository.
+Please also cite the paper [van Dam et al, 2021](#article) when using the SCCA repository.
 
