@@ -32,7 +32,7 @@ sources of the included datasets. See there for licences of those data sets.
 ### References
 
 #### Software
-<a name="article"></a>van Dam, Alje, Dekker, Mark,  Morales-Castilla, Ignacio, Rodríguez, Miguel Á., Wichmann, David and Baudena, Mara (2021); Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity; _Scientific Reports_.
+<a name="article"></a>van Dam, Alje, Dekker, Mark,  Morales-Castilla, Ignacio, Rodríguez, Miguel Á., Wichmann, David and Baudena, Mara (2021); Correspondence analysis, spectral clustering and graph embedding: applications to ecology and economic complexity; _Scientific Reports_; DOI: 10.1038/s41598-021-87971-9
 
 #### Included data set
 Faurby, Søren e.a; 2019; [HYLACINE 1.2: The Phylogenetic Atlas of Mammal Macroecology](https://datadryad.org/stash/dataset/doi:10.5061/dryad.bp26v20)
